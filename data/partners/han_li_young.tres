@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c5ug6j00u4m3r"]
+
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+partner_id = "han_li_young"
+display_name = "Han Li"
+form_name = "Young"
+series = "Mortal's Journey"
+path = 2
+base_hp = 1050
+base_atk = 105
+base_mdef = 65
+base_spd = 102
+base_crit = 14.0
+base_crit_damage = 155.0
+base_eva = 7.0
+base_accuracy = 93.0
+base_energy_regen = 22
+skill_name = "Azure Essence"
+skill_description = "Deals magic damage to one lane and lowers the target's MDEF."

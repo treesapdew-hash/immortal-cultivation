@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cjeh7rwt0oc2"]
+
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+partner_id = "wang_lin_young"
+display_name = "Wang Lin"
+form_name = "Young"
+series = "Renegade Immortal"
+path = 0
+base_hp = 1200
+base_atk = 135
+base_def = 75
+base_mdef = 70
+base_crit = 16.0
+base_crit_damage = 160.0
+base_eva = 7.0
+base_accuracy = 91.0
+skill_name = "Slaughter Intent"
+skill_description = "Hits all enemies in one lane and raises the user's ATK."

@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://4anyi6rpcx7n"]
+
+[ext_resource type="Script" uid="uid://baqamf7hbfwss" path="res://battle/battle_scene.gd" id="1_1otyf"]
+[ext_resource type="Texture2D" uid="uid://b78gbkpdysxi5" path="res://assets/backgrounds/BattleBG.png" id="1_u2cu5"]
+
+[node name="BattleScene" type="Control" unique_id=1093542139]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1otyf")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2033557150]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_u2cu5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=680935027]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StageTitle" type="Label" parent="Layout" unique_id=1396909303]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Stage 1"
+horizontal_alignment = 1
+
+[node name="FormationLayout" type="VBoxContainer" parent="Layout" unique_id=411972987]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EnemyBackRow" type="HBoxContainer" parent="Layout/FormationLayout" unique_id=1411691798]
+layout_mode = 2
+
+[node name="EnemyFrontRow" type="HBoxContainer" parent="Layout/FormationLayout" unique_id=1212070151]
+layout_mode = 2
+
+[node name="BattleGap" type="Control" parent="Layout/FormationLayout" unique_id=951456407]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerFrontRow" type="HBoxContainer" parent="Layout/FormationLayout" unique_id=272292817]
+layout_mode = 2
+
+[node name="PlayerBackRow" type="HBoxContainer" parent="Layout/FormationLayout" unique_id=1419010428]
+layout_mode = 2
+
+[node name="CombatLog" type="Label" parent="Layout" unique_id=839537252]
+custom_minimum_size = Vector2(1000, 120)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
