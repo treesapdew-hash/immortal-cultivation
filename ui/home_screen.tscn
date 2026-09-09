@@ -1,0 +1,229 @@
+[gd_scene format=3 uid="uid://isrv3qoh5mdl"]
+
+[ext_resource type="Texture2D" uid="uid://d2getny1yc1qv" path="res://assets/ui/panels/ResourceBar.png" id="1_euwpp"]
+[ext_resource type="Texture2D" uid="uid://b78gbkpdysxi5" path="res://assets/backgrounds/BattleBG.png" id="2_dwwfq"]
+[ext_resource type="PackedScene" uid="uid://c47qg4ixchyt2" path="res://ui/partner_panel.tscn" id="3_bmu87"]
+[ext_resource type="Texture2D" uid="uid://cb8wo4asierod" path="res://assets/ui/buttons/Ranking.png" id="4_7n2h1"]
+[ext_resource type="Texture2D" uid="uid://d2w41vxw4gsdq" path="res://assets/ui/buttons/Codex.png" id="5_qdgd0"]
+[ext_resource type="Texture2D" uid="uid://bf83ucwdp33t" path="res://assets/ui/buttons/Missions.png" id="6_clxg4"]
+[ext_resource type="Texture2D" uid="uid://4ahaojta65je" path="res://assets/ui/buttons/Mail.png" id="7_x645w"]
+[ext_resource type="Texture2D" uid="uid://dbt0cepuvihp4" path="res://assets/ui/buttons/Shop.png" id="8_wiqkm"]
+[ext_resource type="Texture2D" uid="uid://v3rycl75t66e" path="res://assets/ui/buttons/Settings.png" id="9_pd0ij"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3lfvx"]
+bg_color = Color(0.101960786, 0.101960786, 0.1254902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.36078432, 0.2901961, 0.15686275, 1)
+
+[node name="HomeScreen" type="Control" unique_id=2011501901]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainLayout" type="VBoxContainer" parent="." unique_id=774900976]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="TopBar" type="TextureRect" parent="MainLayout" unique_id=125717195]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+texture = ExtResource("1_euwpp")
+expand_mode = 1
+
+[node name="BattleArea" type="Control" parent="MainLayout" unique_id=1853130106]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StageBG" type="TextureRect" parent="MainLayout/BattleArea" unique_id=993019682]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dwwfq")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="QuickMenuPanel" type="PanelContainer" parent="MainLayout" unique_id=32744802]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3lfvx")
+
+[node name="QuickMenuRow" type="HBoxContainer" parent="MainLayout/QuickMenuPanel" unique_id=879007372]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FormationPanel" type="PanelContainer" parent="MainLayout" unique_id=2110794509]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+
+[node name="FormationSlots" type="HBoxContainer" parent="MainLayout/FormationPanel" unique_id=1946916395]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PartnerPanelHolder" type="Control" parent="MainLayout" unique_id=581340857]
+custom_minimum_size = Vector2(0, 680)
+layout_mode = 2
+
+[node name="PartnerPanel" parent="MainLayout/PartnerPanelHolder" unique_id=1235915502 instance=ExtResource("3_bmu87")]
+layout_mode = 1
+offset_bottom = -10.0
+
+[node name="BottomNavPanel" type="PanelContainer" parent="MainLayout" unique_id=1224254641]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+
+[node name="NavRow" type="HBoxContainer" parent="MainLayout/BottomNavPanel" unique_id=520683741]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="RankingButton" type="TextureButton" parent="MainLayout/BottomNavPanel/NavRow" unique_id=366744477]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+texture_normal = ExtResource("4_7n2h1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RankingLabel" type="Label" parent="MainLayout/BottomNavPanel/NavRow/RankingButton" unique_id=1800221049]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "Ranking"
+horizontal_alignment = 1
+
+[node name="CodexButton" type="TextureButton" parent="MainLayout/BottomNavPanel/NavRow" unique_id=1950835050]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+texture_normal = ExtResource("5_qdgd0")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CodexLabel" type="Label" parent="MainLayout/BottomNavPanel/NavRow/CodexButton" unique_id=981216056]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "Codex"
+horizontal_alignment = 1
+
+[node name="MissionsButton" type="TextureButton" parent="MainLayout/BottomNavPanel/NavRow" unique_id=992377433]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+texture_normal = ExtResource("6_clxg4")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MissionsLabel" type="Label" parent="MainLayout/BottomNavPanel/NavRow/MissionsButton" unique_id=1929456707]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "Missions"
+horizontal_alignment = 1
+
+[node name="MailButton" type="TextureButton" parent="MainLayout/BottomNavPanel/NavRow" unique_id=424486297]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+texture_normal = ExtResource("7_x645w")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MailLabel" type="Label" parent="MainLayout/BottomNavPanel/NavRow/MailButton" unique_id=64207995]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "Mail"
+horizontal_alignment = 1
+
+[node name="ShopButton" type="TextureButton" parent="MainLayout/BottomNavPanel/NavRow" unique_id=1471232700]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+texture_normal = ExtResource("8_wiqkm")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ShopLabel" type="Label" parent="MainLayout/BottomNavPanel/NavRow/ShopButton" unique_id=1247390726]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "Shop"
+horizontal_alignment = 1
+
+[node name="SettingsButton" type="TextureButton" parent="MainLayout/BottomNavPanel/NavRow" unique_id=436203040]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+texture_normal = ExtResource("9_pd0ij")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="SettingsLabel" type="Label" parent="MainLayout/BottomNavPanel/NavRow/SettingsButton" unique_id=19430801]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 22
+text = "Settings"
+horizontal_alignment = 1

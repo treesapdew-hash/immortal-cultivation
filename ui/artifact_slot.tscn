@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://btt73usy7ypx3"]
+
+[ext_resource type="Texture2D" uid="uid://b04vo0o2ub7mf" path="res://assets/ui/panels/Stats Related Frame/artifact_placeholder.png" id="1_8mt5g"]
+[ext_resource type="Texture2D" uid="uid://dqpgn1wc3e7pf" path="res://assets/ui/buttons/Artifact.png" id="2_5v24k"]
+
+[node name="ArtifactSlot" type="TextureRect" unique_id=1011732390]
+custom_minimum_size = Vector2(72, 72)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_8mt5g")
+expand_mode = 1
+
+[node name="SlotMargin" type="MarginContainer" parent="." unique_id=1142630932]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Icon" type="TextureRect" parent="SlotMargin" unique_id=1574446503]
+modulate = Color(1, 1, 1, 0.47058824)
+layout_mode = 2
+texture = ExtResource("2_5v24k")
+expand_mode = 1
+stretch_mode = 5

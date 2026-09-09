@@ -34,17 +34,3 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_bnidt")
 expand_mode = 1
-
-[node name="NameLabel" type="Label" parent="." unique_id=1398581660]
-custom_minimum_size = Vector2(240, 40)
-layout_mode = 0
-offset_top = 330.0
-offset_right = 240.0
-offset_bottom = 370.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 24
-text = "Han Li"
-horizontal_alignment = 1
-vertical_alignment = 1

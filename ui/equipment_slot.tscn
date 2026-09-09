@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://u25npfjy8dlk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpx7y"]
+bg_color = Color(0.16470589, 0.16470589, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.36078432, 0.2901961, 0.15686275, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="EquipmentSlot" type="PanelContainer" unique_id=982700404]
+custom_minimum_size = Vector2(72, 72)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jpx7y")
+
+[node name="SlotMargin" type="MarginContainer" parent="." unique_id=127330209]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Icon" type="TextureRect" parent="SlotMargin" unique_id=492871308]
+modulate = Color(0.6901961, 0.6901961, 0.72156864, 0.29411766)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5

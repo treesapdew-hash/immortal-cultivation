@@ -1,0 +1,340 @@
+[gd_scene format=3 uid="uid://c47qg4ixchyt2"]
+
+[ext_resource type="Texture2D" uid="uid://olshi2c6lrxs" path="res://assets/ui/panels/About Character Frame/character_statistic_frame.png" id="1_uvss4"]
+[ext_resource type="PackedScene" uid="uid://diwqv1ef3bcah" path="res://ui/partner_card.tscn" id="2_kc244"]
+[ext_resource type="Texture2D" uid="uid://dyhl4vri5n10p" path="res://assets/ui/panels/About Character Frame/ascend_button.png" id="3_b7ngr"]
+[ext_resource type="Texture2D" uid="uid://bnfpq3vkl4lp1" path="res://assets/ui/panels/About Character Frame/awaken_button.png" id="4_cgoo5"]
+[ext_resource type="PackedScene" uid="uid://u25npfjy8dlk" path="res://ui/equipment_slot.tscn" id="5_xjkyb"]
+[ext_resource type="Texture2D" uid="uid://c3h25qlisee7j" path="res://assets/ui/buttons/Equip_Weapon.png" id="6_p6q8k"]
+[ext_resource type="Texture2D" uid="uid://jvf7gl52jfg0" path="res://assets/ui/buttons/Equip_Armor.png" id="7_frnmw"]
+[ext_resource type="Texture2D" uid="uid://bvpocg0eg4chj" path="res://assets/ui/buttons/Equip_Ring.png" id="8_hlsa7"]
+[ext_resource type="Texture2D" uid="uid://cj4c7khepcwxl" path="res://assets/ui/buttons/Equip_Boots.png" id="9_ejmv4"]
+[ext_resource type="PackedScene" uid="uid://btt73usy7ypx3" path="res://ui/artifact_slot.tscn" id="10_r5v7x"]
+[ext_resource type="PackedScene" uid="uid://bu1qr5i6wfpt6" path="res://ui/treasure_slot.tscn" id="11_2tnaw"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_3lfvx"]
+color = Color(0.41960785, 0.3529412, 0.19607843, 1)
+thickness = 2
+
+[node name="PartnerPanel" type="Control" unique_id=1235915502]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelFrame" type="NinePatchRect" parent="." unique_id=1384894694]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(-344, -215)
+texture = ExtResource("1_uvss4")
+patch_margin_left = 120
+patch_margin_top = 120
+patch_margin_right = 120
+patch_margin_bottom = 120
+
+[node name="PanelMargin" type="MarginContainer" parent="." unique_id=92981443]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -210.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="MainSplit" type="HBoxContainer" parent="PanelMargin" unique_id=1271390163]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="CardHolder" type="Control" parent="PanelMargin/MainSplit" unique_id=1138261301]
+custom_minimum_size = Vector2(300, 560)
+layout_mode = 2
+
+[node name="PartnerCard" parent="PanelMargin/MainSplit/CardHolder" unique_id=1049355440 instance=ExtResource("2_kc244")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InfoColumn" type="VBoxContainer" parent="PanelMargin/MainSplit" unique_id=1056385317]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Partner Name" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1249776148]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Han Li (韩立)"
+
+[node name="RealmLine" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1914878132]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Realm: Mortal Realm Lv.1 (500/1000)"
+
+[node name="StarRow" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=564973890]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "★★★★★"
+
+[node name="ActionRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=2135217481]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AscendButton" type="TextureButton" parent="PanelMargin/MainSplit/InfoColumn/ActionRow" unique_id=409430071]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_b7ngr")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AscendLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/ActionRow/AscendButton" unique_id=1881784913]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+text = ".✦   Ascend / Breakthrough  .✦ "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AwakenButton" type="TextureButton" parent="PanelMargin/MainSplit/InfoColumn/ActionRow" unique_id=1132239925]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("4_cgoo5")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AwakenLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/ActionRow/AwakenButton" unique_id=2084929651]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+text = "⛤ Awaken ⛤"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacing2" type="Control" parent="PanelMargin/MainSplit/InfoColumn" unique_id=960034787]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="PowerLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1140222304]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Power : 1250"
+
+[node name="Spacing" type="Control" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1790830827]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="StatGrid" type="GridContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=280883098]
+layout_mode = 2
+theme_override_constants/h_separation = 120
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="HPLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1474510351]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "HP :"
+
+[node name="HPValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=427627899]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "8600"
+
+[node name="ATKLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=2038277500]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "ATK :"
+
+[node name="ATKValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1440770163]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1250"
+
+[node name="DEFLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=269516939]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "DEF :"
+
+[node name="DEFValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1952360920]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "420"
+
+[node name="MDEFLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1757574528]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "MDEF :"
+
+[node name="MDEFValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=951065020]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "380"
+
+[node name="SPDLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1330533582]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "SPD :"
+
+[node name="SPDValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1716190114]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "105"
+
+[node name="CRITLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1057526074]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "CRIT :"
+
+[node name="CRITValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1722598928]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "12.00%"
+
+[node name="EVALabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=849417151]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "EVA :"
+
+[node name="EVAValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=711227794]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "8.00%"
+
+[node name="ENRegenLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=803525004]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "EN Regen :"
+
+[node name="ENRegenValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1312337169]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "22"
+
+[node name="EquipmentDivider" type="HSeparator" parent="PanelMargin/MainSplit/InfoColumn" unique_id=2142469239]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_3lfvx")
+
+[node name="EquipmentHeader" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=277279376]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Equipment"
+
+[node name="EquipmentRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=2138622148]
+layout_mode = 2
+theme_override_constants/separation = 90
+alignment = 1
+
+[node name="SwordSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=982700404 instance=ExtResource("5_xjkyb")]
+layout_mode = 2
+
+[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/SwordSlot/SlotMargin" parent_id_path=PackedInt32Array(982700404, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("6_p6q8k")
+
+[node name="ArmorSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=1042762072 instance=ExtResource("5_xjkyb")]
+layout_mode = 2
+
+[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/ArmorSlot/SlotMargin" parent_id_path=PackedInt32Array(1042762072, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("7_frnmw")
+
+[node name="RingSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=2106012723 instance=ExtResource("5_xjkyb")]
+layout_mode = 2
+
+[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/RingSlot/SlotMargin" parent_id_path=PackedInt32Array(2106012723, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("8_hlsa7")
+
+[node name="BootsSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=3893836 instance=ExtResource("5_xjkyb")]
+layout_mode = 2
+
+[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/BootsSlot/SlotMargin" parent_id_path=PackedInt32Array(3893836, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("9_ejmv4")
+
+[node name="BottomRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1512772322]
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="ArtifactColumn" type="VBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow" unique_id=1960016568]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ArtifactHeader" type="Label" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn" unique_id=1234443514]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Artifacts"
+
+[node name="ArtifactDivider" type="HSeparator" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn" unique_id=252520628]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_3lfvx")
+
+[node name="ArtifactRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn" unique_id=2028986827]
+layout_mode = 2
+
+[node name="ArtifactSlot" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=1011732390 instance=ExtResource("10_r5v7x")]
+layout_mode = 2
+
+[node name="ArtifactSlot2" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=1889216770 instance=ExtResource("10_r5v7x")]
+layout_mode = 2
+
+[node name="ArtifactSlot3" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=431377667 instance=ExtResource("10_r5v7x")]
+layout_mode = 2
+
+[node name="ArtifactSlot4" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=414034041 instance=ExtResource("10_r5v7x")]
+layout_mode = 2
+
+[node name="TreasureColumn" type="VBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow" unique_id=1764430237]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TreasureHeader" type="Label" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn" unique_id=1743160019]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Treasures"
+
+[node name="TreasureDivider" type="HSeparator" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn" unique_id=1300903304]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_3lfvx")
+
+[node name="TreasureRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn" unique_id=890270567]
+layout_mode = 2
+
+[node name="TreasureSlot" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=467110035 instance=ExtResource("11_2tnaw")]
+layout_mode = 2
+
+[node name="TreasureSlot2" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=1760551500 instance=ExtResource("11_2tnaw")]
+layout_mode = 2
+
+[node name="TreasureSlot3" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=971153804 instance=ExtResource("11_2tnaw")]
+layout_mode = 2
+
+[node name="TreasureSlot4" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=833021840 instance=ExtResource("11_2tnaw")]
+layout_mode = 2
+
+[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/SwordSlot"]
+[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/ArmorSlot"]
+[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/RingSlot"]
+[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/BootsSlot"]
