@@ -30,6 +30,7 @@ var _body: VBoxContainer
 var _standing: Label
 var _bracket_art: TextureRect
 var _attacks: Label
+var _tabs: HBoxContainer
 var _toast_holder: Control
 
 var _busy := false
@@ -139,11 +140,10 @@ func _build() -> void:
 	v.add_child(_line())
 
 	# Tabs
-	var tabs := HBoxContainer.new()
-	tabs.add_theme_constant_override("separation", 8)
-	v.add_child(tabs)
-	for t in ["Duel", "Board", "Exchange"]:
-		tabs.add_child(_tab_button(t))
+	_tabs = HBoxContainer.new()
+	_tabs.add_theme_constant_override("separation", 8)
+	v.add_child(_tabs)
+	_refresh_tabs()
 
 	v.add_child(_line())
 
@@ -168,16 +168,41 @@ func _tab_button(title: String) -> Button:
 	b.text = title
 	b.flat = true
 	b.focus_mode = Control.FOCUS_NONE
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.custom_minimum_size = Vector2(0, 52)
 	b.add_theme_font_size_override("font_size", 24)
-	b.add_theme_color_override("font_color", COL_TITLE if title == _tab else COL_DIM)
+	var here := title == _tab
+	b.add_theme_color_override("font_color", COL_TITLE if here else COL_DIM)
+	# The current tab sits on a lit plate. Colour alone was too quiet
+	# to tell at a glance which page you were on.
+	if here:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color(COL_GOLD, 0.12)
+		sb.border_color = Color(COL_GOLD, 0.5)
+		sb.set_border_width_all(1)
+		sb.set_corner_radius_all(8)
+		sb.set_content_margin_all(6)
+		for state in ["normal", "hover", "pressed"]:
+			b.add_theme_stylebox_override(state, sb)
 	b.pressed.connect(func(): _set_tab(title))
 	return b
+
+
+## Rebuilt whenever the page changes: the buttons carry their lit
+## state in a stylebox, so they cannot simply be left standing.
+func _refresh_tabs() -> void:
+	for c in _tabs.get_children():
+		_tabs.remove_child(c)
+		c.queue_free()
+	for t in ["Duel", "Board", "Exchange"]:
+		_tabs.add_child(_tab_button(str(t)))
 
 
 func _set_tab(title: String) -> void:
 	if _tab == title:
 		return
 	_tab = title
+	_refresh_tabs()
 	_render()
 
 
@@ -275,8 +300,23 @@ func _render_rewards() -> void:
 
 
 func _render_shop() -> void:
-	_body.add_child(_label("Arena Exchange  ·  %s Tokens" %
-		NumberFormat.short(GameState.get_item_count(Arena.TOKEN_ID)), 22, COL_GOLD))
+	var purse: int = GameState.get_item_count(Arena.TOKEN_ID)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 10)
+	head.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var title := _label("Arena Exchange", 24, COL_GOLD)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(title)
+	var purse_icon := ItemSlot.new()
+	purse_icon.custom_minimum_size = Vector2(38, 38)
+	purse_icon.setup_item(Arena.TOKEN_ID, 0)
+	purse_icon.disabled = true
+	head.add_child(purse_icon)
+	var purse_l := _label(NumberFormat.short(purse), 24, COL_TITLE)
+	purse_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head.add_child(purse_l)
+	_body.add_child(head)
+
 	var stock := await Arena.shop_state()
 	if not is_instance_valid(self) or _tab != "Exchange":
 		return
@@ -284,40 +324,82 @@ func _render_shop() -> void:
 		_body.add_child(_note("The Exchange is closed."))
 		return
 	for entry in stock:
-		_body.add_child(_shop_row(entry))
+		_body.add_child(_shop_row(entry, purse))
+
+	# Where Tokens come from, and when the limits lift. The shelf is
+	# short, so this both explains itself and fills the page.
+	_body.add_child(_line())
+	_body.add_child(_note("Tokens are won in every duel — %d for a victory, %d even in defeat — "
+		% [Arena.TOKENS_WIN, Arena.TOKENS_LOSS]
+		+ "and arrive by mail from your daily and weekly standing. "
+		+ "Purchase limits reset each Monday."))
 
 
-func _shop_row(entry: Dictionary) -> Control:
+## One shelf entry. Bordered in the item's own colour so the headline
+## pieces read as rarer at a glance, and carrying its description,
+## because a 9,000-Token price needs to say what it buys.
+func _shop_row(entry: Dictionary, purse: int) -> Control:
 	var item_id := str(entry.get("item_id", ""))
 	var cost := int(entry.get("cost", 0))
 	var amount := int(entry.get("amount", 1))
 	var bought := int(entry.get("bought", 0))
 	var limit := int(entry.get("weekly_limit", 1))
 	var sold_out := bought >= limit
-	var item := ItemDB.get_item(item_id)
+	var item: Dictionary = ItemDB.get_item(item_id)
+	var tint: Color = item.get("tint", COL_GOLD)
+	var short := purse < cost
+
+	var panel := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(tint, 0.05 if not sold_out else 0.02)
+	sb.border_color = Color(tint, 0.55 if not sold_out else 0.2)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(10)
+	sb.set_content_margin_all(12)
+	panel.add_theme_stylebox_override("panel", sb)
 
 	var h := HBoxContainer.new()
-	h.add_theme_constant_override("separation", 12)
-	h.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_theme_constant_override("separation", 14)
+	panel.add_child(h)
 
 	var icon := ItemSlot.new()
-	icon.custom_minimum_size = Vector2(72, 72)
+	icon.custom_minimum_size = Vector2(80, 80)
 	icon.setup_item(item_id, amount)
 	icon.disabled = true
+	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	h.add_child(icon)
 
 	var texts := VBoxContainer.new()
-	texts.add_theme_constant_override("separation", 0)
+	texts.add_theme_constant_override("separation", 2)
 	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	texts.alignment = BoxContainer.ALIGNMENT_CENTER
 	h.add_child(texts)
-	texts.add_child(_label("%s x%d" % [str(item.get("name", item_id)), amount], 20, COL_TEXT))
-	texts.add_child(_label("%s Tokens  ·  %d of %d this week" %
-		[NumberFormat.short(cost), bought, limit], 16, COL_DIM))
+
+	var item_name: String = str(item.get("name", item_id))
+	texts.add_child(_label("%s x%d" % [item_name, amount], 21,
+		tint.lightened(0.25) if not sold_out else COL_DIM))
+
+	var blurb: String = str(item.get("desc", ""))
+	if blurb != "":
+		var d := _label(_clip(blurb, 115), 15, COL_DIM)
+		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		texts.add_child(d)
+
+	# Price, then stock. Red when it is simply out of reach, with the
+	# shortfall named rather than a dead button and no reason.
+	var price := HBoxContainer.new()
+	price.add_theme_constant_override("separation", 8)
+	texts.add_child(price)
+	price.add_child(_label("%s Tokens" % NumberFormat.short(cost), 17,
+		COL_BAD if short and not sold_out else COL_GOLD))
+	price.add_child(_label("%d of %d this week" % [bought, limit], 15,
+		COL_DIM if not sold_out else COL_BAD))
+	if short and not sold_out:
+		price.add_child(_label("need %s more" % NumberFormat.short(cost - purse), 15, COL_BAD))
 
 	var buy := OrnateButton.new()
 	buy.text = "Sold out" if sold_out else "Buy"
-	buy.disabled = sold_out or GameState.get_item_count(Arena.TOKEN_ID) < cost
+	buy.disabled = sold_out or short
 	buy.custom_minimum_size = Vector2(150, 56)
 	buy.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var on_buy := func() -> void:
@@ -325,7 +407,18 @@ func _shop_row(entry: Dictionary) -> Control:
 	buy.pressed.connect(on_buy)
 	h.add_child(buy)
 
-	return h
+	return panel
+
+
+## Trims a blurb to whole words, so rows stay an even height.
+func _clip(value: String, most: int) -> String:
+	if value.length() <= most:
+		return value
+	var cut := value.substr(0, most)
+	var space := cut.rfind(" ")
+	if space > 40:
+		cut = cut.substr(0, space)
+	return cut + "..."
 
 
 func _render_duel(left: int, bought: int) -> void:
