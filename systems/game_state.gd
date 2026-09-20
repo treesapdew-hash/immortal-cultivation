@@ -1450,14 +1450,57 @@ func artifacts_of(partner_id: String) -> Array:
 	return out
 
 
+## Saves from before artifacts knew their own slot have none, and two
+## worn by the same partner could both claim -1. Hands each one the
+## position it already appeared to occupy, so nothing visibly moves.
+func _settle_artifact_slots() -> void:
+	var next_free := {}
+	for a in artifacts:
+		var owner_id := str(a.get("owner", ""))
+		if owner_id == "":
+			a["slot"] = -1
+			continue
+		var used: Array = next_free.get(owner_id, [])
+		if int(a.get("slot", -1)) >= 0 and not used.has(int(a["slot"])):
+			used.append(int(a["slot"]))
+			next_free[owner_id] = used
+			continue
+		# No slot recorded, or a duplicate: take the lowest still free.
+		for slot in Artifacts.SLOTS:
+			if not used.has(slot):
+				a["slot"] = slot
+				used.append(slot)
+				break
+		if int(a.get("slot", -1)) < 0 or used.size() > Artifacts.SLOTS:
+			# More worn than there are slots: this one comes off.
+			a["owner"] = ""
+			a["slot"] = -1
+		next_free[owner_id] = used
+
+
+## What this partner wears in a given slot, or {} if it's empty.
+func artifact_in_slot(partner_id: String, slot: int) -> Dictionary:
+	for a in artifacts:
+		if a.get("owner", "") == partner_id and int(a.get("slot", -1)) == slot:
+			return a
+	return {}
+
+
+## An artifact remembers which slot it is in, the way gear does.
+## It used to be worked out from its position in the artifacts array,
+## so equipping into the second slot could reorder the first: the
+## "slots" were really just list positions, and the list is ordered by
+## when a piece was forged, not by where it was put.
 func equip_artifact(uid: int, partner_id: String, slot: int) -> void:
 	var a := find_artifact(uid)
 	if a.is_empty():
 		return
-	var worn := artifacts_of(partner_id)
-	if slot < worn.size() and int(worn[slot]["uid"]) != uid:
-		worn[slot]["owner"] = ""
+	var taken := artifact_in_slot(partner_id, slot)
+	if not taken.is_empty() and int(taken["uid"]) != uid:
+		taken["owner"] = ""
+		taken["slot"] = -1
 	a["owner"] = partner_id
+	a["slot"] = clampi(slot, 0, Artifacts.SLOTS - 1)
 	artifacts_changed()
 
 
@@ -1465,6 +1508,7 @@ func unequip_artifact(uid: int) -> void:
 	var a := find_artifact(uid)
 	if not a.is_empty():
 		a["owner"] = ""
+		a["slot"] = -1
 		artifacts_changed()
 
 
@@ -1472,6 +1516,7 @@ func unequip_all_artifacts(partner_id: String) -> void:
 	for a in artifacts:
 		if a.get("owner", "") == partner_id:
 			a["owner"] = ""
+			a["slot"] = -1
 
 
 func artifacts_changed() -> void:
@@ -1776,7 +1821,9 @@ func load_game() -> bool:
 			"uid": int(a.get("uid", 0)), "trait": str(a.get("trait", "")),
 			"grade": int(a.get("grade", 0)), "owner": str(a.get("owner", "")),
 			"locked": bool(a.get("locked", false)),
+			"slot": int(a.get("slot", -1)),
 		})
+	_settle_artifact_slots()
 	next_artifact_uid = int(dict.get("next_artifact_uid", 1))
 
 	lifebound.clear()

@@ -433,13 +433,15 @@ func _setup_artifact_slots() -> void:
 
 
 func _refresh_artifact_slots() -> void:
-	var worn: Array = []
-	if current != null:
-		worn = GameState.artifacts_of(current.partner_id)
 	for i in _artifact_icons.size():
 		var icon: ArtifactIcon = _artifact_icons[i]
-		if i < worn.size():
-			icon.setup(worn[i])
+		# By the slot each artifact records, not by its position in
+		# the list: the list is ordered by when a piece was forged.
+		var worn_here: Dictionary = {}
+		if current != null:
+			worn_here = GameState.artifact_in_slot(current.partner_id, i)
+		if not worn_here.is_empty():
+			icon.setup(worn_here)
 		else:
 			icon.setup_empty()
 		icon.show_alert = current != null and Artifacts.better_available(current.partner_id, i)
@@ -470,9 +472,9 @@ func _refresh_artifact_slots() -> void:
 func _on_artifact_slot(slot: int) -> void:
 	if current == null:
 		return
-	var worn := GameState.artifacts_of(current.partner_id)
-	if slot < worn.size():
-		ArtifactPopup.open_details(self, int(worn[slot]["uid"]), current.partner_id)
+	var worn_here := GameState.artifact_in_slot(current.partner_id, slot)
+	if not worn_here.is_empty():
+		ArtifactPopup.open_details(self, int(worn_here["uid"]), current.partner_id)
 	else:
 		ArtifactPopup.open_picker(self, current.partner_id, slot)
 
