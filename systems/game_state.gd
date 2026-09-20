@@ -509,14 +509,19 @@ func get_copies(partner_id: String) -> int:
 ## their Soul Fragments. Tiers below Red give none.
 const PREMIUM_ESSENCE_ID := "premium_essence"
 const SALVAGE_ESSENCE := {
-	Enums.Rarity.RED: 1,
-	Enums.Rarity.GOLD: 3,
-	Enums.Rarity.PRISMATIC: 10,
+	Enums.Rarity.RED: 5,
+	Enums.Rarity.GOLD: 15,
+	Enums.Rarity.PRISMATIC: 50,
 }
-## Essence spent to forge one Soul Fragment. A star costs 1-4
-## fragments (COPIES_PER_STAR), so this sets how many spare Reds a
-## Premium Red's star is worth. Raise it to make them rarer.
-const ESSENCE_PER_FRAGMENT := 5
+## Essence spent to forge one Soul Fragment.
+##
+## The whole chain, in spare Reds (a Red salvages to 5 Essence):
+##   1 to 15 stars   29 fragments   58 Essence   ~12 Reds
+##   Red to Gold     50 Essence                  ~10 Reds
+##   15 to 18 stars  12 fragments   24 Essence    ~5 Reds
+##   Gold to Prismatic  150 Essence              ~30 Reds
+## so roughly 22 spare Reds to reach Gold and 57 to reach Prismatic.
+const ESSENCE_PER_FRAGMENT := 2
 
 ## Essence to evolve into the next form, by the form you are leaving.
 ## Purple lines mostly cap at Red; Reds become Gold; the seven lines
