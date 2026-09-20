@@ -136,6 +136,8 @@ func _rebuild() -> void:
 		"Copy Report", OrnateButton.Variant.GOLD, _on_report)
 	_action_row("Login & Cloud Save", _account_status(), "Manage", OrnateButton.Variant.GOLD, _on_account)
 	_redeem_row()
+	_action_row("Replay tutorials", "Elder Yunhe guides you through each feature again.",
+		"Replay", OrnateButton.Variant.DARK, _on_replay_tutorials)
 	_soon_row("Language")
 	_action_row("Reset account", "Deletes ALL progress and starts over. Cannot be undone.",
 		"Reset", OrnateButton.Variant.CRIMSON, _on_reset)
@@ -331,6 +333,20 @@ func _on_account() -> void:
 func _on_report() -> void:
 	DisplayServer.clipboard_set(Settings.bug_report())
 	_toast("Bug report copied. Paste it in your message.", COL_OK)
+
+
+## Forgets which tutorials are finished and restarts the intro.
+## Settings closes first: the tutorial spotlights the game behind it,
+## so leaving this panel up would cover what it is pointing at.
+func _on_replay_tutorials() -> void:
+	var start_again := func() -> void:
+		var scene := get_tree().current_scene
+		queue_free()
+		if scene != null:
+			Tutorial.replay(scene)
+	_confirm("Replay tutorials?",
+		"Elder Yunhe will guide you through each feature again as you reach it.\n"
+		+ "Your progress is not affected.", "Replay", start_again)
 
 
 ## Two confirmations before wiping the account.

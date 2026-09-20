@@ -125,6 +125,27 @@ static func start_unlock(feature_id: String, from: Node) -> void:
 	start("unlock_" + feature_id, from)
 
 
+## Forgets every finished tutorial, so each one plays again as you
+## reach that feature, and starts the intro straight away.
+## Steps with "skip_if" still skip themselves for a player who has
+## already done the thing, so this doesn't hand out the starter
+## Summon Scroll a second time.
+static func replay(from: Node) -> void:
+	GameState.tutorials_done.clear()
+	GameState.tutorials_pending.clear()
+	GameState.tutorial_step.clear()
+	GameState.save_game()
+
+	# Drop anything queued or on screen, or the old run would carry on
+	# over the top of the restarted intro.
+	_queue.clear()
+	if _running != null and is_instance_valid(_running):
+		_running.queue_free()
+	_running = null
+
+	start("intro", from)
+
+
 ## On launch: continue any tutorial that was cut short.
 static func resume(from: Node) -> void:
 	for id in GameState.tutorials_pending.duplicate():
