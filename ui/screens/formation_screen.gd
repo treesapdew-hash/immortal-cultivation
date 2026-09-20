@@ -36,6 +36,9 @@ const TIER_COLORS := [
 var _team_label: Label
 var _path_title: Label
 var _path_detail: Label
+## Which Path the roster list is filtered to, or -1 for all.
+var _path_filter := -1
+var _filter_buttons := {}
 var _stuck_time := 0.0
 var _hint: Label
 var _grid: GridContainer
@@ -148,6 +151,16 @@ func _build() -> void:
 	_path_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(_path_detail)
 
+	# Filter the roster by Path, so a resonance can actually be built
+	var filters := HFlowContainer.new()
+	filters.add_theme_constant_override("h_separation", 6)
+	filters.add_theme_constant_override("v_separation", 6)
+	v.add_child(filters)
+	filters.add_child(_filter_button("All", -1))
+	for path in Enums.PATH_NAMES:
+		filters.add_child(_filter_button(str(Enums.PATH_NAMES[path]).replace(" Path", ""), int(path)))
+	_apply_filter_look()
+
 	var center := CenterContainer.new()
 	v.add_child(center)
 
@@ -181,6 +194,36 @@ func _build() -> void:
 # ROSTER GRID
 # ---------------------------------------------------------
 
+## One Path filter chip. path of -1 is "All".
+func _filter_button(title: String, path: int) -> Button:
+	var b := Button.new()
+	b.text = title
+	b.flat = true
+	b.focus_mode = Control.FOCUS_NONE
+	b.add_theme_font_size_override("font_size", 20)
+	b.custom_minimum_size = Vector2(0, 40)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		b.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	b.pressed.connect(func(): _set_path_filter(path))
+	_filter_buttons[path] = b
+	return b
+
+
+func _set_path_filter(path: int) -> void:
+	if _path_filter == path:
+		return
+	_path_filter = path
+	_apply_filter_look()
+	_rebuild()
+
+
+func _apply_filter_look() -> void:
+	for key in _filter_buttons:
+		var b: Button = _filter_buttons[key]
+		b.add_theme_color_override("font_color",
+			COL_GOLD_TX if int(key) == _path_filter else COL_DIM)
+
+
 func _rebuild() -> void:
 	_dirty = false
 
@@ -191,15 +234,19 @@ func _rebuild() -> void:
 	_team_label.text = "Team  %d / %d" % [GameState.get_team_size(), GameState.FORMATION_SIZE]
 	_refresh_path()
 
-	# Every partner except the MC (roster index 0)
+	# Every partner except the MC (roster index 0). Partners already in
+	# the team stay visible whatever the filter, so you can always see
+	# what you are swapping out.
 	var entries: Array = []
 	for i in range(1, GameState.roster.size()):
 		var p: OwnedPartner = GameState.roster[i]
 		var data := p.get_data()
 		if data == null:
 			continue
-		entries.append({"index": i, "partner": p, "data": data,
-			"slot": GameState.get_slot_of(i)})
+		var slot := GameState.get_slot_of(i)
+		if _path_filter >= 0 and int(data.path) != _path_filter and slot <= 0:
+			continue
+		entries.append({"index": i, "partner": p, "data": data, "slot": slot})
 
 	# Team members first, then by tier (highest first), then by strength
 	entries.sort_custom(func(a, b):
