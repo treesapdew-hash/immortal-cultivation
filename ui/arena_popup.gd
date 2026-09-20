@@ -365,6 +365,10 @@ func _opponent_row(o: Dictionary, left: int) -> Control:
 		int(o.get("points", 0)), NumberFormat.short(int(o.get("power", 0))),
 		int(o.get("wins", 0)), int(o.get("losses", 0))], 16, COL_DIM))
 
+	# NPCs have no profile to look at, so only real cultivators get this.
+	if not is_npc:
+		h.add_child(_inspect_button(str(o.get("id", "")), str(o.get("name", "Cultivator"))))
+
 	var fight := OrnateButton.new()
 	fight.text = "Duel"
 	fight.custom_minimum_size = Vector2(150, 56)
@@ -389,11 +393,32 @@ func _render_board() -> void:
 		return
 	var place := 1
 	for r in rows:
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
 		var line := _label("%d.  %s  —  %d points  (%dW %dL)" % [
 			place, str(r.get("name", "Cultivator")), int(r.get("points", 0)),
 			int(r.get("wins", 0)), int(r.get("losses", 0))], 19, COL_TEXT)
-		_body.add_child(line)
+		line.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(line)
+		row.add_child(_inspect_button(str(r.get("id", "")), str(r.get("name", "Cultivator"))))
+		_body.add_child(row)
 		place += 1
+
+
+## A small eye on a row that opens someone's formation and gear.
+func _inspect_button(user_id: String, who: String) -> Control:
+	var b := Button.new()
+	b.text = "View"
+	b.flat = true
+	b.focus_mode = Control.FOCUS_NONE
+	b.disabled = user_id == ""
+	b.custom_minimum_size = Vector2(88, 50)
+	b.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	b.add_theme_font_size_override("font_size", 17)
+	b.add_theme_color_override("font_color", COL_GOLD)
+	b.pressed.connect(func(): InspectPopup.open(self, user_id, who))
+	return b
 
 
 # ---------------------------------------------------------

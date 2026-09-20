@@ -513,6 +513,7 @@ func _on_send() -> void:
 
 func _open_actions(user_id: String, who: String, body: String) -> void:
 	var menu := PopupMenu.new()
+	menu.add_item("Inspect " + who, 4)
 	menu.add_item("Whisper " + who, 0)
 	menu.add_item("Add friend", 1)
 	menu.add_separator()
@@ -561,6 +562,8 @@ func _do_action(id: int, user_id: String, who: String, body: String) -> void:
 		3:
 			var r3 := await Chat.report(user_id, _channel, body)
 			_add_system("Report sent." if r3["ok"] else str(r3["error"]))
+		4:
+			InspectPopup.open(self, user_id, who)
 
 
 # ---------------------------------------------------------

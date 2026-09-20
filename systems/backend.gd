@@ -229,7 +229,8 @@ func _http(method: int, url: String, headers: PackedStringArray, body: Variant) 
 # PROFILE AND CLOUD SAVE
 # ---------------------------------------------------------
 
-## Keeps this player's public profile (name, realm, stage) up to date.
+## Keeps this player's public profile (name, realm, stage, power and
+## the showcase others inspect) up to date.
 func update_profile() -> void:
 	if not online or user_id == "":
 		return
@@ -239,6 +240,8 @@ func update_profile() -> void:
 		"display_name": str(GameState.mc_name),
 		"realm": mc.realm_index if mc != null else 0,
 		"highest_stage": int(GameState.highest_stage),
+		"power": int(GameState.get_team_power()),
+		"showcase": Showcase.build(),
 		"updated_at": Time.get_datetime_string_from_system(true) + "Z",
 	}
 	await rest(HTTPClient.METHOD_POST, "profiles?on_conflict=id", row,

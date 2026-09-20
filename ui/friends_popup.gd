@@ -426,6 +426,7 @@ func _on_search() -> void:
 
 func _open_actions(user_id: String, who: String) -> void:
 	var menu := PopupMenu.new()
+	menu.add_item("Inspect " + who, 3)
 	menu.add_item("Whisper " + who, 0)
 	menu.add_separator()
 	menu.add_item("Remove friend", 1)
@@ -447,6 +448,8 @@ func _do_action(id: int, user_id: String, who: String) -> void:
 		2:
 			var r2 := await Chat.block(user_id)
 			_act(r2, "%s is blocked." % who)
+		3:
+			InspectPopup.open(self, user_id, who)
 
 
 # ---------------------------------------------------------
