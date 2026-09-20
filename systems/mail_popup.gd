@@ -49,10 +49,11 @@ static func make_button() -> Button:
 		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		art.set_anchors_preset(Control.PRESET_FULL_RECT)
 		b.add_child(art)
-		b.button_down.connect(func(): art.modulate = Color(0.82, 0.82, 0.88))
-		b.button_up.connect(func(): art.modulate = Color.WHITE)
 	else:
 		b.draw.connect(_draw_envelope.bind(b))
+
+	# Hover and press feedback, on the button so it covers both cases.
+	IconFX.attach(b)
 
 	# Badge drawn on top of the icon
 	var badge := Control.new()
