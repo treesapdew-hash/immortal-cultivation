@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bnto13xav12vp"]
+
+[ext_resource type="Texture2D" uid="uid://tkr3u1t2yh7v" path="res://assets/partners/gold/electrolux/card.png" id="1_yah8e"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_4luvc"]
+[ext_resource type="Texture2D" uid="uid://b5ufoojycmf4j" path="res://assets/partners/gold/electrolux/sprite.png" id="3_lt87s"]
+
+[resource]
+script = ExtResource("2_4luvc")
+partner_id = "electrolux"
+display_name = "Electrolux"
+rarity = 5
+path = 2
+card_texture = ExtResource("1_yah8e")
+sprite_texture = ExtResource("3_lt87s")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c52u3tjnv0jml"]
+
+[ext_resource type="Texture2D" uid="uid://bdaf1qtsfst35" path="res://assets/partners/red/meng_chuan_lightning_form/card.png" id="1_8pfux"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_wv155"]
+[ext_resource type="Texture2D" uid="uid://cg5oudlbspjpu" path="res://assets/partners/red/meng_chuan_lightning_form/sprite.png" id="3_anr0w"]
+
+[resource]
+script = ExtResource("2_wv155")
+partner_id = "meng_chuan_lightning_form"
+display_name = "Meng Chuan"
+form_name = "Lightning Form"
+rarity = 4
+card_texture = ExtResource("1_8pfux")
+sprite_texture = ExtResource("3_anr0w")

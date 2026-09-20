@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://b776t6dbpqcel"]
+
+[ext_resource type="Script" uid="uid://b2i3t4a1ewrwd" path="res://ui/nav_button.gd" id="1_gbbwy"]
+[ext_resource type="Texture2D" uid="uid://dc1ge8efwdh6g" path="res://assets/ui/nav_home.png" id="1_mdma1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gbbwy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3lfvx"]
+bg_color = Color(0.8784314, 0.16470589, 0.16470589, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41568628, 0.039215688, 0.039215688, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="NavButton" type="Button" unique_id=1206170415]
+custom_minimum_size = Vector2(120, 120)
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_gbbwy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gbbwy")
+script = ExtResource("1_gbbwy")
+icon_texture = ExtResource("1_mdma1")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1172956462]
+unique_name_in_owner = true
+modulate = Color(0.6, 0.64, 0.7, 1)
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("1_mdma1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Badge" type="Panel" parent="Icon" unique_id=156771082]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -26.0
+offset_top = 10.0
+offset_right = -4.0
+offset_bottom = 26.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3lfvx")
+
+[node name="NameLabel" type="Label" parent="." unique_id=2087547787]
+unique_name_in_owner = true
+modulate = Color(0.6, 0.64, 0.7, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "Home"
+horizontal_alignment = 1

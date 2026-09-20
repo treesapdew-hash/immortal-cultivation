@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cikd2q1a1rn8w"]
+
+[ext_resource type="Texture2D" uid="uid://ibc2rni8t2ur" path="res://assets/partners/red/luo_zheng_late_form/card.png" id="1_cf7xt"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_3iiy3"]
+[ext_resource type="Texture2D" uid="uid://ykrfvg5cpl8h" path="res://assets/partners/red/luo_zheng_late_form/sprite.png" id="3_3873m"]
+
+[resource]
+script = ExtResource("2_3iiy3")
+partner_id = "luo_zheng_late_form"
+display_name = "Luo Zheng"
+rarity = 4
+card_texture = ExtResource("1_cf7xt")
+sprite_texture = ExtResource("3_3873m")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://b1bdtqn01id6b"]
+
+[ext_resource type="Texture2D" uid="uid://d0n6uc6kdcgm6" path="res://assets/partners/blue/lu_xueqi/card.png" id="1_4ycda"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_a45r2"]
+[ext_resource type="Texture2D" uid="uid://y5b16wcgik8" path="res://assets/partners/blue/lu_xueqi/sprite.png" id="3_eetd5"]
+
+[resource]
+script = ExtResource("2_a45r2")
+partner_id = "lu_xueqi"
+display_name = "Lu Xueqi"
+rarity = 1
+path = 3
+card_texture = ExtResource("1_4ycda")
+sprite_texture = ExtResource("3_eetd5")

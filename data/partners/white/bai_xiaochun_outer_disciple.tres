@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://y7fvv3ujwo5h"]
+
+[ext_resource type="Texture2D" uid="uid://ve7ykggjwoug" path="res://assets/partners/white/bai_xiaochun_outer_disciple/bai_xiaochun_outer_disciple_card.png" id="1_58h0h"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_nrny4"]
+[ext_resource type="Texture2D" uid="uid://b6by24j2i3p0j" path="res://assets/partners/white/bai_xiaochun_outer_disciple/bai_xiaochun_outer_disciple_sprite.png" id="3_mun3u"]
+
+[resource]
+script = ExtResource("2_nrny4")
+partner_id = "bai_xiaochun_outer_disciple"
+display_name = "Bai Xiaochun"
+form_name = "Outer Disciple"
+card_texture = ExtResource("1_58h0h")
+sprite_texture = ExtResource("3_mun3u")

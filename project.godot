@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Immortal Cultivation"
-run/main_scene="uid://4anyi6rpcx7n"
+run/main_scene="uid://isrv3qoh5mdl"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 PartnerDatabase="*uid://cdn4pbvjghqs8"
 GameState="*uid://c1g4nyve2cofo"
+Backend="*uid://beh8owvqifhkt"
 
 [display]
 
@@ -29,6 +30,14 @@ window/size/window_width_override=540
 window/size/window_height_override=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor]
+
+movie_writer/movie_file="res://testing.avi"
+
+[gui]
+
+theme/custom_font="uid://cclqo2il368b"
 
 [physics]
 

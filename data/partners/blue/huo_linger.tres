@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://ds7278p85nlss"]
+
+[ext_resource type="Texture2D" uid="uid://b1xlrrrc82wmu" path="res://assets/partners/blue/huo_linger/card.png" id="1_8evio"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_1x05w"]
+[ext_resource type="Texture2D" uid="uid://b7duxnv5e8is3" path="res://assets/partners/blue/huo_linger/sprite.png" id="3_l5jmi"]
+
+[resource]
+script = ExtResource("2_1x05w")
+partner_id = "huo_linger"
+display_name = "Huo Ling'er"
+rarity = 1
+path = 2
+card_texture = ExtResource("1_8evio")
+sprite_texture = ExtResource("3_l5jmi")

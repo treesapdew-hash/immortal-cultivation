@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bkgp57dch8ppi"]
+
+[ext_resource type="Texture2D" uid="uid://d2nl1wjtsmhqs" path="res://assets/partners/red/tang_san_sea_god/card.png" id="1_newd0"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_pnopa"]
+[ext_resource type="Texture2D" uid="uid://dsw5w70tku8yx" path="res://assets/partners/red/tang_san_sea_god/sprite.png" id="3_6sj25"]
+
+[resource]
+script = ExtResource("2_pnopa")
+partner_id = "tang_san_sea_god"
+display_name = "Tang San"
+form_name = "Sea God"
+rarity = 4
+path = 1
+card_texture = ExtResource("1_newd0")
+sprite_texture = ExtResource("3_6sj25")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://be8whoy0r6aq3"]
+
+[ext_resource type="Texture2D" uid="uid://skqyv0dlti5a" path="res://assets/partners/blue/biyao/card.png" id="1_3hcoh"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_fp2hr"]
+[ext_resource type="Texture2D" uid="uid://ddnt2482m1vfw" path="res://assets/partners/blue/biyao/sprite.png" id="3_5x0pk"]
+
+[resource]
+script = ExtResource("2_fp2hr")
+partner_id = "biyao"
+display_name = "Biyao"
+rarity = 1
+path = 1
+card_texture = ExtResource("1_3hcoh")
+sprite_texture = ExtResource("3_5x0pk")

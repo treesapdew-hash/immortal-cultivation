@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://fruav2ctn07g"]
+
+[ext_resource type="Texture2D" uid="uid://mddr82gpnrit" path="res://assets/partners/prismatic/shi_hao_immortal_king/card.png" id="1_w3ioo"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_2yilc"]
+[ext_resource type="Texture2D" uid="uid://cfsifarshmnhq" path="res://assets/partners/prismatic/shi_hao_immortal_king/sprite.png" id="3_cp10q"]
+
+[resource]
+script = ExtResource("2_2yilc")
+partner_id = "shi_hao_immortal_king"
+display_name = "Shi Hao"
+form_name = "Immortal King"
+rarity = 6
+card_texture = ExtResource("1_w3ioo")
+sprite_texture = ExtResource("3_cp10q")

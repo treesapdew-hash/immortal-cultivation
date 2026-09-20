@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cs54xc4r2tcs4"]
+
+[ext_resource type="Texture2D" uid="uid://dnyl0qd4jnowm" path="res://assets/partners/gold/lin_qiye_merlin/card.png" id="1_7deyl"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_fo1fd"]
+[ext_resource type="Texture2D" uid="uid://ghtdcmjkr2uu" path="res://assets/partners/gold/lin_qiye_merlin/sprite.png" id="3_aj8bw"]
+
+[resource]
+script = ExtResource("2_fo1fd")
+partner_id = "lin_qiye_merlin"
+display_name = "Lin Qiye"
+form_name = "Merlin Form"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_7deyl")
+sprite_texture = ExtResource("3_aj8bw")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bpg0o1rvm8xmp"]
+
+[ext_resource type="Texture2D" uid="uid://bxmkwgeem3rua" path="res://assets/partners/purple/medusa_snake_queen/card.png" id="1_30al8"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_ita41"]
+[ext_resource type="Texture2D" uid="uid://dowa0cai0qey8" path="res://assets/partners/purple/medusa_snake_queen/sprite.png" id="3_jikkf"]
+
+[resource]
+script = ExtResource("2_ita41")
+partner_id = "medusa_snake_queen"
+display_name = "Medusa"
+form_name = "Snake Queen"
+rarity = 3
+path = 1
+card_texture = ExtResource("1_30al8")
+sprite_texture = ExtResource("3_jikkf")

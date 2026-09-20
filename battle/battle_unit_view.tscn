@@ -1,47 +1,192 @@
 [gd_scene format=3 uid="uid://cehswsqr7c221"]
 
 [ext_resource type="Script" uid="uid://b0ya23enir5m8" path="res://battle/battle_unit_view.gd" id="1_li7w5"]
+[ext_resource type="Texture2D" uid="uid://che1egchucush" path="res://assets/vfx/character_turn.png" id="2_4212g"]
+[ext_resource type="Texture2D" uid="uid://ckiy0ipv2llgc" path="res://assets/vfx/enemy_turn.png" id="3_uthl3"]
+[ext_resource type="Texture2D" uid="uid://bsh7a7ry1assh" path="res://assets/ui/icons/unit_shadow.png" id="4_mnv8l"]
+[ext_resource type="Texture2D" uid="uid://cfqsolf464n00" path="res://assets/partners/white/zhang_tie/zhang_tie_sprite.png" id="5_mnv8l"]
+[ext_resource type="Texture2D" uid="uid://b6htbg0bnydpj" path="res://assets/dao/sword.png" id="6_mnv8l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b2j2k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3lfvx"]
+content_margin_left = 7.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.043137256, 0.078431375, 0.09411765, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2901961, 0.3529412, 0.36862746, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1yi8"]
+bg_color = Color(0.043137256, 0.078431375, 0.09411765, 1)
+border_color = Color(0.10980392, 0.17254902, 0.28235295, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnv8l"]
+bg_color = Color(0.22745098, 0.65882355, 0.8784314, 1)
+border_color = Color(0.12156863, 0.47843137, 0.32156864, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8nfbe"]
+bg_color = Color(0.05490196, 0.11764706, 0.08627451, 1)
+border_color = Color(0.2901961, 0.3529412, 0.36862746, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcowc"]
+bg_color = Color(0.24313726, 0.8117647, 0.5568628, 1)
 
 [node name="BattleUnitView" type="Control" unique_id=1085656384]
-custom_minimum_size = Vector2(110, 150)
+custom_minimum_size = Vector2(220, 260)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+pivot_offset = Vector2(110, 260)
 size_flags_horizontal = 3
 script = ExtResource("1_li7w5")
+player_ring = ExtResource("2_4212g")
+enemy_ring = ExtResource("3_uthl3")
+
+[node name="Shadow" type="TextureRect" parent="." unique_id=1429993948]
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -29.0
+offset_right = 76.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_mnv8l")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Sprite" type="TextureRect" parent="." unique_id=866965057]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -34.0
+offset_top = 75.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("5_mnv8l")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="InfoPlate" type="PanelContainer" parent="." unique_id=633584939]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -34.0
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.1
+offset_top = 25.0
+offset_bottom = 25.0
 grow_horizontal = 2
-grow_vertical = 0
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(0.5, 1)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_b2j2k")
 
 [node name="InfoLayout" type="VBoxContainer" parent="InfoPlate" unique_id=171148288]
 layout_mode = 2
+theme_override_constants/separation = 2
 
-[node name="NameLabel" type="Label" parent="InfoPlate/InfoLayout" unique_id=1987650448]
+[node name="NameLabel" type="Label" parent="InfoPlate/InfoLayout" unique_id=28858629]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 18
 text = "Partner"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HPBar" type="ProgressBar" parent="InfoPlate/InfoLayout" unique_id=2002021716]
-custom_minimum_size = Vector2(0, 8)
+[node name="BarRow" type="HBoxContainer" parent="InfoPlate/InfoLayout" unique_id=1725206642]
 layout_mode = 2
+theme_override_constants/separation = -18
+
+[node name="PathBadge" type="TextureRect" parent="InfoPlate/InfoLayout/BarRow" unique_id=875116972]
+unique_name_in_owner = true
+z_index = 1
+custom_minimum_size = Vector2(36, 35)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_mnv8l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BarBox" type="PanelContainer" parent="InfoPlate/InfoLayout/BarRow" unique_id=239125798]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_3lfvx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InfoPlate/InfoLayout/BarRow/BarBox" unique_id=1215442565]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="EnergyBarHolder" type="Control" parent="InfoPlate/InfoLayout/BarRow/BarBox/VBoxContainer" unique_id=1091601488]
+custom_minimum_size = Vector2(90, 4)
+layout_mode = 2
+
+[node name="EnergyBar" type="ProgressBar" parent="InfoPlate/InfoLayout/BarRow/BarBox/VBoxContainer/EnergyBarHolder" unique_id=1552320891]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_f1yi8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mnv8l")
 value = 100.0
+show_percentage = false
+
+[node name="HPBarHolder" type="Control" parent="InfoPlate/InfoLayout/BarRow/BarBox/VBoxContainer" unique_id=738404074]
+custom_minimum_size = Vector2(90, 8)
+layout_mode = 2
+
+[node name="HPBar" type="ProgressBar" parent="InfoPlate/InfoLayout/BarRow/BarBox/VBoxContainer/HPBarHolder" unique_id=2002021716]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 5
+theme_override_styles/background = SubResource("StyleBoxFlat_8nfbe")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lcowc")
+value = 100.0
+show_percentage = false
+
+[node name="TurnRing" type="TextureRect" parent="." unique_id=289192313]
+visible = false
+custom_minimum_size = Vector2(220, 80)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -114.0
+offset_top = -49.0
+offset_right = 76.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture = ExtResource("3_uthl3")
+expand_mode = 1

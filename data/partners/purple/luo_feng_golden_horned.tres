@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bn4iog70lxkkq"]
+
+[ext_resource type="Texture2D" uid="uid://cv8xmr6xoxnac" path="res://assets/partners/purple/luo_feng_golden_horned/card.png" id="1_wfcwj"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_bhjc7"]
+[ext_resource type="Texture2D" uid="uid://bot8sj8k0s6mc" path="res://assets/partners/purple/luo_feng_golden_horned/sprite.png" id="3_y2hbc"]
+
+[resource]
+script = ExtResource("2_bhjc7")
+partner_id = "luo_feng_golden_horned"
+display_name = "Luo Feng"
+form_name = "Golden Horned Beast"
+rarity = 3
+card_texture = ExtResource("1_wfcwj")
+sprite_texture = ExtResource("3_y2hbc")

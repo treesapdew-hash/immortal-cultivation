@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cu3n4l2y7toeg"]
+
+[ext_resource type="Texture2D" uid="uid://dna4baqxmtjb4" path="res://assets/partners/white/mu_chen_academy/mu_chen_academy_card.png" id="1_skpyq"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_awcnc"]
+[ext_resource type="Texture2D" uid="uid://b3l6u2akrkdow" path="res://assets/partners/white/mu_chen_academy/mu_chen_academy_sprite.png" id="3_cnycs"]
+
+[resource]
+script = ExtResource("2_awcnc")
+partner_id = "mu_chen_academy"
+display_name = "Mu Chen"
+form_name = "Spirit Academy"
+path = 2
+card_texture = ExtResource("1_skpyq")
+sprite_texture = ExtResource("3_cnycs")

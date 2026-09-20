@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://deihims2xgkwq"]
+
+[ext_resource type="Texture2D" uid="uid://dccrv2y67vqjb" path="res://assets/partners/red/qian_renxue_limit_douluo/card.png" id="1_mtgxg"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_h2hxe"]
+[ext_resource type="Texture2D" uid="uid://r5631kuqm7lg" path="res://assets/partners/red/qian_renxue_limit_douluo/sprite.png" id="3_xixu8"]
+
+[resource]
+script = ExtResource("2_h2hxe")
+partner_id = "qian_renxue_limit_douluo"
+display_name = "Qian Renxue"
+form_name = "Limit Douluo"
+rarity = 4
+path = 0
+card_texture = ExtResource("1_mtgxg")
+sprite_texture = ExtResource("3_xixu8")

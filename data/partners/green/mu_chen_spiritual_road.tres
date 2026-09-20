@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dmtq2xwo5wbuw"]
+
+[ext_resource type="Texture2D" uid="uid://dwa7m7o4nhc8g" path="res://assets/partners/green/mu_chen_spiritual_road/card.png" id="1_e82yb"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_gel0o"]
+[ext_resource type="Texture2D" uid="uid://bcfb8utqxoblh" path="res://assets/partners/green/mu_chen_spiritual_road/sprite.png" id="3_3d7ql"]
+
+[resource]
+script = ExtResource("2_gel0o")
+partner_id = "mu_chen_spiritual_road"
+display_name = "Mu Chen"
+form_name = "Spiritual Road"
+rarity = 2
+path = 2
+card_texture = ExtResource("1_e82yb")
+sprite_texture = ExtResource("3_3d7ql")

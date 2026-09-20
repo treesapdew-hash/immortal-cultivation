@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cvs3ow5xlv7bx"]
+
+[ext_resource type="Texture2D" uid="uid://cffoawgx356mh" path="res://assets/partners/prismatic/tang_san_dual_god/card.png" id="1_i6gd4"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_hb14h"]
+[ext_resource type="Texture2D" uid="uid://kkhowwweqtw7" path="res://assets/partners/prismatic/tang_san_dual_god/sprite.png" id="3_0jmxh"]
+
+[resource]
+script = ExtResource("2_hb14h")
+partner_id = "tang_san_dual_god"
+display_name = "Tang San"
+form_name = "Dual God"
+rarity = 6
+path = 1
+card_texture = ExtResource("1_i6gd4")
+sprite_texture = ExtResource("3_0jmxh")

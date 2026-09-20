@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://5wgl4l2ypuh7"]
+
+[ext_resource type="Texture2D" uid="uid://000ly2be01pd" path="res://assets/partners/green/bai_xiaochun_heavendao/card.png" id="1_iydhu"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_rc7l3"]
+[ext_resource type="Texture2D" uid="uid://btn8dyg2eq6y1" path="res://assets/partners/green/bai_xiaochun_heavendao/sprite.png" id="3_jeh6c"]
+
+[resource]
+script = ExtResource("2_rc7l3")
+partner_id = "bai_xiaochun_heavendao"
+display_name = "Bai Xiaochun"
+form_name = "Heaven Dao Sect"
+rarity = 2
+card_texture = ExtResource("1_iydhu")
+sprite_texture = ExtResource("3_jeh6c")

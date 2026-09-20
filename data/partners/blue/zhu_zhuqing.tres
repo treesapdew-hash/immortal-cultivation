@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bmn3erk54hmlb"]
+
+[ext_resource type="Texture2D" uid="uid://c1um7dob6o27n" path="res://assets/partners/blue/zhu_zhuqing/card.png" id="1_s8bsf"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_eu5wt"]
+[ext_resource type="Texture2D" uid="uid://baxudhtron3wa" path="res://assets/partners/blue/zhu_zhuqing/sprite.png" id="3_4ciud"]
+
+[resource]
+script = ExtResource("2_eu5wt")
+partner_id = "zhu_zhuqing"
+display_name = "Zhu Zhuqing"
+rarity = 1
+card_texture = ExtResource("1_s8bsf")
+sprite_texture = ExtResource("3_4ciud")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cmcwcnsioeeek"]
+
+[ext_resource type="Texture2D" uid="uid://k0tiwrvk7cc8" path="res://assets/partners/red/xiao_se_late/card.png" id="1_xhoc7"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_nf7yw"]
+[ext_resource type="Texture2D" uid="uid://b57ipncasl80e" path="res://assets/partners/red/xiao_se_late/sprite.png" id="3_1lb8g"]
+
+[resource]
+script = ExtResource("2_nf7yw")
+partner_id = "xiao_se_late"
+display_name = "Xiao Se"
+rarity = 4
+card_texture = ExtResource("1_xhoc7")
+sprite_texture = ExtResource("3_1lb8g")

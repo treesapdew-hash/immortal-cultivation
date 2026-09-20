@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://0wlhdy10ry6q"]
+
+[ext_resource type="Texture2D" uid="uid://jokf4gjv1264" path="res://assets/partners/blue/ji_ziyue/card.png" id="1_s5v5s"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_f71sj"]
+[ext_resource type="Texture2D" uid="uid://ck5bakalv7vw3" path="res://assets/partners/blue/ji_ziyue/sprite.png" id="3_2nwqc"]
+
+[resource]
+script = ExtResource("2_f71sj")
+partner_id = "ji_ziyue"
+display_name = "Ji Ziyue"
+rarity = 1
+path = 0
+card_texture = ExtResource("1_s5v5s")
+sprite_texture = ExtResource("3_2nwqc")

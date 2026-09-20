@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cfjyp5x3fbvtu"]
+
+[ext_resource type="Texture2D" uid="uid://c3j83m2uwp4ta" path="res://assets/partners/purple/gongsun_wan_er/card.png" id="1_cigew"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_dvxil"]
+[ext_resource type="Texture2D" uid="uid://csgmwewq78rhw" path="res://assets/partners/purple/gongsun_wan_er/sprite.png" id="3_0tqee"]
+
+[resource]
+script = ExtResource("2_dvxil")
+partner_id = "gongsun_wan_er"
+display_name = "Gongsun Wan'er"
+rarity = 3
+path = 3
+card_texture = ExtResource("1_cigew")
+sprite_texture = ExtResource("3_0tqee")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bx2lbyv5y56og"]
+
+[ext_resource type="Texture2D" uid="uid://b7od1yyeflmtu" path="res://assets/partners/green/luo_feng_warrior/card.png" id="1_h81mc"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_18hdw"]
+[ext_resource type="Texture2D" uid="uid://bp05tfbrnjctl" path="res://assets/partners/green/luo_feng_warrior/sprite.png" id="3_8pvxr"]
+
+[resource]
+script = ExtResource("2_18hdw")
+partner_id = "luo_feng_warrior"
+display_name = "Luo Feng"
+form_name = "Warrior"
+rarity = 2
+card_texture = ExtResource("1_h81mc")
+sprite_texture = ExtResource("3_8pvxr")

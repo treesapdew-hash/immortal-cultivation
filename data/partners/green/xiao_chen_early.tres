@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://csseqs7qkfueu"]
+
+[ext_resource type="Texture2D" uid="uid://mwvf7l7fmybs" path="res://assets/partners/green/xiao_chen_early/card.png" id="1_rpm04"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_vd1ae"]
+[ext_resource type="Texture2D" uid="uid://dyqnq5ehlxog6" path="res://assets/partners/green/xiao_chen_early/sprite.png" id="3_xo1x1"]
+
+[resource]
+script = ExtResource("2_vd1ae")
+partner_id = "xiao_chen_early"
+display_name = "Xiao Chen"
+rarity = 2
+card_texture = ExtResource("1_rpm04")
+sprite_texture = ExtResource("3_xo1x1")

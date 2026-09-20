@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bs5p2i434vjfp"]
+
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="1_d26t2"]
+
+[resource]
+script = ExtResource("1_d26t2")
+partner_id = "wang_lin_youth"
+display_name = "Wang Lin"
+form_name = "Youth"
+path = 2

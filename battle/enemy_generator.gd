@@ -7,21 +7,60 @@ extends RefCounted
 
 const TEAM_SIZE := 6
 
-# Base stats for a stage-1 normal enemy.
-const BASE_HP := 900
-const BASE_ATK := 85
-const BASE_DEF := 45
+# Base stats for a stage-1 normal enemy. Kept low so the MC
+# can clear the first stages alone.
+const BASE_HP := 300
+const BASE_ATK := 45
+const BASE_DEF := 20
 const BASE_SPD := 95
 
-# Growth per stage. HP climbs faster than ATK so fights get
-# longer rather than suddenly lethal.
-const HP_GROWTH := 1.045
-const ATK_GROWTH := 1.035
+# ---------------------------------------------------------
+# DIFFICULTY BANDS  -- tune these freely
+#
+# [stage, enemy strength at that stage]. Between two entries
+# strength grows smoothly (same % each stage). Early bands are
+# gentle, later bands stretch out so progress stays steady.
+# After the last entry, strength keeps growing by
+# LATE_GROWTH_PER_500 every 500 stages.
+# ---------------------------------------------------------
 
-# Boss multipliers (spec section 39).
+const STRENGTH_BANDS := [
+	[1, 1.0],
+	[30, 1.6],
+	[100, 6.4],
+	[300, 38.0],
+	[500, 115.0],
+	[800, 400.0],
+	[1000, 800.0],
+	[1500, 2800.0],
+]
+const LATE_GROWTH_PER_500 := 1.4
+
+# HP scales a bit harder than ATK, so fights get longer
+# rather than suddenly lethal.
+const HP_EXPONENT := 1.0
+const ATK_EXPONENT := 0.92
+
+# How many enemies show up: [from stage, count]
+const ENEMY_COUNT := [
+	[1, 2],
+	[6, 3],
+	[16, 4],
+	[31, 5],
+	[61, 6],
+]
+
+# Fill order for enemy slots: front centre first, then front
+# sides, then the back row.
+const SLOT_ORDER := [1, 0, 2, 4, 3, 5]
+
+# Boss multipliers (spec section 39). Early bosses are softer.
 const BOSS_HP_MULT := 4.0
 const BOSS_ATK_MULT := 1.8
 const BOSS_DEF_MULT := 1.5
+const EARLY_BOSS_UNTIL := 30
+const EARLY_BOSS_HP_MULT := 2.5
+const EARLY_BOSS_ATK_MULT := 1.4
 
 const ENEMY_NAMES := [
 	"Ironfang Wolf",
@@ -42,12 +81,37 @@ static func is_boss_stage(stage: int) -> bool:
 	return stage % 10 == 0
 
 
+## Overall enemy strength at a stage (1.0 at stage 1).
+static func strength(stage: int) -> float:
+	stage = maxi(stage, 1)
+
+	for i in range(STRENGTH_BANDS.size() - 1):
+		var from: Array = STRENGTH_BANDS[i]
+		var to: Array = STRENGTH_BANDS[i + 1]
+		if stage <= to[0]:
+			var t := float(stage - from[0]) / float(to[0] - from[0])
+			# Geometric blend: the same % growth every stage in the band
+			return from[1] * pow(to[1] / from[1], t)
+
+	var last: Array = STRENGTH_BANDS.back()
+	var extra := float(stage - last[0]) / 500.0
+	return last[1] * pow(LATE_GROWTH_PER_500, extra)
+
+
 static func hp_multiplier(stage: int) -> float:
-	return pow(HP_GROWTH, stage - 1)
+	return pow(strength(stage), HP_EXPONENT)
 
 
 static func atk_multiplier(stage: int) -> float:
-	return pow(ATK_GROWTH, stage - 1)
+	return pow(strength(stage), ATK_EXPONENT)
+
+
+static func enemy_count(stage: int) -> int:
+	var count := TEAM_SIZE
+	for entry in ENEMY_COUNT:
+		if stage >= entry[0]:
+			count = entry[1]
+	return count
 
 
 # TEMPORARY: borrows a partner sprite until real enemy art
@@ -64,23 +128,50 @@ static func _placeholder_sprite() -> Texture2D:
 	return data.sprite_texture
 
 
+## Slots the boss stands in: it fills the front-centre slot and
+## takes up the one beside it, so a boss stage has one enemy fewer.
+## Bosses can't be debuffed from this stage on.
+const BOSS_IMMUNITY_STAGE := 2000
+## Ordinary monsters only get immunity much later.
+const MOB_IMMUNITY_STAGE := 5000
+
+const BOSS_SLOT := 1
+const BOSS_BLOCKED_SLOT := 2
+
+
 static func generate(stage: int) -> Array:
 	var team: Array = []
+	team.resize(TEAM_SIZE)   # empty slots stay null
 
-	for i in range(TEAM_SIZE):
+	var boss := is_boss_stage(stage)
+	var count := enemy_count(stage)
+	if boss:
+		count = maxi(2, count - 1)   # the boss is worth two slots
 
-		# The boss takes the front-centre slot (index 1).
-		if is_boss_stage(stage) and i == 1:
-			team.append(_make_boss(stage))
+	var filled := 0
+	for n in SLOT_ORDER.size():
+		if filled >= count:
+			break
+		var slot: int = SLOT_ORDER[n]
+		if boss and slot == BOSS_BLOCKED_SLOT:
+			continue          # kept clear for the boss's bulk
+		if boss and slot == BOSS_SLOT:
+			team[slot] = _make_boss(stage)
 		else:
-			team.append(_make_normal(stage, i))
+			team[slot] = _make_normal(stage, slot)
+		filled += 1
 
 	return team
 
 
 static func _make_normal(stage: int, index: int) -> Dictionary:
 
-	var archetype = ["Balanced", "Tank", "Assassin"].pick_random()
+	# At most 2 kinds of mob per stage (see MonsterDB)
+	var monster := MonsterDB.monster_for(stage, index)
+	var archetype: String = monster["archetype"]
+	var sprite: Texture2D = monster["sprite"]
+	if sprite == null:
+		sprite = _placeholder_sprite()
 
 	var hp := float(BASE_HP)
 	var atk := float(BASE_ATK)
@@ -98,7 +189,9 @@ static func _make_normal(stage: int, index: int) -> Dictionary:
 		spd *= 1.25
 
 	return {
-		"name": ENEMY_NAMES[index % ENEMY_NAMES.size()],
+		"name": monster["name"],
+		"monster_id": monster["id"],
+		"immune": stage >= MOB_IMMUNITY_STAGE,
 		"hp": int(hp * hp_multiplier(stage)),
 		"atk": int(atk * atk_multiplier(stage)),
 		"def": int(defense * atk_multiplier(stage)),
@@ -110,7 +203,7 @@ static func _make_normal(stage: int, index: int) -> Dictionary:
 		"accuracy": 85.0,
 		"energy_regen": 15,
 		"is_boss": false,
-		"sprite": _placeholder_sprite(),
+		"sprite": sprite,
 		"color": Color(1.0, 0.65, 0.65)
 	}
 
@@ -123,13 +216,24 @@ static func _make_boss(stage: int) -> Dictionary:
 	var atk_mult = BOSS_ATK_MULT
 	var def_mult = BOSS_DEF_MULT
 
-	if is_major:
+	if stage <= EARLY_BOSS_UNTIL:
+		hp_mult = EARLY_BOSS_HP_MULT
+		atk_mult = EARLY_BOSS_ATK_MULT
+		def_mult = 1.2
+	elif is_major:
 		hp_mult = 8.0
 		atk_mult = 2.5
 		def_mult = 2.0
 
+	var boss := MonsterDB.pick_boss(stage, is_major)
+	var boss_sprite: Texture2D = boss["sprite"]
+	if boss_sprite == null:
+		boss_sprite = _placeholder_sprite()
+
 	return {
-		"name": BOSS_NAMES[1] if is_major else BOSS_NAMES[0],
+		"name": boss["name"],
+		"monster_id": boss["id"],
+		"immune": stage >= BOSS_IMMUNITY_STAGE,
 		"hp": int(BASE_HP * hp_multiplier(stage) * hp_mult),
 		"atk": int(BASE_ATK * atk_multiplier(stage) * atk_mult),
 		"def": int(BASE_DEF * atk_multiplier(stage) * def_mult),
@@ -141,6 +245,6 @@ static func _make_boss(stage: int) -> Dictionary:
 		"accuracy": 92.0,
 		"energy_regen": 20,
 		"is_boss": true,
-		"sprite": _placeholder_sprite(),
+		"sprite": boss_sprite,
 		"color": Color(1.0, 0.85, 0.3)
 	}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://croyp5gtbatk"]
+
+[ext_resource type="Texture2D" uid="uid://c5f2cxb2o5gfj" path="res://assets/partners/green/song_junwan/card.png" id="1_0bvnc"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_yyunu"]
+[ext_resource type="Texture2D" uid="uid://b24ovwex6uqf7" path="res://assets/partners/green/song_junwan/sprite.png" id="3_celah"]
+
+[resource]
+script = ExtResource("2_yyunu")
+partner_id = "song_junwan"
+display_name = "Song Junwan"
+rarity = 2
+path = 2
+card_texture = ExtResource("1_0bvnc")
+sprite_texture = ExtResource("3_celah")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dl0vcs5mbdtjt"]
+
+[ext_resource type="Texture2D" uid="uid://lkwi2xskhql1" path="res://assets/partners/red/zhang_xiaofan_ghost_li/card.png" id="1_kp7mg"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_d5q5l"]
+[ext_resource type="Texture2D" uid="uid://cxaq3x5umsldv" path="res://assets/partners/red/zhang_xiaofan_ghost_li/sprite.png" id="3_fpu6i"]
+
+[resource]
+script = ExtResource("2_d5q5l")
+partner_id = "zhang_xiaofan_ghost_li"
+display_name = "Zhang Xiaofan"
+form_name = "Ghost Li"
+rarity = 4
+path = 3
+card_texture = ExtResource("1_kp7mg")
+sprite_texture = ExtResource("3_fpu6i")

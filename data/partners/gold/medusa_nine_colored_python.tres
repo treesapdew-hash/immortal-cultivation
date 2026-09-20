@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://ceu2dh5ke4qm"]
+
+[ext_resource type="Texture2D" uid="uid://qgjiu67xyn8y" path="res://assets/partners/gold/medusa_nine_colored_python/card.png" id="1_er1mt"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_uqaje"]
+[ext_resource type="Texture2D" uid="uid://de16qfsafcnke" path="res://assets/partners/gold/medusa_nine_colored_python/sprite.png" id="3_dnieh"]
+
+[resource]
+script = ExtResource("2_uqaje")
+partner_id = "medusa_nine_colored_python"
+display_name = "Medusa"
+form_name = "Nine-Colored Heaven Swallowing Python"
+rarity = 5
+path = 1
+card_texture = ExtResource("1_er1mt")
+sprite_texture = ExtResource("3_dnieh")

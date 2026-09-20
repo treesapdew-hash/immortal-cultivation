@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bnabvi6quplm0"]
+
+[ext_resource type="Texture2D" uid="uid://buk7uiobnnbhq" path="res://assets/partners/purple/bibi_dong/card.png" id="1_g15h6"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_upav2"]
+[ext_resource type="Texture2D" uid="uid://2ix2v5tgpupb" path="res://assets/partners/purple/bibi_dong/sprite.png" id="3_1ber5"]
+
+[resource]
+script = ExtResource("2_upav2")
+partner_id = "bibi_dong"
+display_name = "Bibi Dong"
+form_name = "Spirit Hall Pope"
+rarity = 3
+path = 1
+card_texture = ExtResource("1_g15h6")
+sprite_texture = ExtResource("3_1ber5")

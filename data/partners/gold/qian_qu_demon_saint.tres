@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cne4ycbwo78qu"]
+
+[ext_resource type="Texture2D" uid="uid://ddy7d5kkv7jnq" path="res://assets/partners/gold/qian_qu_demon_saint/card.png" id="1_2sn42"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_ipgq0"]
+[ext_resource type="Texture2D" uid="uid://bdwv5lvm8yxs4" path="res://assets/partners/gold/qian_qu_demon_saint/sprite.png" id="3_gykhv"]
+
+[resource]
+script = ExtResource("2_ipgq0")
+partner_id = "qian_qu_demon_saint"
+display_name = "Demon Saint"
+rarity = 5
+path = 1
+card_texture = ExtResource("1_2sn42")
+sprite_texture = ExtResource("3_gykhv")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bu0im6q1qym0w"]
+
+[ext_resource type="Texture2D" uid="uid://b10sfhrg7s30o" path="res://assets/partners/blue/ya_fei/card.png" id="1_tiqj1"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_knnvo"]
+[ext_resource type="Texture2D" uid="uid://6u5jke4xon26" path="res://assets/partners/blue/ya_fei/sprite.png" id="3_5vooj"]
+
+[resource]
+script = ExtResource("2_knnvo")
+partner_id = "ya_fei"
+display_name = "Ya Fei"
+rarity = 1
+path = 2
+card_texture = ExtResource("1_tiqj1")
+sprite_texture = ExtResource("3_5vooj")

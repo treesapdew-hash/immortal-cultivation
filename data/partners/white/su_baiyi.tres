@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://u3rhshux00eu"]
+
+[ext_resource type="Texture2D" uid="uid://w6q30a5y3cg1" path="res://assets/partners/white/su_baiyi/su_baiyi_card.png" id="1_e5uib"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_71s3o"]
+[ext_resource type="Texture2D" uid="uid://cog2xkcqeglja" path="res://assets/partners/white/su_baiyi/su_baiyi_sprite.png" id="3_nyp00"]
+
+[resource]
+script = ExtResource("2_71s3o")
+partner_id = "su_baiyi"
+display_name = "Su Baiyi"
+path = 3
+card_texture = ExtResource("1_e5uib")
+sprite_texture = ExtResource("3_nyp00")

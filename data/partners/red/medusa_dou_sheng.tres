@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dklkpaltyub2l"]
+
+[ext_resource type="Texture2D" uid="uid://cjbqm4o1s1j7r" path="res://assets/partners/red/medusa_dou_sheng/card.png" id="1_ho7qn"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_3s0o3"]
+[ext_resource type="Texture2D" uid="uid://b0duxlb8bbw1d" path="res://assets/partners/red/medusa_dou_sheng/sprite.png" id="3_u4tto"]
+
+[resource]
+script = ExtResource("2_3s0o3")
+partner_id = "medusa_dou_sheng"
+display_name = "Medusa"
+form_name = "Queen of Serpents"
+rarity = 4
+path = 1
+card_texture = ExtResource("1_ho7qn")
+sprite_texture = ExtResource("3_u4tto")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://chnmawxaybic6"]
+
+[ext_resource type="Texture2D" uid="uid://bodbt64yond4n" path="res://assets/partners/gold/wang_lin_life_death/card.png" id="1_bbra1"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_1une5"]
+[ext_resource type="Texture2D" uid="uid://dqghvld1ot8su" path="res://assets/partners/gold/wang_lin_life_death/sprite.png" id="3_jcs3o"]
+
+[resource]
+script = ExtResource("2_1une5")
+partner_id = "wang_lin_life_death"
+display_name = "Wang Lin"
+form_name = "Life and Death Intent"
+rarity = 5
+path = 2
+card_texture = ExtResource("1_bbra1")
+sprite_texture = ExtResource("3_jcs3o")

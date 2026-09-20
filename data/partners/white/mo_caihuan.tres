@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bu5qo76iekqj1"]
+
+[ext_resource type="Texture2D" uid="uid://mg7g5h3nc2bq" path="res://assets/partners/white/mo_caihuan/mo_caihuan_card.png" id="1_vrp1c"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_l6u5b"]
+[ext_resource type="Texture2D" uid="uid://bessscfxo70de" path="res://assets/partners/white/mo_caihuan/mo_caihuan_sprite.png" id="3_tc38b"]
+
+[resource]
+script = ExtResource("2_l6u5b")
+partner_id = "mo_caihuan"
+display_name = "Mo Caihuan"
+path = 1
+card_texture = ExtResource("1_vrp1c")
+sprite_texture = ExtResource("3_tc38b")

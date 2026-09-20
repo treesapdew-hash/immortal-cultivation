@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c6rhyxdg8rxxo"]
+
+[ext_resource type="Texture2D" uid="uid://cyhmgl1wutf2w" path="res://assets/partners/purple/wang_lin_nascent/card.png" id="1_ixdlp"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_cgmju"]
+[ext_resource type="Texture2D" uid="uid://cxxn5utdxbv4j" path="res://assets/partners/purple/wang_lin_nascent/sprite.png" id="3_n2qu6"]
+
+[resource]
+script = ExtResource("2_cgmju")
+partner_id = "wang_lin_nascent"
+display_name = "Wang Lin"
+form_name = "Nascent Soul"
+rarity = 3
+path = 2
+card_texture = ExtResource("1_ixdlp")
+sprite_texture = ExtResource("3_n2qu6")

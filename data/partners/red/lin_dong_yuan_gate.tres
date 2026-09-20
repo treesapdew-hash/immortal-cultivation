@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://ba52b5i68r51g"]
+
+[ext_resource type="Texture2D" uid="uid://daojavpgi8soo" path="res://assets/partners/red/lin_dong_yuan_gate/card.png" id="1_4bddn"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_m2b2q"]
+[ext_resource type="Texture2D" uid="uid://b2fsvj3ncox4m" path="res://assets/partners/red/lin_dong_yuan_gate/sprite.png" id="3_uhgqq"]
+
+[resource]
+script = ExtResource("2_m2b2q")
+partner_id = "lin_dong_yuan_gate"
+display_name = "Lin Dong"
+form_name = "Yuan Gate"
+rarity = 4
+path = 2
+card_texture = ExtResource("1_4bddn")
+sprite_texture = ExtResource("3_uhgqq")

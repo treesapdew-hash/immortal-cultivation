@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://1mdob6g0wwa5"]
+
+[ext_resource type="Texture2D" uid="uid://b7aa2wxn4kl06" path="res://assets/partners/gold/hen_ren_da_di/card.png" id="1_el1uy"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_x7mqv"]
+[ext_resource type="Texture2D" uid="uid://0s22whm50qoq" path="res://assets/partners/gold/hen_ren_da_di/sprite.png" id="3_wgjdl"]
+
+[resource]
+script = ExtResource("2_x7mqv")
+partner_id = "hen_ren_da_di"
+display_name = "Ruthless Empress"
+rarity = 5
+card_texture = ExtResource("1_el1uy")
+sprite_texture = ExtResource("3_wgjdl")

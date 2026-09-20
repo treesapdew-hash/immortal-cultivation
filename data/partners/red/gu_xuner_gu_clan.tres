@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c8b2bog7s6x8q"]
+
+[ext_resource type="Texture2D" uid="uid://gba3dfe8q072" path="res://assets/partners/red/gu_xuner_gu_clan/card.png" id="1_vmyow"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_pry0k"]
+[ext_resource type="Texture2D" uid="uid://c0vjk6mmo5s3w" path="res://assets/partners/red/gu_xuner_gu_clan/sprite.png" id="3_6qomx"]
+
+[resource]
+script = ExtResource("2_pry0k")
+partner_id = "gu_xuner_gu_clan"
+display_name = "Gu Xun'er"
+form_name = "Gu Clan"
+rarity = 4
+path = 0
+card_texture = ExtResource("1_vmyow")
+sprite_texture = ExtResource("3_6qomx")

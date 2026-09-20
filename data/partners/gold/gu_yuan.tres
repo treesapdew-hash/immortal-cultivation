@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c5pp6yslwhdbq"]
+
+[ext_resource type="Texture2D" uid="uid://cwehkb600oesa" path="res://assets/partners/gold/gu_yuan/card.png" id="1_3rkcv"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_nlk0p"]
+[ext_resource type="Texture2D" uid="uid://cxgydcypcvwx7" path="res://assets/partners/gold/gu_yuan/sprite.png" id="3_hshd4"]
+
+[resource]
+script = ExtResource("2_nlk0p")
+partner_id = "gu_yuan"
+display_name = "Gu Yuan"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_3rkcv")
+sprite_texture = ExtResource("3_hshd4")

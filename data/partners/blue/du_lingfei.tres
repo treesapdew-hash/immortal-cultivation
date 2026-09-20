@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://duu5h1nxafl73"]
+
+[ext_resource type="Texture2D" uid="uid://csghoajn04ti0" path="res://assets/partners/blue/du_lingfei/card.png" id="1_ci6wk"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_22okd"]
+[ext_resource type="Texture2D" uid="uid://b1kb5v1k4xg7p" path="res://assets/partners/blue/du_lingfei/sprite.png" id="3_n75un"]
+
+[resource]
+script = ExtResource("2_22okd")
+partner_id = "du_lingfei"
+display_name = "Du Lingfei"
+rarity = 1
+path = 3
+card_texture = ExtResource("1_ci6wk")
+sprite_texture = ExtResource("3_n75un")

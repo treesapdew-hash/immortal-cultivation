@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://chf3r3yf4vg0d"]
+
+[ext_resource type="Texture2D" uid="uid://e1psav6wv5su" path="res://assets/partners/prismatic/meng_chuan_body_refining_saint/card.png" id="1_mq0dw"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_fy4rv"]
+[ext_resource type="Texture2D" uid="uid://cwh5upf240k8v" path="res://assets/partners/prismatic/meng_chuan_body_refining_saint/sprite.png" id="3_3shb7"]
+
+[resource]
+script = ExtResource("2_fy4rv")
+partner_id = "meng_chuan_body_refining_saint"
+display_name = "Meng Chuan"
+form_name = "Body Refining Saint"
+rarity = 6
+card_texture = ExtResource("1_mq0dw")
+sprite_texture = ExtResource("3_3shb7")

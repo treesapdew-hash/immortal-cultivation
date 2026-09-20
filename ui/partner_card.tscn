@@ -1,27 +1,46 @@
 [gd_scene format=3 uid="uid://diwqv1ef3bcah"]
 
-[ext_resource type="Texture2D" uid="uid://cblciwkiwo1yu" path="res://assets/characters/han_li_young_card.png" id="1_0xj2i"]
-[ext_resource type="Texture2D" uid="uid://dv5novgsoibhs" path="res://assets/characters/Frames/white_character_frame.png" id="2_bnidt"]
+[ext_resource type="Texture2D" uid="uid://ve7ykggjwoug" path="res://assets/partners/white/bai_xiaochun_outer_disciple/bai_xiaochun_outer_disciple_card.png" id="1_bnidt"]
+[ext_resource type="Texture2D" uid="uid://brnubvpvt1qbu" path="res://assets/frames/prismatic_frame.png" id="2_bnidt"]
+[ext_resource type="Texture2D" uid="uid://cuuihuihfbeax" path="res://assets/dao/divine.png" id="3_bnidt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3lfvx"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [node name="PartnerCard" type="Control" unique_id=1049355440]
-custom_minimum_size = Vector2(240, 400)
+custom_minimum_size = Vector2(240, 360)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="CardArt" type="TextureRect" parent="." unique_id=1749085497]
+[node name="ArtMask" type="Panel" parent="." unique_id=461238402]
+clip_children = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 15.0
-offset_top = 20.0
-offset_right = -15.0
-offset_bottom = -30.0
+offset_top = 19.0
+offset_right = -16.0
+offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_0xj2i")
+theme_override_styles/panel = SubResource("StyleBoxFlat_3lfvx")
+
+[node name="CardArt" type="TextureRect" parent="ArtMask" unique_id=1749085497]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_bnidt")
 expand_mode = 1
 stretch_mode = 6
 
@@ -34,3 +53,16 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_bnidt")
 expand_mode = 1
+
+[node name="DaoBadge" type="TextureRect" parent="." unique_id=857905740]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 1
+anchors_preset = -1
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_bnidt")
+expand_mode = 1
+stretch_mode = 5

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dghsg6xqqr8vs"]
+
+[ext_resource type="Texture2D" uid="uid://cctauyuj1dapa" path="res://assets/partners/green/cao_yusheng/card.png" id="1_nul72"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_vwudb"]
+[ext_resource type="Texture2D" uid="uid://dp1l4t11nlxal" path="res://assets/partners/green/cao_yusheng/sprite.png" id="3_d4psu"]
+
+[resource]
+script = ExtResource("2_vwudb")
+partner_id = "cao_yusheng"
+display_name = "Cao Yusheng"
+rarity = 2
+card_texture = ExtResource("1_nul72")
+sprite_texture = ExtResource("3_d4psu")

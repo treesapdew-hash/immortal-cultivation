@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cknvyqknahii7"]
+
+[ext_resource type="Texture2D" uid="uid://rgujkuxcl77x" path="res://assets/partners/red/zhuo_fan_demon_emperor/card.png" id="1_rnt4d"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_4a878"]
+[ext_resource type="Texture2D" uid="uid://cp1pjwgsn1w8j" path="res://assets/partners/red/zhuo_fan_demon_emperor/sprite.png" id="3_bmx8q"]
+
+[resource]
+script = ExtResource("2_4a878")
+partner_id = "zhuo_fan_demon_emperor"
+display_name = "Zhuo Fan"
+form_name = "Demon Emperor"
+rarity = 4
+path = 1
+card_texture = ExtResource("1_rnt4d")
+sprite_texture = ExtResource("3_bmx8q")

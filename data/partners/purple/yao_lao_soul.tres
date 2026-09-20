@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://b6m2xfnu2vsql"]
+
+[ext_resource type="Texture2D" uid="uid://bee0q7ki46k52" path="res://assets/partners/purple/yao_lao_soul/card.png" id="1_jkn8r"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_mp2b8"]
+[ext_resource type="Texture2D" uid="uid://uxaybgwb3pr0" path="res://assets/partners/purple/yao_lao_soul/sprite.png" id="3_6nfm7"]
+
+[resource]
+script = ExtResource("2_mp2b8")
+partner_id = "yao_lao_soul"
+display_name = "Yao Lao"
+form_name = "Soul Form"
+rarity = 3
+path = 2
+card_texture = ExtResource("1_jkn8r")
+sprite_texture = ExtResource("3_6nfm7")

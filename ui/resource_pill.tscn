@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cbtdyh3e2auao"]
+
+[ext_resource type="Texture2D" uid="uid://c0gm52oiv7jh5" path="res://assets/ui/panels/resources.png" id="1_m2bc3"]
+[ext_resource type="Texture2D" uid="uid://v8r0m57rb6cg" path="res://assets/ui/icons/spirit_stone.png" id="2_3b23u"]
+[ext_resource type="Script" uid="uid://bgco7rkhsaj7l" path="res://ui/resource_pill.gd" id="2_seu4l"]
+[ext_resource type="FontFile" uid="uid://cclqo2il368b" path="res://assets/TrajanPro-Bold.otf" id="3_seu4l"]
+[ext_resource type="Texture2D" uid="uid://ckxifps6wtn7m" path="res://assets/ui/icons/plus_icon.png" id="4_o5dvn"]
+
+[node name="ResourcePill" type="NinePatchRect" unique_id=1067118367]
+custom_minimum_size = Vector2(180, 25)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_m2bc3")
+script = ExtResource("2_seu4l")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1264382284]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=776028594]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1266716667]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_3b23u")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1129245642]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 4
+
+[node name="Amount" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=1407029290]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_seu4l")
+text = "10,000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlusButton" type="TextureButton" parent="MarginContainer/HBoxContainer" unique_id=780829451]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_o5dvn")
+ignore_texture_size = true
+stretch_mode = 5

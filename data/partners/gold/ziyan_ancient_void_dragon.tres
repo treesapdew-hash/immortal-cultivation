@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cxac788lhmegm"]
+
+[ext_resource type="Texture2D" uid="uid://db1d5d3jxirmm" path="res://assets/partners/gold/ziyan_ancient_void_dragon/card.png" id="1_h5w11"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_pstej"]
+[ext_resource type="Texture2D" uid="uid://dak4kup5wr7be" path="res://assets/partners/gold/ziyan_ancient_void_dragon/sprite.png" id="3_b6hyn"]
+
+[resource]
+script = ExtResource("2_pstej")
+partner_id = "ziyan_ancient_void_dragon"
+display_name = "Zi Yan"
+form_name = "Dragon Empress"
+rarity = 5
+card_texture = ExtResource("1_h5w11")
+sprite_texture = ExtResource("3_b6hyn")

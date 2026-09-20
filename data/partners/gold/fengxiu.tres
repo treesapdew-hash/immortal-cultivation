@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://b8vl7spsifvgh"]
+
+[ext_resource type="Texture2D" uid="uid://cswcs1x8lfmkh" path="res://assets/partners/gold/fengxiu/card.png" id="1_wf0wr"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_wjja0"]
+[ext_resource type="Texture2D" uid="uid://dkeder6kkcfdy" path="res://assets/partners/gold/fengxiu/sprite.png" id="3_pqhfc"]
+
+[resource]
+script = ExtResource("2_wjja0")
+partner_id = "fengxiu"
+display_name = "Fengxiu"
+form_name = "Demon God Emperor"
+rarity = 5
+path = 1
+card_texture = ExtResource("1_wf0wr")
+sprite_texture = ExtResource("3_pqhfc")

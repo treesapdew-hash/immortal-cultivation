@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://frkidpn486gb"]
+
+[ext_resource type="Texture2D" uid="uid://bm8jyanja5sxo" path="res://assets/partners/green/nie_li_fanged_panda/card.png" id="1_tlvsh"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_pielr"]
+[ext_resource type="Texture2D" uid="uid://by8p7x43aismm" path="res://assets/partners/green/nie_li_fanged_panda/sprite.png" id="3_th8x6"]
+
+[resource]
+script = ExtResource("2_pielr")
+partner_id = "nie_li_fanged_panda"
+display_name = "Nie Li"
+form_name = "Demon Spirit Awakened"
+rarity = 2
+path = 1
+card_texture = ExtResource("1_tlvsh")
+sprite_texture = ExtResource("3_th8x6")

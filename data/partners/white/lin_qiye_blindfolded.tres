@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dfwnmr1md5wkk"]
+
+[ext_resource type="Texture2D" uid="uid://oov78mbddl0p" path="res://assets/partners/white/lin_qiye_blindfolded/lin_qiye_blindfolded_card.png" id="1_ooyoh"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_j3eyf"]
+[ext_resource type="Texture2D" uid="uid://dnl2ub6ncb7ht" path="res://assets/partners/white/lin_qiye_blindfolded/lin_qiye_blindfolded_sprite.png" id="3_57774"]
+
+[resource]
+script = ExtResource("2_j3eyf")
+partner_id = "lin_qiye_blindfolded"
+display_name = "Lin Qiye"
+form_name = "Blindfolded"
+path = 0
+card_texture = ExtResource("1_ooyoh")
+sprite_texture = ExtResource("3_57774")

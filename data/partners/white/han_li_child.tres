@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://buboghli78q5k"]
+
+[ext_resource type="Texture2D" uid="uid://bcerlbm1ggk5o" path="res://assets/partners/white/han_li_child/han_li_child_card.png" id="1_agke7"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_xygyf"]
+[ext_resource type="Texture2D" uid="uid://oluysmumfp6f" path="res://assets/partners/white/han_li_child/han_li_child_sprite.png" id="3_8t8s8"]
+
+[resource]
+script = ExtResource("2_xygyf")
+partner_id = "han_li_child"
+display_name = "Han Li"
+form_name = "Village Boy"
+path = 3
+card_texture = ExtResource("1_agke7")
+sprite_texture = ExtResource("3_8t8s8")

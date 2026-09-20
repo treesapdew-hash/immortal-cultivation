@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://hde3pn7y8l8m"]
+
+[ext_resource type="Texture2D" uid="uid://h43pdlt5uon7" path="res://assets/partners/gold/tang_hao_clear_sky/card.png" id="1_5qkah"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_likth"]
+[ext_resource type="Texture2D" uid="uid://dw4ey1hk0ht4f" path="res://assets/partners/gold/tang_hao_clear_sky/sprite.png" id="3_6eb0m"]
+
+[resource]
+script = ExtResource("2_likth")
+partner_id = "tang_hao_clear_sky"
+display_name = "Tang Hao"
+form_name = "Peak Clear Sky Douluo"
+rarity = 5
+card_texture = ExtResource("1_5qkah")
+sprite_texture = ExtResource("3_6eb0m")

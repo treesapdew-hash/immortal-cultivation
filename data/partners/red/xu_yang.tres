@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bjipci1xsq70f"]
+
+[ext_resource type="Texture2D" uid="uid://cqvf6k1tdbw0i" path="res://assets/partners/red/xu_yang/card.png" id="1_88o6h"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_olg1q"]
+[ext_resource type="Texture2D" uid="uid://dx04utn65yadp" path="res://assets/partners/red/xu_yang/sprite.png" id="3_5rmij"]
+
+[resource]
+script = ExtResource("2_olg1q")
+partner_id = "xu_yang"
+display_name = "Xu Yang"
+rarity = 4
+path = 2
+card_texture = ExtResource("1_88o6h")
+sprite_texture = ExtResource("3_5rmij")

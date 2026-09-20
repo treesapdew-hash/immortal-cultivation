@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dyx3n8ntwh740"]
+
+[ext_resource type="Texture2D" uid="uid://cybm66ueiq14b" path="res://assets/partners/gold/yao_lao_medicine_saint/card.png" id="1_mfvs2"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_5rxck"]
+[ext_resource type="Texture2D" uid="uid://rxdfhe8h1r2m" path="res://assets/partners/gold/yao_lao_medicine_saint/sprite.png" id="3_mcq6w"]
+
+[resource]
+script = ExtResource("2_5rxck")
+partner_id = "yao_lao_medicine_saint"
+display_name = "Yao Lao"
+form_name = "Medicine Saint"
+rarity = 5
+path = 2
+card_texture = ExtResource("1_mfvs2")
+sprite_texture = ExtResource("3_mcq6w")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://ofw6kclu6wlw"]
+
+[ext_resource type="Texture2D" uid="uid://4uhi5g7jtp1p" path="res://assets/partners/green/xiao_yan_heavy_ruler/card.png" id="1_vs711"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_rnjj6"]
+[ext_resource type="Texture2D" uid="uid://dqulfelvf1d0i" path="res://assets/partners/green/xiao_yan_heavy_ruler/sprite.png" id="3_lnk61"]
+
+[resource]
+script = ExtResource("2_rnjj6")
+partner_id = "xiao_yan_heavy_ruler"
+display_name = "Xiao Yan"
+form_name = "Heavy Xuan Ruler"
+rarity = 2
+path = 2
+card_texture = ExtResource("1_vs711")
+sprite_texture = ExtResource("3_lnk61")

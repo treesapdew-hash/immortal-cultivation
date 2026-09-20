@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c2fia03jy0k5u"]
+
+[ext_resource type="Texture2D" uid="uid://doptrnararg5t" path="res://assets/partners/white/xiao_wu/xiao_wu_card.png" id="1_ol5kq"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_ehte3"]
+[ext_resource type="Texture2D" uid="uid://daf2dhxernm8d" path="res://assets/partners/white/xiao_wu/xiao_wu_sprite.png" id="3_vpels"]
+
+[resource]
+script = ExtResource("2_ehte3")
+partner_id = "xiao_wu"
+display_name = "Xiao Wu"
+card_texture = ExtResource("1_ol5kq")
+sprite_texture = ExtResource("3_vpels")

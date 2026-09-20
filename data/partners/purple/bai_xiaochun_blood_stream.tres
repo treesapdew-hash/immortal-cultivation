@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dknbnawmf2wwr"]
+
+[ext_resource type="Texture2D" uid="uid://hjkkj0yd5wx4" path="res://assets/partners/purple/bai_xiaochun_blood_stream/card.png" id="1_ooq06"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_qxev7"]
+[ext_resource type="Texture2D" uid="uid://37k8ua6lg2p5" path="res://assets/partners/purple/bai_xiaochun_blood_stream/sprite.png" id="3_b7qw8"]
+
+[resource]
+script = ExtResource("2_qxev7")
+partner_id = "bai_xiaochun_blood_stream"
+display_name = "Bai Xiaochun"
+form_name = "Blood Stream Sect"
+rarity = 3
+card_texture = ExtResource("1_ooq06")
+sprite_texture = ExtResource("3_b7qw8")

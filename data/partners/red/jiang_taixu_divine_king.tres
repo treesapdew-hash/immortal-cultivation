@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://7kmpfc7knepo"]
+
+[ext_resource type="Texture2D" uid="uid://durqvclu7oh8v" path="res://assets/partners/red/jiang_taixu_divine_king/card.png" id="1_kdukn"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_emb2n"]
+[ext_resource type="Texture2D" uid="uid://nit2035qrrlq" path="res://assets/partners/red/jiang_taixu_divine_king/sprite.png" id="3_fl282"]
+
+[resource]
+script = ExtResource("2_emb2n")
+partner_id = "jiang_taixu_divine_king"
+display_name = "Jiang Taixu"
+form_name = "Divine King"
+rarity = 4
+path = 0
+card_texture = ExtResource("1_kdukn")
+sprite_texture = ExtResource("3_fl282")

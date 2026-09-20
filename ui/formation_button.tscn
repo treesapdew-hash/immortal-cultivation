@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://6lxlp0pwwnyb"]
+
+[ext_resource type="FontFile" uid="uid://cclqo2il368b" path="res://assets/TrajanPro-Bold.otf" id="1_v5oqe"]
+[ext_resource type="Texture2D" uid="uid://5d3j20gif536" path="res://assets/ui/panels/quick_menu_static.png" id="2_ravmx"]
+[ext_resource type="Texture2D" uid="uid://c2e01w4425g17" path="res://assets/ui/panels/quick_menu_hover.png" id="3_cb37o"]
+[ext_resource type="Texture2D" uid="uid://55yy86utf7qy" path="res://assets/ui/icons/formation_icon.png" id="4_62ryd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kbrsk"]
+content_margin_left = 18.0
+content_margin_right = 12.0
+texture = ExtResource("2_ravmx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8nfbe"]
+content_margin_left = 18.0
+content_margin_right = 12.0
+texture = ExtResource("3_cb37o")
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_3lfvx"]
+
+[node name="TabButton" type="Button" unique_id=1201088525]
+offset_right = 200.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_constants/icon_max_width = 36
+theme_override_fonts/font = ExtResource("1_v5oqe")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxTexture_kbrsk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_8nfbe")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_3lfvx")
+text = "Formation"
+icon = ExtResource("4_62ryd")

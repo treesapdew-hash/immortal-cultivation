@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cyro5d2uq5xmw"]
+
+[ext_resource type="Texture2D" uid="uid://d4c40asrba786" path="res://assets/partners/green/shi_hao_supreme_bone/card.png" id="1_bdc4f"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_ivyse"]
+[ext_resource type="Texture2D" uid="uid://d0o0rk55taany" path="res://assets/partners/green/shi_hao_supreme_bone/sprite.png" id="3_q2mg0"]
+
+[resource]
+script = ExtResource("2_ivyse")
+partner_id = "shi_hao_supreme_bone"
+display_name = "Shi Hao"
+form_name = "Supreme Bone"
+rarity = 2
+card_texture = ExtResource("1_bdc4f")
+sprite_texture = ExtResource("3_q2mg0")

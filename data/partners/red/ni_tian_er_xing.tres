@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dfq0531x8hs4q"]
+
+[ext_resource type="Texture2D" uid="uid://gsnl8xb2aumf" path="res://assets/partners/red/ni_tian_er_xing/card.png" id="1_rwjcv"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_lchkl"]
+[ext_resource type="Texture2D" uid="uid://cqb7lnivqjhor" path="res://assets/partners/red/ni_tian_er_xing/sprite.png" id="3_66dj0"]
+
+[resource]
+script = ExtResource("2_lchkl")
+partner_id = "ni_tian_er_xing"
+display_name = "Ni Tian Er Xing"
+rarity = 4
+card_texture = ExtResource("1_rwjcv")
+sprite_texture = ExtResource("3_66dj0")

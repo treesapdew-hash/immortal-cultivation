@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://iq3mywo6scxc"]
+
+[ext_resource type="Script" uid="uid://dtmd40toa4l5i" path="res://ui/formation_slot.gd" id="1_nveep"]
+[ext_resource type="Texture2D" uid="uid://d383xfl4xfv1r" path="res://assets/mc/male_sword/card.png" id="2_qyuhd"]
+[ext_resource type="Texture2D" uid="uid://bbct1mq5dcn63" path="res://assets/ui/panels/unit_frame_static.png" id="3_monin"]
+[ext_resource type="Texture2D" uid="uid://hbr05cghnsj5" path="res://assets/ui/stars/star_green.png" id="4_4lad6"]
+[ext_resource type="Texture2D" uid="uid://cym61lbmdl1m" path="res://assets/ui/stars/star_blue.png" id="4_qyuhd"]
+[ext_resource type="FontFile" uid="uid://cclqo2il368b" path="res://assets/TrajanPro-Bold.otf" id="5_4ulec"]
+[ext_resource type="Texture2D" uid="uid://bmsbbb4g542od" path="res://assets/ui/stars/star_gray.png" id="5_emq5g"]
+[ext_resource type="Texture2D" uid="uid://dydigaid5gs2w" path="res://assets/ui/stars/star_red.png" id="5_onfix"]
+[ext_resource type="Texture2D" uid="uid://dxn61b7tidybn" path="res://assets/ui/stars/star_gold.png" id="6_d62gd"]
+[ext_resource type="Texture2D" uid="uid://ckxifps6wtn7m" path="res://assets/ui/icons/plus_icon.png" id="6_qyuhd"]
+[ext_resource type="Texture2D" uid="uid://chi331el5ukui" path="res://assets/ui/panels/unit_frame_hover.png" id="8_4ulec"]
+[ext_resource type="Texture2D" uid="uid://b6htbg0bnydpj" path="res://assets/dao/sword.png" id="9_emq5g"]
+
+[node name="FormationSlot" type="Button" unique_id=1144016392]
+custom_minimum_size = Vector2(132, 122)
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_nveep")
+star_empty = ExtResource("5_emq5g")
+star_tiers = Array[Texture2D]([ExtResource("4_qyuhd"), ExtResource("4_4lad6"), ExtResource("5_onfix"), ExtResource("6_d62gd")])
+preview_stars = 6
+
+[node name="PortraitWindow" type="Control" parent="." unique_id=820328174]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Portrait" type="TextureRect" parent="PortraitWindow" unique_id=7521720]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_qyuhd")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FrameOverlay" type="TextureRect" parent="." unique_id=1474021847]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_monin")
+expand_mode = 1
+
+[node name="Stars" type="HBoxContainer" parent="." unique_id=1381946118]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.0
+offset_top = -35.0
+offset_right = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = -2
+
+[node name="StarSlot1" type="TextureRect" parent="Stars" unique_id=550211450]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_qyuhd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StarSlot2" type="TextureRect" parent="Stars" unique_id=1607966596]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_emq5g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StarSlot3" type="TextureRect" parent="Stars" unique_id=174077151]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_emq5g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StarSlot4" type="TextureRect" parent="Stars" unique_id=348673866]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_emq5g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StarSlot5" type="TextureRect" parent="Stars" unique_id=1288034655]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_emq5g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RealmLabel" type="Label" parent="." unique_id=1685126323]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = 26.0
+grow_horizontal = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("5_4ulec")
+theme_override_font_sizes/font_size = 12
+text = "Qi Cond 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="EmptyIcon" type="TextureRect" parent="." unique_id=1413371000]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_qyuhd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SelectGlow" type="TextureRect" parent="." unique_id=880795253]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = -0.32673645
+offset_bottom = -0.22772217
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.01, 1.01)
+mouse_filter = 2
+texture = ExtResource("8_4ulec")
+expand_mode = 1
+
+[node name="PathBadge" type="TextureRect" parent="." unique_id=991057654]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 0
+offset_left = -5.0
+offset_top = -3.0
+offset_right = 35.0
+offset_bottom = 37.0
+texture = ExtResource("9_emq5g")
+expand_mode = 1
+stretch_mode = 5

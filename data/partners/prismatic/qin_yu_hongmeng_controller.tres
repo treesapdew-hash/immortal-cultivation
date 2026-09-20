@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cdigl220la3jh"]
+
+[ext_resource type="Texture2D" uid="uid://bvb7mhvv8qa8m" path="res://assets/partners/prismatic/qin_yu_hongmeng_controller/card.png" id="1_37a08"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_tst2a"]
+[ext_resource type="Texture2D" uid="uid://bonrlbbjjrd5l" path="res://assets/partners/prismatic/qin_yu_hongmeng_controller/sprite.png" id="3_iiv7l"]
+
+[resource]
+script = ExtResource("2_tst2a")
+partner_id = "qin_yu_hongmeng_controller"
+display_name = "Qin Yu"
+form_name = "Hongmeng Controller"
+rarity = 6
+card_texture = ExtResource("1_37a08")
+sprite_texture = ExtResource("3_iiv7l")

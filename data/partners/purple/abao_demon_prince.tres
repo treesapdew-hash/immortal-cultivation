@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://yti0vriseg8k"]
+
+[ext_resource type="Texture2D" uid="uid://cvt4ona08jo0" path="res://assets/partners/purple/abao_demon_prince/card.png" id="1_r3nkc"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_38755"]
+[ext_resource type="Texture2D" uid="uid://bddusqicpamqr" path="res://assets/partners/purple/abao_demon_prince/sprite.png" id="3_moflc"]
+
+[resource]
+script = ExtResource("2_38755")
+partner_id = "abao_demon_prince"
+display_name = "Abao"
+form_name = "Demon Prince"
+rarity = 3
+path = 1
+card_texture = ExtResource("1_r3nkc")
+sprite_texture = ExtResource("3_moflc")

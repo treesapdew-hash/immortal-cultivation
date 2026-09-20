@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://defb0uxdi8rt6"]
+
+[ext_resource type="Texture2D" uid="uid://qweelnv8tmug" path="res://assets/partners/blue/chen_qiaoqian/card.png" id="1_b4ibb"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_xbcft"]
+[ext_resource type="Texture2D" uid="uid://dsfhn7nifri4g" path="res://assets/partners/blue/chen_qiaoqian/sprite.png" id="3_70pbl"]
+
+[resource]
+script = ExtResource("2_xbcft")
+partner_id = "chen_qiaoqian"
+display_name = "Chen Qiaoqian"
+rarity = 1
+path = 2
+card_texture = ExtResource("1_b4ibb")
+sprite_texture = ExtResource("3_70pbl")

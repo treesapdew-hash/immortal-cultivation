@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bwugf3f8b3pg3"]
+
+[ext_resource type="Texture2D" uid="uid://gkihwhxqijtx" path="res://assets/partners/red/wang_lin_ascendant/card.png" id="1_1hmdp"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_cquna"]
+[ext_resource type="Texture2D" uid="uid://ubf4oii4jgbr" path="res://assets/partners/red/wang_lin_ascendant/sprite.png" id="3_xwx88"]
+
+[resource]
+script = ExtResource("2_cquna")
+partner_id = "wang_lin_ascendant"
+display_name = "Wang Lin"
+form_name = "Ascendant Era"
+rarity = 4
+path = 2
+card_texture = ExtResource("1_1hmdp")
+sprite_texture = ExtResource("3_xwx88")

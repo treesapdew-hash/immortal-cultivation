@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bd231ng2psldh"]
+
+[ext_resource type="Texture2D" uid="uid://dnvrwevyjrlsc" path="res://assets/partners/red/luo_feng_peak/card.png" id="1_cw65g"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_fwu6p"]
+[ext_resource type="Texture2D" uid="uid://17cie5wx5dsr" path="res://assets/partners/red/luo_feng_peak/sprite.png" id="3_7gw52"]
+
+[resource]
+script = ExtResource("2_fwu6p")
+partner_id = "luo_feng_peak"
+display_name = "Luo Feng"
+form_name = "Armored Peak"
+rarity = 4
+card_texture = ExtResource("1_cw65g")
+sprite_texture = ExtResource("3_7gw52")

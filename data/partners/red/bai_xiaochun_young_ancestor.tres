@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://nbdbbyqhsbud"]
+
+[ext_resource type="Texture2D" uid="uid://bmjvj18ny4gaj" path="res://assets/partners/red/bai_xiaochun_young_ancestor/card.png" id="1_dk1j4"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_8h7tp"]
+[ext_resource type="Texture2D" uid="uid://bianubjjvyrbi" path="res://assets/partners/red/bai_xiaochun_young_ancestor/sprite.png" id="3_elayv"]
+
+[resource]
+script = ExtResource("2_8h7tp")
+partner_id = "bai_xiaochun_young_ancestor"
+display_name = "Bai Xiaochun"
+form_name = "Young Ancestor"
+rarity = 4
+card_texture = ExtResource("1_dk1j4")
+sprite_texture = ExtResource("3_elayv")

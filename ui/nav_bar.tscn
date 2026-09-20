@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://c44sh5bnqh2u0"]
+
+[ext_resource type="Texture2D" uid="uid://cffnoy8s0syv1" path="res://assets/ui/nav_bar_bg.png" id="1_2p4xe"]
+[ext_resource type="PackedScene" uid="uid://b776t6dbpqcel" path="res://ui/nav_button.tscn" id="2_8pfmc"]
+[ext_resource type="Texture2D" uid="uid://d2agl47asppf2" path="res://assets/ui/nav_growth.png" id="3_ftyep"]
+[ext_resource type="Texture2D" uid="uid://brbbq2o0jr1ae" path="res://assets/ui/nav_missions.png" id="5_e4snk"]
+[ext_resource type="Texture2D" uid="uid://do8awsk78ajx2" path="res://assets/ui/nav_codex.png" id="5_y24vp"]
+[ext_resource type="Texture2D" uid="uid://fgp181wujele" path="res://assets/ui/nav_event.png" id="6_e4snk"]
+[ext_resource type="Texture2D" uid="uid://qygsd35884pn" path="res://assets/ui/nav_more.png" id="7_50xno"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3lfvx"]
+content_margin_left = 30.0
+content_margin_top = 2.0
+content_margin_right = 30.0
+content_margin_bottom = 28.0
+texture = ExtResource("1_2p4xe")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ftyep"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y24vp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e4snk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oav8k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_50xno"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8q8bs"]
+
+[node name="NavBar" type="PanelContainer" unique_id=213950660]
+custom_minimum_size = Vector2(0, 130)
+offset_right = 900.0
+offset_bottom = 172.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_3lfvx")
+
+[node name="Buttons" type="HBoxContainer" parent="." unique_id=2077523898]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Home" parent="Buttons" unique_id=1206170415 instance=ExtResource("2_8pfmc")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_ftyep")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ftyep")
+
+[node name="Growth" parent="Buttons" unique_id=571180940 instance=ExtResource("2_8pfmc")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_y24vp")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_y24vp")
+nav_id = "growth"
+icon_texture = ExtResource("3_ftyep")
+label_text = "Growth"
+show_badge = true
+
+[node name="Mission" parent="Buttons" unique_id=395689542 instance=ExtResource("2_8pfmc")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_e4snk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e4snk")
+nav_id = "mission"
+icon_texture = ExtResource("5_e4snk")
+label_text = "Mission"
+show_badge = true
+
+[node name="Codex" parent="Buttons" unique_id=1013105210 instance=ExtResource("2_8pfmc")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_oav8k")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oav8k")
+nav_id = "codex"
+icon_texture = ExtResource("5_y24vp")
+label_text = "Codex"
+
+[node name="Events" parent="Buttons" unique_id=1086467577 instance=ExtResource("2_8pfmc")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_50xno")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_50xno")
+nav_id = "events"
+icon_texture = ExtResource("6_e4snk")
+label_text = "Events"
+show_badge = true
+
+[node name="More" parent="Buttons" unique_id=1175315831 instance=ExtResource("2_8pfmc")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8q8bs")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8q8bs")
+nav_id = "more"
+icon_texture = ExtResource("7_50xno")
+label_text = "More"
+show_badge = true

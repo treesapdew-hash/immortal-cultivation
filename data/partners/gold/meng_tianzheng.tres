@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dphf0djyk1pai"]
+
+[ext_resource type="Texture2D" uid="uid://fg5e18x1jx85" path="res://assets/partners/gold/meng_tianzheng/card.png" id="1_bm3nc"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_0fc6n"]
+[ext_resource type="Texture2D" uid="uid://b5xkrhm4vy60s" path="res://assets/partners/gold/meng_tianzheng/sprite.png" id="3_e5j18"]
+
+[resource]
+script = ExtResource("2_0fc6n")
+partner_id = "meng_tianzheng"
+display_name = "Meng Tianzheng"
+rarity = 5
+card_texture = ExtResource("1_bm3nc")
+sprite_texture = ExtResource("3_e5j18")

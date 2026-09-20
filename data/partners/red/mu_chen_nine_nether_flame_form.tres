@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://yu3svqvqkesd"]
+
+[ext_resource type="Texture2D" uid="uid://da1eb3syrktyg" path="res://assets/partners/red/mu_chen_nine_nether_flame_form/card.png" id="1_8ol43"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_5x10u"]
+[ext_resource type="Texture2D" uid="uid://0exi8t4e3g8" path="res://assets/partners/red/mu_chen_nine_nether_flame_form/sprite.png" id="3_r4sqa"]
+
+[resource]
+script = ExtResource("2_5x10u")
+partner_id = "mu_chen_nine_nether_flame_form"
+display_name = "Mu Chen"
+form_name = "Nine Nether Flame"
+rarity = 4
+path = 2
+card_texture = ExtResource("1_8ol43")
+sprite_texture = ExtResource("3_r4sqa")

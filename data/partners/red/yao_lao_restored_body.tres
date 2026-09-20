@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bfq3g2mc1yydu"]
+
+[ext_resource type="Texture2D" uid="uid://du1jwghbbt4mr" path="res://assets/partners/red/yao_lao_restored_body/card.png" id="1_kwipc"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_he1tj"]
+[ext_resource type="Texture2D" uid="uid://dp6l7hqa1xrq2" path="res://assets/partners/red/yao_lao_restored_body/sprite.png" id="3_y6y4c"]
+
+[resource]
+script = ExtResource("2_he1tj")
+partner_id = "yao_lao_restored_body"
+display_name = "Yao Lao"
+form_name = "Restored Body"
+rarity = 4
+path = 2
+card_texture = ExtResource("1_kwipc")
+sprite_texture = ExtResource("3_y6y4c")

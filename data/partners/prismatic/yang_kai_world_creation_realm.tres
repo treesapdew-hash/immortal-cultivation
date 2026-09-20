@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cmaunfpoymcdn"]
+
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="1_1lbfq"]
+
+[resource]
+script = ExtResource("1_1lbfq")
+partner_id = "yang_kai_world_creation_realm"
+display_name = "Yang Kai"
+form_name = "World Creation Realm"
+rarity = 6

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bbyq20p8ptaqj"]
+
+[ext_resource type="Texture2D" uid="uid://c7mhguajn77va" path="res://assets/partners/purple/bo_saixi/card.png" id="1_4bpgd"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_yfutp"]
+[ext_resource type="Texture2D" uid="uid://cv87m4jengie5" path="res://assets/partners/purple/bo_saixi/sprite.png" id="3_eqmle"]
+
+[resource]
+script = ExtResource("2_yfutp")
+partner_id = "bo_saixi"
+display_name = "Bo Saixi"
+rarity = 3
+path = 0
+card_texture = ExtResource("1_4bpgd")
+sprite_texture = ExtResource("3_eqmle")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cmafale2kqvq7"]
+
+[ext_resource type="Texture2D" uid="uid://lnqudf312gdj" path="res://assets/partners/gold/xiao_yan_dou_sheng/card.png" id="1_ms2yg"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_slulb"]
+[ext_resource type="Texture2D" uid="uid://bd4jov2a46eye" path="res://assets/partners/gold/xiao_yan_dou_sheng/sprite.png" id="3_duijd"]
+
+[resource]
+script = ExtResource("2_slulb")
+partner_id = "xiao_yan_dou_sheng"
+display_name = "Xiao Yan"
+form_name = "Dou Sheng"
+rarity = 5
+path = 2
+card_texture = ExtResource("1_ms2yg")
+sprite_texture = ExtResource("3_duijd")

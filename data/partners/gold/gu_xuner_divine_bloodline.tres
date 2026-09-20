@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dnp0b6y31ylwc"]
+
+[ext_resource type="Texture2D" uid="uid://dy1d0qvquj7qt" path="res://assets/partners/gold/gu_xuner_divine_bloodline/card.png" id="1_42jpc"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_jipin"]
+[ext_resource type="Texture2D" uid="uid://dogo4u22u83kj" path="res://assets/partners/gold/gu_xuner_divine_bloodline/sprite.png" id="3_c4lil"]
+
+[resource]
+script = ExtResource("2_jipin")
+partner_id = "gu_xuner_divine_bloodline"
+display_name = "Gu Xun'er"
+form_name = "Divine Bloodline"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_42jpc")
+sprite_texture = ExtResource("3_c4lil")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cluqgyk4uy5ok"]
+
+[ext_resource type="Texture2D" uid="uid://csfmh7saduc7n" path="res://assets/partners/white/nie_li_reborn/nie_li_reborn_card.png" id="1_pntqt"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_q5xpj"]
+[ext_resource type="Texture2D" uid="uid://cmnyseiw1meg0" path="res://assets/partners/white/nie_li_reborn/nie_li_reborn_sprite.png" id="3_vbcmc"]
+
+[resource]
+script = ExtResource("2_q5xpj")
+partner_id = "nie_li_reborn"
+display_name = "Nie Li"
+form_name = "Reborn"
+path = 1
+card_texture = ExtResource("1_pntqt")
+sprite_texture = ExtResource("3_vbcmc")

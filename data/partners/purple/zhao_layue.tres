@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dtbn6ow4bqjdm"]
+
+[ext_resource type="Texture2D" uid="uid://bnhejxxsxit4i" path="res://assets/partners/purple/zhao_layue/card.png" id="1_h4yxu"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_qk2b8"]
+[ext_resource type="Texture2D" uid="uid://bm7jbs4j6qd5q" path="res://assets/partners/purple/zhao_layue/sprite.png" id="3_wyfol"]
+
+[resource]
+script = ExtResource("2_qk2b8")
+partner_id = "zhao_layue"
+display_name = "Zhao Layue"
+rarity = 3
+path = 3
+card_texture = ExtResource("1_h4yxu")
+sprite_texture = ExtResource("3_wyfol")

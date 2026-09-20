@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bi77ptxto2gr5"]
+
+[ext_resource type="Texture2D" uid="uid://qjtn85k3b2rn" path="res://assets/partners/white/qingtan/qingtan_card.png" id="1_7oh6i"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_h0cmi"]
+[ext_resource type="Texture2D" uid="uid://dg367emlronvi" path="res://assets/partners/white/qingtan/qingtan_sprite.png" id="3_ynb8e"]
+
+[resource]
+script = ExtResource("2_h0cmi")
+partner_id = "qingtan"
+display_name = "Qingtan"
+path = 2
+card_texture = ExtResource("1_7oh6i")
+sprite_texture = ExtResource("3_ynb8e")

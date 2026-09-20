@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c7k8op0e7vk6"]
+
+[ext_resource type="Texture2D" uid="uid://p21v8cpvtych" path="res://assets/partners/green/han_li_foundation/card.png" id="1_wxxb3"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_qj3vs"]
+[ext_resource type="Texture2D" uid="uid://t47juahvhsru" path="res://assets/partners/green/han_li_foundation/sprite.png" id="3_fx18m"]
+
+[resource]
+script = ExtResource("2_qj3vs")
+partner_id = "han_li_foundation"
+display_name = "Han Li"
+form_name = "Foundation Establishment"
+rarity = 2
+path = 3
+card_texture = ExtResource("1_wxxb3")
+sprite_texture = ExtResource("3_fx18m")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://2nqg0653bny3"]
+
+[ext_resource type="Texture2D" uid="uid://ctvhg1dwcglta" path="res://assets/partners/white/qin_yu_prince/qin_yu_prince_card.png" id="1_i6bjn"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_xgaat"]
+[ext_resource type="Texture2D" uid="uid://0k7jsnlbe6gl" path="res://assets/partners/white/qin_yu_prince/qin_yu_prince_sprite.png" id="3_wk2w2"]
+
+[resource]
+script = ExtResource("2_xgaat")
+partner_id = "qin_yu_prince"
+display_name = "Qin Yu"
+form_name = "Third Prince"
+card_texture = ExtResource("1_i6bjn")
+sprite_texture = ExtResource("3_wk2w2")

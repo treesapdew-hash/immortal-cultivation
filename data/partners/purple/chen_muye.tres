@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c3v5i5p4lnlls"]
+
+[ext_resource type="Texture2D" uid="uid://bl6ryiwe6t0qt" path="res://assets/partners/purple/chen_muye/card.png" id="1_fc0ld"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_t0ifh"]
+[ext_resource type="Texture2D" uid="uid://1q1lxir2q3xd" path="res://assets/partners/purple/chen_muye/sprite.png" id="3_0qi7m"]
+
+[resource]
+script = ExtResource("2_t0ifh")
+partner_id = "chen_muye"
+display_name = "Chen Muye"
+rarity = 3
+path = 1
+card_texture = ExtResource("1_fc0ld")
+sprite_texture = ExtResource("3_0qi7m")

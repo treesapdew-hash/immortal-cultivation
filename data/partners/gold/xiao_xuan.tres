@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dnfsy1472okib"]
+
+[ext_resource type="Texture2D" uid="uid://caibofqf157hj" path="res://assets/partners/gold/xiao_xuan/card.png" id="1_ue0pq"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_er6vv"]
+[ext_resource type="Texture2D" uid="uid://cqewasy3iqhxr" path="res://assets/partners/gold/xiao_xuan/sprite.png" id="3_xfv8l"]
+
+[resource]
+script = ExtResource("2_er6vv")
+partner_id = "xiao_xuan"
+display_name = "Xiao Xuan"
+rarity = 5
+card_texture = ExtResource("1_ue0pq")
+sprite_texture = ExtResource("3_xfv8l")

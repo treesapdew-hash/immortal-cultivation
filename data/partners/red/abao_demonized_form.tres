@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cqw41woo31c6s"]
+
+[ext_resource type="Texture2D" uid="uid://8x0vbybd3pew" path="res://assets/partners/red/abao_demonized_form/card.png" id="1_33x6m"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_0d077"]
+[ext_resource type="Texture2D" uid="uid://kioliitbp2cn" path="res://assets/partners/red/abao_demonized_form/sprite.png" id="3_dkbbp"]
+
+[resource]
+script = ExtResource("2_0d077")
+partner_id = "abao_demonized_form"
+display_name = "Abao"
+form_name = "Demonized"
+rarity = 4
+path = 1
+card_texture = ExtResource("1_33x6m")
+sprite_texture = ExtResource("3_dkbbp")

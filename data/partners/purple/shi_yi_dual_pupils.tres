@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://b0rq60qpm36dr"]
+
+[ext_resource type="Texture2D" uid="uid://dhmdkela6n3hm" path="res://assets/partners/purple/shi_yi_dual_pupils/card.png" id="1_mvbte"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_vlewm"]
+[ext_resource type="Texture2D" uid="uid://bsbugudcybttc" path="res://assets/partners/purple/shi_yi_dual_pupils/sprite.png" id="3_5a2yl"]
+
+[resource]
+script = ExtResource("2_vlewm")
+partner_id = "shi_yi_dual_pupils"
+display_name = "Shi Yi"
+form_name = "Double Pupils"
+rarity = 3
+path = 0
+card_texture = ExtResource("1_mvbte")
+sprite_texture = ExtResource("3_5a2yl")

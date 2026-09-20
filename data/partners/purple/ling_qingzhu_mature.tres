@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bfmcm3fqv77mw"]
+
+[ext_resource type="Texture2D" uid="uid://bvnvunpref38" path="res://assets/partners/purple/ling_qingzhu_mature/card.png" id="1_ofg3m"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_10p6b"]
+[ext_resource type="Texture2D" uid="uid://d04bm5gxprmhl" path="res://assets/partners/purple/ling_qingzhu_mature/sprite.png" id="3_h625b"]
+
+[resource]
+script = ExtResource("2_10p6b")
+partner_id = "ling_qingzhu_mature"
+display_name = "Ling Qingzhu"
+form_name = "Mature"
+rarity = 3
+path = 3
+card_texture = ExtResource("1_ofg3m")
+sprite_texture = ExtResource("3_h625b")

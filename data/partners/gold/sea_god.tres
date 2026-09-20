@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://jxi50c2cn0w3"]
+
+[ext_resource type="Texture2D" uid="uid://3m7r2flqt52j" path="res://assets/partners/gold/sea_god/card.png" id="1_ts0is"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_mkor3"]
+[ext_resource type="Texture2D" uid="uid://dcaa6vrcuesdk" path="res://assets/partners/gold/sea_god/sprite.png" id="3_3gpmf"]
+
+[resource]
+script = ExtResource("2_mkor3")
+partner_id = "sea_god"
+display_name = "Poseidon"
+form_name = "Sea God"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_ts0is")
+sprite_texture = ExtResource("3_3gpmf")

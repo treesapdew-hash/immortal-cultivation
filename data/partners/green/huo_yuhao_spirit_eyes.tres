@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dvhu6s3sv0t70"]
+
+[ext_resource type="Texture2D" uid="uid://7fmvlyamev50" path="res://assets/partners/green/huo_yuhao_spirit_eyes/card.png" id="1_crxes"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_e22cx"]
+[ext_resource type="Texture2D" uid="uid://gt1mes1da0ny" path="res://assets/partners/green/huo_yuhao_spirit_eyes/sprite.png" id="3_hbg8o"]
+
+[resource]
+script = ExtResource("2_e22cx")
+partner_id = "huo_yuhao_spirit_eyes"
+display_name = "Huo Yuhao"
+form_name = "Spirit Eyes"
+rarity = 2
+path = 1
+card_texture = ExtResource("1_crxes")
+sprite_texture = ExtResource("3_hbg8o")

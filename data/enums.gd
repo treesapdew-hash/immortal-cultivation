@@ -71,108 +71,44 @@ const PATH_NAMES := {
 }
 
 
+# Short descriptions for the Dao picker and tooltips.
+const PATH_DESCRIPTIONS := {
+	Path.DIVINE:  "All Damage, Defence",
+	Path.SPIRIT:  "Energy, Effect Resistance",
+	Path.MYSTIC:  "Skill Damage, Accuracy",
+	Path.SWORD:   "Critical, Speed",
+	Path.MARTIAL: "ATK, HP"
+}
+
+
+# Theme colour for each Dao (UI accents, glows).
+const PATH_COLORS := {
+	Path.DIVINE:  Color("f2c85b"),   # gold
+	Path.SPIRIT:  Color("5ee6c8"),   # jade
+	Path.MYSTIC:  Color("b57bff"),   # violet
+	Path.SWORD:   Color("7fd4ff"),   # ice blue
+	Path.MARTIAL: Color("ff6b5b"),   # crimson
+}
+
+
 # ---------------------------------------------------------
-# MAJOR WORLDS  (spec section 3)
+# MAJOR WORLDS
+#
+# One world per major realm, in the same order as
+# Realms.Major (Mortal, Spirit, Sovereign, Immortal).
+#
+# The realm ladder itself, star caps and realm names all
+# live in realms.gd. Don't add realm lists here.
 # ---------------------------------------------------------
 
 enum World {
-	LOWER,
-	MIDDLE,
-	UPPER,
-	IMMORTAL
+	LOWER,      # Mortal Realm
+	MIDDLE,     # Spirit Realm
+	UPPER,      # Sovereign Realm
+	IMMORTAL    # Immortal Realm
 }
 
 
-# Highest star level allowed in each world (spec section 22).
-const WORLD_STAR_CAP := {
-	World.LOWER:    10,
-	World.MIDDLE:   20,
-	World.UPPER:    30,
-	World.IMMORTAL: 40
-}
-
-
-# ---------------------------------------------------------
-# CULTIVATION REALMS  (spec section 4)
-#
-# 30 realms total. Index 0 = Mortal, index 29 = Transcendence.
-# Each realm has 10 tiers, so there are 300 cultivation steps.
-# ---------------------------------------------------------
-
-const TIERS_PER_REALM := 10
-
-const REALMS := [
-	# --- LOWER REALM (index 0-9) ---
-	"Mortal",
-	"Qi Refining",
-	"Foundation Establishment",
-	"Golden Core",
-	"Nascent Soul",
-	"Soul Formation",
-	"Void Refinement",
-	"Body Integration",
-	"Mahayana",
-	"Tribulation Transcendence",
-
-	# --- MIDDLE REALM (index 10-17) ---
-	"Ascendant",
-	"Spirit Saint",
-	"Saint",
-	"Saint King",
-	"Great Saint",
-	"Holy Sovereign",
-	"Supreme",
-	"Supreme Sovereign",
-
-	# --- UPPER REALM (index 18-23) ---
-	"Heavenly Venerable",
-	"Dao Venerable",
-	"Dao Lord",
-	"Dao King",
-	"Dao Sovereign",
-	"Dao Emperor",
-
-	# --- IMMORTAL REALM (index 24-29) ---
-	"True Immortal",
-	"Immortal King",
-	"Quasi Immortal Emperor",
-	"Immortal Emperor",
-	"Sacrifice of Dao",
-	"Transcendence"
-]
-
-
-const TIER_NUMERALS := [
-	"I", "II", "III", "IV", "V",
-	"VI", "VII", "VIII", "IX", "X"
-]
-
-
-# Which major world a realm index belongs to.
+# Which world a minor realm index (see Realms.MINOR) belongs to.
 static func get_world_for_realm(realm_index: int) -> World:
-	if realm_index < 10:
-		return World.LOWER
-	elif realm_index < 18:
-		return World.MIDDLE
-	elif realm_index < 24:
-		return World.UPPER
-	return World.IMMORTAL
-
-
-# "Golden Core Tier IV"
-static func format_realm(realm_index: int, tier: int) -> String:
-	if realm_index < 0 or realm_index >= REALMS.size():
-		return "Unknown"
-
-	var tier_index = clampi(tier - 1, 0, TIERS_PER_REALM - 1)
-
-	return "%s Tier %s" % [
-		REALMS[realm_index],
-		TIER_NUMERALS[tier_index]
-	]
-
-
-# Flattens realm + tier into a single 0-299 number.
-# Used for stat scaling so one formula covers the whole game.
-static func get_cultivation_step(realm_index: int, tier: int) -> int:
-	return realm_index * TIERS_PER_REALM + (tier - 1)
+	return Realms.get_major(realm_index) as World

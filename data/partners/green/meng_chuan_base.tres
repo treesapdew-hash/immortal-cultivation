@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cx6iqix7dc8kq"]
+
+[ext_resource type="Texture2D" uid="uid://balqa12cwg7p4" path="res://assets/partners/green/meng_chuan_base/card.png" id="1_ajmhx"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_bv7hy"]
+[ext_resource type="Texture2D" uid="uid://d188dq8h7c1x7" path="res://assets/partners/green/meng_chuan_base/sprite.png" id="3_0c4ah"]
+
+[resource]
+script = ExtResource("2_bv7hy")
+partner_id = "meng_chuan_base"
+display_name = "Meng Chuan"
+form_name = "Blade Disciple"
+rarity = 2
+card_texture = ExtResource("1_ajmhx")
+sprite_texture = ExtResource("3_0c4ah")

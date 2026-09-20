@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://tyvrigtnf2r3"]
+
+[ext_resource type="Texture2D" uid="uid://2fma5efqbifh" path="res://assets/partners/green/hai_bodong/card.png" id="1_3vimn"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_gbk7h"]
+[ext_resource type="Texture2D" uid="uid://du5aah4j6nppq" path="res://assets/partners/green/hai_bodong/sprite.png" id="3_bbebw"]
+
+[resource]
+script = ExtResource("2_gbk7h")
+partner_id = "hai_bodong"
+display_name = "Hai Bodong"
+rarity = 2
+path = 2
+card_texture = ExtResource("1_3vimn")
+sprite_texture = ExtResource("3_bbebw")

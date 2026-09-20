@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://ocs2iqyrnv7n"]
+
+[ext_resource type="Texture2D" uid="uid://bu1tg8mows8po" path="res://assets/partners/red/huo_yuhao_ice_jade_emperor/card.png" id="1_sus3p"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_cofx3"]
+[ext_resource type="Texture2D" uid="uid://ck8rqep6be8ap" path="res://assets/partners/red/huo_yuhao_ice_jade_emperor/sprite.png" id="3_u7i2o"]
+
+[resource]
+script = ExtResource("2_cofx3")
+partner_id = "huo_yuhao_ice_jade_emperor"
+display_name = "Huo Yuhao"
+form_name = "Ice Jade Emperor"
+rarity = 4
+path = 1
+card_texture = ExtResource("1_sus3p")
+sprite_texture = ExtResource("3_u7i2o")

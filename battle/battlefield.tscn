@@ -1,0 +1,229 @@
+[gd_scene format=3 uid="uid://cy6cwcxrsqfnj"]
+
+[ext_resource type="PackedScene" uid="uid://cehswsqr7c221" path="res://battle/battle_unit_view.tscn" id="1_dkh7w"]
+[ext_resource type="Script" uid="uid://dlqm8yj8pp1fg" path="res://battle/tab_button.gd" id="1_kiys1"]
+[ext_resource type="Texture2D" uid="uid://bki6q5vov4bdh" path="res://assets/mc/male_sword/sprite.png" id="4_28u5w"]
+[ext_resource type="Texture2D" uid="uid://dnl2ub6ncb7ht" path="res://assets/partners/white/lin_qiye_blindfolded/lin_qiye_blindfolded_sprite.png" id="5_scu2s"]
+[ext_resource type="Texture2D" uid="uid://cmnyseiw1meg0" path="res://assets/partners/white/nie_li_reborn/nie_li_reborn_sprite.png" id="6_wkg8w"]
+[ext_resource type="Texture2D" uid="uid://drx5b4t6gxq1c" path="res://assets/partners/white/xiao_mei/xiao_mei_sprite.png" id="6_xoai0"]
+[ext_resource type="Texture2D" uid="uid://bc53t0w04m3ta" path="res://assets/partners/white/meng_chuan_youth/meng_chuan_youth_sprite.png" id="8_xkin6"]
+[ext_resource type="Texture2D" uid="uid://bessscfxo70de" path="res://assets/partners/white/mo_caihuan/mo_caihuan_sprite.png" id="9_5p5vn"]
+
+[node name="FormationLayout" type="Control" unique_id=582700426]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 60.0
+offset_right = 1040.0
+offset_bottom = 783.0
+size_flags_vertical = 3
+script = ExtResource("1_kiys1")
+
+[node name="EnemyBackRow" type="Control" parent="." unique_id=917031479]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="E4" parent="EnemyBackRow" unique_id=1085656384 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.28
+anchor_right = 0.2
+anchor_bottom = 0.28
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.8, 0.8)
+
+[node name="E5" parent="EnemyBackRow" unique_id=1914422145 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.42
+anchor_top = 0.28
+anchor_right = 0.42
+anchor_bottom = 0.28
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.8, 0.8)
+
+[node name="E6" parent="EnemyBackRow" unique_id=1147910478 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.64
+anchor_top = 0.28
+anchor_right = 0.64
+anchor_bottom = 0.28
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyFrontRow" type="Control" parent="." unique_id=8301302]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="E1" parent="EnemyFrontRow" unique_id=945853633 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36
+anchor_top = 0.4
+anchor_right = 0.36
+anchor_bottom = 0.4
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.85, 0.85)
+
+[node name="E2" parent="EnemyFrontRow" unique_id=1708454743 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.58
+anchor_top = 0.4
+anchor_right = 0.58
+anchor_bottom = 0.4
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.85, 0.85)
+
+[node name="E3" parent="EnemyFrontRow" unique_id=1376197046 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_top = 0.4
+anchor_right = 0.8
+anchor_bottom = 0.4
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.85, 0.85)
+
+[node name="PlayerFrontRow" type="Control" parent="." unique_id=751594539]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="P1" parent="PlayerFrontRow" unique_id=1858500333 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.75
+anchor_right = 0.2
+anchor_bottom = 0.75
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Sprite" parent="PlayerFrontRow/P1" index="1" unique_id=866965057]
+texture = ExtResource("4_28u5w")
+
+[node name="P2" parent="PlayerFrontRow" unique_id=934982162 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.42
+anchor_top = 0.75
+anchor_right = 0.42
+anchor_bottom = 0.75
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Sprite" parent="PlayerFrontRow/P2" index="1" unique_id=866965057]
+texture = ExtResource("5_scu2s")
+
+[node name="P3" parent="PlayerFrontRow" unique_id=872663738 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.64
+anchor_top = 0.75
+anchor_right = 0.64
+anchor_bottom = 0.75
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Sprite" parent="PlayerFrontRow/P3" index="1" unique_id=866965057]
+texture = ExtResource("6_wkg8w")
+
+[node name="PlayerBackRow" type="Control" parent="." unique_id=1402313811]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="P4" parent="PlayerBackRow" unique_id=1114882989 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36
+anchor_top = 0.92
+anchor_right = 0.36
+anchor_bottom = 0.92
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.08, 1.08)
+
+[node name="Sprite" parent="PlayerBackRow/P4" index="1" unique_id=866965057]
+texture = ExtResource("6_xoai0")
+
+[node name="P5" parent="PlayerBackRow" unique_id=1836425626 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.58
+anchor_top = 0.92
+anchor_right = 0.58
+anchor_bottom = 0.92
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.08, 1.08)
+
+[node name="Sprite" parent="PlayerBackRow/P5" index="1" unique_id=866965057]
+texture = ExtResource("8_xkin6")
+
+[node name="P6" parent="PlayerBackRow" unique_id=776049985 instance=ExtResource("1_dkh7w")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_top = 0.92
+anchor_right = 0.8
+anchor_bottom = 0.92
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.08, 1.08)
+
+[node name="Sprite" parent="PlayerBackRow/P6" index="1" unique_id=866965057]
+texture = ExtResource("9_5p5vn")
+
+[editable path="PlayerFrontRow/P1"]
+[editable path="PlayerFrontRow/P2"]
+[editable path="PlayerFrontRow/P3"]
+[editable path="PlayerBackRow/P4"]
+[editable path="PlayerBackRow/P5"]
+[editable path="PlayerBackRow/P6"]

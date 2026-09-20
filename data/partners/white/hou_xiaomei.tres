@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dh0xcg7fo6qkl"]
+
+[ext_resource type="Texture2D" uid="uid://bjn3a5pj5gaui" path="res://assets/partners/white/hou_xiaomei/hou_xiaomei_card.png" id="1_fk3m4"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_0doo7"]
+[ext_resource type="Texture2D" uid="uid://on1mtwj4r6eu" path="res://assets/partners/white/hou_xiaomei/hou_xiaomei_sprite.png" id="3_msdrc"]
+
+[resource]
+script = ExtResource("2_0doo7")
+partner_id = "hou_xiaomei"
+display_name = "Hou Xiaomei"
+path = 2
+card_texture = ExtResource("1_fk3m4")
+sprite_texture = ExtResource("3_msdrc")

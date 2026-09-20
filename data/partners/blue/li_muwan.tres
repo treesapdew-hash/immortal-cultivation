@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cnnhgsb56fey0"]
+
+[ext_resource type="Texture2D" uid="uid://78fo82pcpaeb" path="res://assets/partners/blue/li_muwan/card.png" id="1_jqykv"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_hd32w"]
+[ext_resource type="Texture2D" uid="uid://b5g0mxwojvlp5" path="res://assets/partners/blue/li_muwan/sprite.png" id="3_dnpdl"]
+
+[resource]
+script = ExtResource("2_hd32w")
+partner_id = "li_muwan"
+display_name = "Li Muwan"
+rarity = 1
+path = 2
+card_texture = ExtResource("1_jqykv")
+sprite_texture = ExtResource("3_dnpdl")

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dgdc5k54xihhx"]
+
+[ext_resource type="Texture2D" uid="uid://cfqhmscg51q5s" path="res://assets/partners/gold/qian_renxue_angel/card.png" id="1_owhfc"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_xkxq3"]
+[ext_resource type="Texture2D" uid="uid://c8lwdw6tn6450" path="res://assets/partners/gold/qian_renxue_angel/sprite.png" id="3_ka306"]
+
+[resource]
+script = ExtResource("2_xkxq3")
+partner_id = "qian_renxue_angel"
+display_name = "Qian Renxue"
+form_name = "Angel God"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_owhfc")
+sprite_texture = ExtResource("3_ka306")

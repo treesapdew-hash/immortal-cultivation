@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://8rxk0h4hbtok"]
+
+[ext_resource type="Texture2D" uid="uid://ckjwsmgs583h7" path="res://assets/partners/red/fang_han_mature/card.png" id="1_45yyi"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_gb6xj"]
+[ext_resource type="Texture2D" uid="uid://ckf7e3jmtlfnq" path="res://assets/partners/red/fang_han_mature/sprite.png" id="3_jh6xn"]
+
+[resource]
+script = ExtResource("2_gb6xj")
+partner_id = "fang_han_mature"
+display_name = "Fang Han"
+rarity = 4
+card_texture = ExtResource("1_45yyi")
+sprite_texture = ExtResource("3_jh6xn")

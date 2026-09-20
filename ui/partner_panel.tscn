@@ -1,340 +1,389 @@
 [gd_scene format=3 uid="uid://c47qg4ixchyt2"]
 
-[ext_resource type="Texture2D" uid="uid://olshi2c6lrxs" path="res://assets/ui/panels/About Character Frame/character_statistic_frame.png" id="1_uvss4"]
+[ext_resource type="Script" uid="uid://km63gqo18tti" path="res://ui/partner_panel.gd" id="1_b7ngr"]
+[ext_resource type="Texture2D" uid="uid://bmsbbb4g542od" path="res://assets/ui/stars/star_gray.png" id="2_frnmw"]
 [ext_resource type="PackedScene" uid="uid://diwqv1ef3bcah" path="res://ui/partner_card.tscn" id="2_kc244"]
+[ext_resource type="FontFile" uid="uid://cclqo2il368b" path="res://assets/TrajanPro-Bold.otf" id="2_t0g5j"]
 [ext_resource type="Texture2D" uid="uid://dyhl4vri5n10p" path="res://assets/ui/panels/About Character Frame/ascend_button.png" id="3_b7ngr"]
+[ext_resource type="Texture2D" uid="uid://cym61lbmdl1m" path="res://assets/ui/stars/star_blue.png" id="3_qoom0"]
 [ext_resource type="Texture2D" uid="uid://bnfpq3vkl4lp1" path="res://assets/ui/panels/About Character Frame/awaken_button.png" id="4_cgoo5"]
+[ext_resource type="Texture2D" uid="uid://hbr05cghnsj5" path="res://assets/ui/stars/star_green.png" id="4_hlsa7"]
+[ext_resource type="Texture2D" uid="uid://dydigaid5gs2w" path="res://assets/ui/stars/star_red.png" id="5_ejmv4"]
+[ext_resource type="Script" uid="uid://dxt7ao7eand2p" path="res://ui/frame_button.gd" id="5_ktmtx"]
 [ext_resource type="PackedScene" uid="uid://u25npfjy8dlk" path="res://ui/equipment_slot.tscn" id="5_xjkyb"]
 [ext_resource type="Texture2D" uid="uid://c3h25qlisee7j" path="res://assets/ui/buttons/Equip_Weapon.png" id="6_p6q8k"]
+[ext_resource type="Texture2D" uid="uid://dxn61b7tidybn" path="res://assets/ui/stars/star_gold.png" id="6_r5v7x"]
 [ext_resource type="Texture2D" uid="uid://jvf7gl52jfg0" path="res://assets/ui/buttons/Equip_Armor.png" id="7_frnmw"]
+[ext_resource type="Texture2D" uid="uid://jthoh8u1gxp5" path="res://assets/ui/panels/power_panel.png" id="7_l8rgl"]
+[ext_resource type="Texture2D" uid="uid://dc4mv8fvoiokk" path="res://assets/frames/white_frame.png" id="7_uo2in"]
 [ext_resource type="Texture2D" uid="uid://bvpocg0eg4chj" path="res://assets/ui/buttons/Equip_Ring.png" id="8_hlsa7"]
+[ext_resource type="Texture2D" uid="uid://b5h02lj73waqm" path="res://assets/frames/blue_frame.png" id="8_v36ia"]
 [ext_resource type="Texture2D" uid="uid://cj4c7khepcwxl" path="res://assets/ui/buttons/Equip_Boots.png" id="9_ejmv4"]
-[ext_resource type="PackedScene" uid="uid://btt73usy7ypx3" path="res://ui/artifact_slot.tscn" id="10_r5v7x"]
-[ext_resource type="PackedScene" uid="uid://bu1qr5i6wfpt6" path="res://ui/treasure_slot.tscn" id="11_2tnaw"]
+[ext_resource type="Texture2D" uid="uid://b4ne5pvcxvfty" path="res://assets/frames/green_frame.png" id="9_lqu1u"]
+[ext_resource type="Texture2D" uid="uid://d31344ugpk1in" path="res://assets/frames/purple_frame.png" id="10_leqmc"]
+[ext_resource type="Texture2D" uid="uid://cpy6pssneuwfn" path="res://assets/frames/red_frame.png" id="11_3huaf"]
+[ext_resource type="Texture2D" uid="uid://iro778n5asw8" path="res://assets/frames/gold_frame.png" id="12_u615a"]
+[ext_resource type="Texture2D" uid="uid://brnubvpvt1qbu" path="res://assets/frames/prismatic_frame.png" id="13_7h3wk"]
+[ext_resource type="Texture2D" uid="uid://dqpgn1wc3e7pf" path="res://assets/ui/buttons/Artifact.png" id="18_ejmv4"]
+[ext_resource type="Texture2D" uid="uid://c8ew00x0dykf7" path="res://assets/ui/buttons/Treasure.png" id="19_r5v7x"]
+[ext_resource type="Texture2D" uid="uid://lkcmf2lqgoeo" path="res://assets/ui/buttons/beast_soul.png" id="25_lqu1u"]
+[ext_resource type="Texture2D" uid="uid://cexarvixp7os" path="res://assets/ui/buttons/lifebound_artifact.png" id="27_leqmc"]
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_3lfvx"]
-color = Color(0.41960785, 0.3529412, 0.19607843, 1)
-thickness = 2
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c8sy8"]
 
-[node name="PartnerPanel" type="Control" unique_id=1235915502]
-layout_mode = 3
+[sub_resource type="FontVariation" id="FontVariation_8nfbe"]
+base_font = ExtResource("2_t0g5j")
+
+[sub_resource type="FontVariation" id="FontVariation_3lfvx"]
+base_font = ExtResource("2_t0g5j")
+spacing_top = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kbrsk"]
+texture = ExtResource("3_b7ngr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nx2xd"]
+texture = ExtResource("4_cgoo5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3lfvx"]
+content_margin_left = 70.0
+content_margin_top = 10.0
+content_margin_right = 70.0
+content_margin_bottom = 10.0
+texture = ExtResource("7_l8rgl")
+
+[sub_resource type="FontVariation" id="FontVariation_kbrsk"]
+base_font = ExtResource("2_t0g5j")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_gkmdj"]
+color = Color(0.62352943, 0.84705883, 0.9098039, 0.5882353)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_l8rgl"]
+color = Color(0.62352943, 0.84705883, 0.9098039, 0.5882353)
+
+[sub_resource type="FontVariation" id="FontVariation_lcowc"]
+base_font = ExtResource("2_t0g5j")
+
+[node name="PartnerPanel" type="PanelContainer" unique_id=404967841]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -1240.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_c8sy8")
+script = ExtResource("1_b7ngr")
+star_empty = ExtResource("2_frnmw")
+star_tiers = Array[Texture2D]([ExtResource("3_qoom0"), ExtResource("4_hlsa7"), ExtResource("5_ejmv4"), ExtResource("6_r5v7x")])
+card_tier_frames = Array[Texture2D]([ExtResource("7_uo2in"), ExtResource("8_v36ia"), ExtResource("9_lqu1u"), ExtResource("10_leqmc"), ExtResource("11_3huaf"), ExtResource("12_u615a"), ExtResource("13_7h3wk")])
+stat_font_size = 18
+name_width = 110
 
-[node name="PanelFrame" type="NinePatchRect" parent="." unique_id=1384894694]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(-344, -215)
-texture = ExtResource("1_uvss4")
-patch_margin_left = 120
-patch_margin_top = 120
-patch_margin_right = 120
-patch_margin_bottom = 120
-
-[node name="PanelMargin" type="MarginContainer" parent="." unique_id=92981443]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -210.0
-offset_bottom = 210.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_right = 40
-
-[node name="MainSplit" type="HBoxContainer" parent="PanelMargin" unique_id=1271390163]
+[node name="Margin" type="MarginContainer" parent="." unique_id=934540006]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
 
-[node name="CardHolder" type="Control" parent="PanelMargin/MainSplit" unique_id=1138261301]
-custom_minimum_size = Vector2(300, 560)
-layout_mode = 2
-
-[node name="PartnerCard" parent="PanelMargin/MainSplit/CardHolder" unique_id=1049355440 instance=ExtResource("2_kc244")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="InfoColumn" type="VBoxContainer" parent="PanelMargin/MainSplit" unique_id=1056385317]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-
-[node name="Partner Name" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1249776148]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Han Li (韩立)"
-
-[node name="RealmLine" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1914878132]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Realm: Mortal Realm Lv.1 (500/1000)"
-
-[node name="StarRow" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=564973890]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "★★★★★"
-
-[node name="ActionRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=2135217481]
+[node name="Body" type="HBoxContainer" parent="Margin" unique_id=1607051246]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="AscendButton" type="TextureButton" parent="PanelMargin/MainSplit/InfoColumn/ActionRow" unique_id=409430071]
-custom_minimum_size = Vector2(0, 45)
+[node name="PartnerCard" parent="Margin/Body" unique_id=1049355440 instance=ExtResource("2_kc244")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 360)
+layout_mode = 2
+
+[node name="Info" type="VBoxContainer" parent="Margin/Body" unique_id=512676303]
 layout_mode = 2
 size_flags_horizontal = 3
-texture_normal = ExtResource("3_b7ngr")
-ignore_texture_size = true
-stretch_mode = 0
+theme_override_constants/separation = 4
 
-[node name="AscendLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/ActionRow/AscendButton" unique_id=1881784913]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+[node name="TopSpacer" type="Control" parent="Margin/Body/Info" unique_id=771489890]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="Margin/Body/Info" unique_id=1813664310]
+layout_mode = 2
+
+[node name="TitleBox" type="VBoxContainer" parent="Margin/Body/Info/Header" unique_id=1444838531]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="Margin/Body/Info/Header/TitleBox" unique_id=1024981929]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = SubResource("FontVariation_8nfbe")
+theme_override_font_sizes/font_size = 32
+text = "Bai Xiao Chun"
+
+[node name="RealmLabel" type="RichTextLabel" parent="Margin/Body/Info/Header/TitleBox" unique_id=891117170]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/default_color = Color(0.92156863, 1, 1, 1)
+theme_override_font_sizes/normal_font_size = 22
+text = "Realm : Mortal Realm Lv. 1"
+fit_content = true
+scroll_active = false
+
+[node name="Stars" type="HBoxContainer" parent="Margin/Body/Info/Header/TitleBox" unique_id=396615132]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = -12
+
+[node name="Star1" type="TextureRect" parent="Margin/Body/Info/Header/TitleBox/Stars" unique_id=1177334509]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_qoom0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star2" type="TextureRect" parent="Margin/Body/Info/Header/TitleBox/Stars" unique_id=429824759]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_qoom0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star3" type="TextureRect" parent="Margin/Body/Info/Header/TitleBox/Stars" unique_id=601785932]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_qoom0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star4" type="TextureRect" parent="Margin/Body/Info/Header/TitleBox/Stars" unique_id=1937213584]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_qoom0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star5" type="TextureRect" parent="Margin/Body/Info/Header/TitleBox/Stars" unique_id=1276248304]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_qoom0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ButtonRow" type="HBoxContainer" parent="Margin/Body/Info" unique_id=832095817]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="AscendButton" type="Button" parent="Margin/Body/Info/ButtonRow" unique_id=2086493919]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/outline_size = 5
-text = ".✦   Ascend / Breakthrough  .✦ "
+theme_override_fonts/font = SubResource("FontVariation_3lfvx")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_kbrsk")
+text = "Ascend / Breakthrough"
+script = ExtResource("5_ktmtx")
+
+[node name="AwakenButton" type="Button" parent="Margin/Body/Info/ButtonRow" unique_id=1363656736]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = SubResource("FontVariation_3lfvx")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_nx2xd")
+text = "Awaken"
+script = ExtResource("5_ktmtx")
+
+[node name="QiRow" type="HBoxContainer" parent="Margin/Body/Info" unique_id=1392252209]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="QiBanner" type="PanelContainer" parent="Margin/Body/Info/QiRow" unique_id=1206434059]
+custom_minimum_size = Vector2(345, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_3lfvx")
+
+[node name="QiLabel" type="Label" parent="Margin/Body/Info/QiRow/QiBanner" unique_id=1430625496]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = SubResource("FontVariation_kbrsk")
+theme_override_font_sizes/font_size = 20
+text = "Qi : 1250"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AwakenButton" type="TextureButton" parent="PanelMargin/MainSplit/InfoColumn/ActionRow" unique_id=1132239925]
-custom_minimum_size = Vector2(0, 45)
+[node name="QiLine" type="HSeparator" parent="Margin/Body/Info/QiRow" unique_id=1711555176]
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
 size_flags_horizontal = 3
-texture_normal = ExtResource("4_cgoo5")
-ignore_texture_size = true
-stretch_mode = 0
+size_flags_vertical = 4
+theme_override_styles/separator = SubResource("StyleBoxLine_gkmdj")
 
-[node name="AwakenLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/ActionRow/AwakenButton" unique_id=2084929651]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-text = "⛤ Awaken ⛤"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Spacing2" type="Control" parent="PanelMargin/MainSplit/InfoColumn" unique_id=960034787]
-custom_minimum_size = Vector2(0, 6)
+[node name="StatGrid" type="GridContainer" parent="Margin/Body/Info" unique_id=1780825817]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 2
+columns = 2
 
-[node name="PowerLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1140222304]
+[node name="GearLine" type="HSeparator" parent="Margin/Body/Info" unique_id=1192413131]
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Power : 1250"
+theme_override_constants/separation = 32
+theme_override_styles/separator = SubResource("StyleBoxLine_l8rgl")
 
-[node name="Spacing" type="Control" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1790830827]
-custom_minimum_size = Vector2(0, 6)
+[node name="GearRow" type="VBoxContainer" parent="Margin/Body/Info" unique_id=863200024]
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="StatGrid" type="GridContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=280883098]
+[node name="EquipGroup" type="VBoxContainer" parent="Margin/Body/Info/GearRow" unique_id=607049047]
 layout_mode = 2
-theme_override_constants/h_separation = 120
-theme_override_constants/v_separation = 8
-columns = 4
+theme_override_constants/separation = 8
 
-[node name="HPLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1474510351]
+[node name="EquipTitle" type="Label" parent="Margin/Body/Info/GearRow/EquipGroup" unique_id=43151202]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "HP :"
-
-[node name="HPValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=427627899]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "8600"
-
-[node name="ATKLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=2038277500]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "ATK :"
-
-[node name="ATKValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1440770163]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "1250"
-
-[node name="DEFLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=269516939]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "DEF :"
-
-[node name="DEFValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1952360920]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "420"
-
-[node name="MDEFLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1757574528]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "MDEF :"
-
-[node name="MDEFValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=951065020]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "380"
-
-[node name="SPDLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1330533582]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "SPD :"
-
-[node name="SPDValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1716190114]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "105"
-
-[node name="CRITLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1057526074]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "CRIT :"
-
-[node name="CRITValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1722598928]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "12.00%"
-
-[node name="EVALabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=849417151]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "EVA :"
-
-[node name="EVAValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=711227794]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "8.00%"
-
-[node name="ENRegenLabel" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=803525004]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "EN Regen :"
-
-[node name="ENRegenValue" type="Label" parent="PanelMargin/MainSplit/InfoColumn/StatGrid" unique_id=1312337169]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "22"
-
-[node name="EquipmentDivider" type="HSeparator" parent="PanelMargin/MainSplit/InfoColumn" unique_id=2142469239]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_3lfvx")
-
-[node name="EquipmentHeader" type="Label" parent="PanelMargin/MainSplit/InfoColumn" unique_id=277279376]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = SubResource("FontVariation_lcowc")
+theme_override_font_sizes/font_size = 24
 text = "Equipment"
 
-[node name="EquipmentRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=2138622148]
+[node name="EquipSlots" type="HBoxContainer" parent="Margin/Body/Info/GearRow/EquipGroup" unique_id=809043585]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 90
-alignment = 1
+theme_override_constants/separation = 8
 
-[node name="SwordSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=982700404 instance=ExtResource("5_xjkyb")]
+[node name="EquipmentSlot" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots" unique_id=982700404 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/SwordSlot/SlotMargin" parent_id_path=PackedInt32Array(982700404, 127330209) index="0" unique_id=492871308]
+[node name="Icon" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot/SlotMargin" parent_id_path=PackedInt32Array(982700404, 127330209) index="0" unique_id=492871308]
 texture = ExtResource("6_p6q8k")
 
-[node name="ArmorSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=1042762072 instance=ExtResource("5_xjkyb")]
+[node name="EquipmentSlot2" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots" unique_id=1203717338 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/ArmorSlot/SlotMargin" parent_id_path=PackedInt32Array(1042762072, 127330209) index="0" unique_id=492871308]
+[node name="Icon" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot2/SlotMargin" parent_id_path=PackedInt32Array(1203717338, 127330209) index="0" unique_id=492871308]
 texture = ExtResource("7_frnmw")
 
-[node name="RingSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=2106012723 instance=ExtResource("5_xjkyb")]
+[node name="EquipmentSlot3" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots" unique_id=14782649 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/RingSlot/SlotMargin" parent_id_path=PackedInt32Array(2106012723, 127330209) index="0" unique_id=492871308]
+[node name="Icon" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot3/SlotMargin" parent_id_path=PackedInt32Array(14782649, 127330209) index="0" unique_id=492871308]
 texture = ExtResource("8_hlsa7")
 
-[node name="BootsSlot" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow" unique_id=3893836 instance=ExtResource("5_xjkyb")]
+[node name="EquipmentSlot4" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots" unique_id=1101645563 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="Icon" parent="PanelMargin/MainSplit/InfoColumn/EquipmentRow/BootsSlot/SlotMargin" parent_id_path=PackedInt32Array(3893836, 127330209) index="0" unique_id=492871308]
+[node name="Icon" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot4/SlotMargin" parent_id_path=PackedInt32Array(1101645563, 127330209) index="0" unique_id=492871308]
 texture = ExtResource("9_ejmv4")
 
-[node name="BottomRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn" unique_id=1512772322]
+[node name="Control" type="Control" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots" unique_id=1905872393]
+custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-theme_override_constants/separation = 60
 
-[node name="ArtifactColumn" type="VBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow" unique_id=1960016568]
+[node name="SpiritSlot" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots" unique_id=473931103 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="ArtifactHeader" type="Label" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn" unique_id=1234443514]
+[node name="Icon" parent="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/SpiritSlot/SlotMargin" parent_id_path=PackedInt32Array(473931103, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("25_lqu1u")
+
+[node name="LowerGear" type="HBoxContainer" parent="Margin/Body/Info/GearRow" unique_id=1458951058]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_constants/separation = 50
+
+[node name="ArtifactGroup" type="VBoxContainer" parent="Margin/Body/Info/GearRow/LowerGear" unique_id=1192581434]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ArtifactTitle" type="Label" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup" unique_id=513849815]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = SubResource("FontVariation_lcowc")
+theme_override_font_sizes/font_size = 24
 text = "Artifacts"
 
-[node name="ArtifactDivider" type="HSeparator" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn" unique_id=252520628]
+[node name="ArtifactSlots" type="HBoxContainer" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup" unique_id=1629624744]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_3lfvx")
+theme_override_constants/separation = 8
 
-[node name="ArtifactRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn" unique_id=2028986827]
-layout_mode = 2
-
-[node name="ArtifactSlot" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=1011732390 instance=ExtResource("10_r5v7x")]
+[node name="ArtifactSlot1" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots" unique_id=1058907852 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="ArtifactSlot2" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=1889216770 instance=ExtResource("10_r5v7x")]
+[node name="Icon" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/ArtifactSlot1/SlotMargin" parent_id_path=PackedInt32Array(1058907852, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("18_ejmv4")
+
+[node name="ArtifactSlot2" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots" unique_id=539418596 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="ArtifactSlot3" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=431377667 instance=ExtResource("10_r5v7x")]
+[node name="Icon" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/ArtifactSlot2/SlotMargin" parent_id_path=PackedInt32Array(539418596, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("18_ejmv4")
+
+[node name="ArtifactSlot3" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots" unique_id=1363529191 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="ArtifactSlot4" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/ArtifactColumn/ArtifactRow" unique_id=414034041 instance=ExtResource("10_r5v7x")]
+[node name="Icon" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/ArtifactSlot3/SlotMargin" parent_id_path=PackedInt32Array(1363529191, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("18_ejmv4")
+
+[node name="Control" type="Control" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots" unique_id=1543060422]
+custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 
-[node name="TreasureColumn" type="VBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow" unique_id=1764430237]
+[node name="LifeboundSlot" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots" unique_id=1490597668 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="TreasureHeader" type="Label" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn" unique_id=1743160019]
+[node name="Icon" parent="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/LifeboundSlot/SlotMargin" parent_id_path=PackedInt32Array(1490597668, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("27_leqmc")
+
+[node name="TreasureGroup" type="VBoxContainer" parent="Margin/Body/Info/GearRow/LowerGear" unique_id=1043272185]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_constants/separation = 8
+
+[node name="TreasureTitle" type="Label" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup" unique_id=2034111727]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = SubResource("FontVariation_lcowc")
+theme_override_font_sizes/font_size = 24
 text = "Treasures"
 
-[node name="TreasureDivider" type="HSeparator" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn" unique_id=1300903304]
+[node name="TreasuresSlots" type="HBoxContainer" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup" unique_id=1182799000]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_3lfvx")
+theme_override_constants/separation = 8
 
-[node name="TreasureRow" type="HBoxContainer" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn" unique_id=890270567]
-layout_mode = 2
-
-[node name="TreasureSlot" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=467110035 instance=ExtResource("11_2tnaw")]
+[node name="TreasureSlot1" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots" unique_id=1259320848 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="TreasureSlot2" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=1760551500 instance=ExtResource("11_2tnaw")]
+[node name="Icon" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots/TreasureSlot1/SlotMargin" parent_id_path=PackedInt32Array(1259320848, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("19_r5v7x")
+
+[node name="TreasureSlot2" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots" unique_id=102863814 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="TreasureSlot3" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=971153804 instance=ExtResource("11_2tnaw")]
+[node name="Icon" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots/TreasureSlot2/SlotMargin" parent_id_path=PackedInt32Array(102863814, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("19_r5v7x")
+
+[node name="TreasureSlot3" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots" unique_id=1036449117 instance=ExtResource("5_xjkyb")]
 layout_mode = 2
 
-[node name="TreasureSlot4" parent="PanelMargin/MainSplit/InfoColumn/BottomRow/TreasureColumn/TreasureRow" unique_id=833021840 instance=ExtResource("11_2tnaw")]
-layout_mode = 2
+[node name="Icon" parent="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots/TreasureSlot3/SlotMargin" parent_id_path=PackedInt32Array(1036449117, 127330209) index="0" unique_id=492871308]
+texture = ExtResource("19_r5v7x")
 
-[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/SwordSlot"]
-[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/ArmorSlot"]
-[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/RingSlot"]
-[editable path="PanelMargin/MainSplit/InfoColumn/EquipmentRow/BootsSlot"]
+[editable path="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot"]
+[editable path="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot2"]
+[editable path="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot3"]
+[editable path="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/EquipmentSlot4"]
+[editable path="Margin/Body/Info/GearRow/EquipGroup/EquipSlots/SpiritSlot"]
+[editable path="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/ArtifactSlot1"]
+[editable path="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/ArtifactSlot2"]
+[editable path="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/ArtifactSlot3"]
+[editable path="Margin/Body/Info/GearRow/LowerGear/ArtifactGroup/ArtifactSlots/LifeboundSlot"]
+[editable path="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots/TreasureSlot1"]
+[editable path="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots/TreasureSlot2"]
+[editable path="Margin/Body/Info/GearRow/LowerGear/TreasureGroup/TreasuresSlots/TreasureSlot3"]

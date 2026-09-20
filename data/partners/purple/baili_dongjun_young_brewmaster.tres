@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://06rmlr1hq2tb"]
+
+[ext_resource type="Texture2D" uid="uid://c0i2njmsl5r07" path="res://assets/partners/purple/baili_dongjun_young_brewmaster/card.png" id="1_eabq8"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_ufnhw"]
+[ext_resource type="Texture2D" uid="uid://ukl3nky7lxh1" path="res://assets/partners/purple/baili_dongjun_young_brewmaster/sprite.png" id="3_u87uy"]
+
+[resource]
+script = ExtResource("2_ufnhw")
+partner_id = "baili_dongjun_young_brewmaster"
+display_name = "Baili Dongjun"
+form_name = "Young Brewmaster"
+rarity = 3
+path = 3
+card_texture = ExtResource("1_eabq8")
+sprite_texture = ExtResource("3_u87uy")

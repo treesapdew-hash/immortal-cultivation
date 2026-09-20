@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bvvwdqyh5ct53"]
+
+[ext_resource type="Texture2D" uid="uid://d4ifpwgtkmyt3" path="res://assets/partners/white/long_haochen_squire/long_haochen_squire_card.png" id="1_lb88o"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_uwaix"]
+[ext_resource type="Texture2D" uid="uid://c7vk3c0j6y233" path="res://assets/partners/white/long_haochen_squire/long_haochen_squire_sprite.png" id="3_yp4m2"]
+
+[resource]
+script = ExtResource("2_uwaix")
+partner_id = "long_haochen_squire"
+display_name = "Long Haochen"
+form_name = "Squire"
+path = 0
+card_texture = ExtResource("1_lb88o")
+sprite_texture = ExtResource("3_yp4m2")

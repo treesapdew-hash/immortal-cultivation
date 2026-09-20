@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c1bbrls8m0e8r"]
+
+[ext_resource type="Texture2D" uid="uid://g1awxri6sgm" path="res://assets/partners/gold/long_hao_chen_throne/card.png" id="1_m2583"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_u6242"]
+[ext_resource type="Texture2D" uid="uid://b5t0sss4fv5dp" path="res://assets/partners/gold/long_hao_chen_throne/sprite.png" id="3_ti6w6"]
+
+[resource]
+script = ExtResource("2_u6242")
+partner_id = "long_hao_chen_throne"
+display_name = "Long Haochen"
+form_name = "Throne of Eternity and Creation"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_m2583")
+sprite_texture = ExtResource("3_ti6w6")

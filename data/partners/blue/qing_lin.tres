@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cqtv1b3ncdxa3"]
+
+[ext_resource type="Texture2D" uid="uid://csd2ju82jxsqa" path="res://assets/partners/blue/qing_lin/card.png" id="1_mwu1w"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_u5le3"]
+[ext_resource type="Texture2D" uid="uid://do1c1x446giq8" path="res://assets/partners/blue/qing_lin/sprite.png" id="3_gn7v1"]
+
+[resource]
+script = ExtResource("2_u5le3")
+partner_id = "qing_lin"
+display_name = "Qing Lin"
+rarity = 1
+path = 1
+card_texture = ExtResource("1_mwu1w")
+sprite_texture = ExtResource("3_gn7v1")

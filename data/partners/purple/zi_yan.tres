@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://xm5sf0ae7gb4"]
+
+[ext_resource type="Texture2D" uid="uid://ddjik65unxmgj" path="res://assets/partners/purple/zi_yan/card.png" id="1_8jf7c"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_816rj"]
+[ext_resource type="Texture2D" uid="uid://cvlxcx78y3btw" path="res://assets/partners/purple/zi_yan/sprite.png" id="3_n4xof"]
+
+[resource]
+script = ExtResource("2_816rj")
+partner_id = "zi_yan"
+display_name = "Zi Yan"
+form_name = "Little Dragon"
+rarity = 3
+card_texture = ExtResource("1_8jf7c")
+sprite_texture = ExtResource("3_n4xof")

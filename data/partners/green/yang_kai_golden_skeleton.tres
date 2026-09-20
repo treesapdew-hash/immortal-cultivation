@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dj23li7ti5sg5"]
+
+[ext_resource type="Texture2D" uid="uid://deritsewgc184" path="res://assets/partners/green/yang_kai_golden_skeleton/card.png" id="1_bk8yl"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_bg0d7"]
+[ext_resource type="Texture2D" uid="uid://cqv1hakvhmc8p" path="res://assets/partners/green/yang_kai_golden_skeleton/sprite.png" id="3_dm3v0"]
+
+[resource]
+script = ExtResource("2_bg0d7")
+partner_id = "yang_kai_golden_skeleton"
+display_name = "Yang Kai"
+form_name = "Golden Skeleton"
+rarity = 2
+card_texture = ExtResource("1_bk8yl")
+sprite_texture = ExtResource("3_dm3v0")

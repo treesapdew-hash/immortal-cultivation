@@ -1,0 +1,386 @@
+[gd_scene format=3 uid="uid://isrv3qoh5mdl"]
+
+[ext_resource type="Texture2D" uid="uid://d2getny1yc1qv" path="res://assets/ui/panels/ResourceBar.png" id="1_euwpp"]
+[ext_resource type="PackedScene" uid="uid://bx0wgd6xq4b1s" path="res://ui/character_creation.tscn" id="1_m3mii"]
+[ext_resource type="Texture2D" uid="uid://xnrgk56g35ai" path="res://assets/ui/icons/realm_emblem.png" id="2_f77xh"]
+[ext_resource type="Script" uid="uid://c8kasql4uaejr" path="res://ui/top_row.gd" id="2_ngtaj"]
+[ext_resource type="FontFile" uid="uid://cclqo2il368b" path="res://assets/TrajanPro-Bold.otf" id="3_1lsp0"]
+[ext_resource type="PackedScene" uid="uid://c47qg4ixchyt2" path="res://ui/partner_panel.tscn" id="3_bmu87"]
+[ext_resource type="Texture2D" uid="uid://cseg202wxlmu7" path="res://assets/ui/mortal_realm.png" id="3_ngtaj"]
+[ext_resource type="PackedScene" uid="uid://cbtdyh3e2auao" path="res://ui/resource_pill.tscn" id="4_32b25"]
+[ext_resource type="Texture2D" uid="uid://ie67x50ub1rm" path="res://assets/ui/spirit_realm.png" id="4_m3mii"]
+[ext_resource type="Texture2D" uid="uid://bw36pftm8r7kp" path="res://assets/ui/icons/immortal_jade.png" id="5_1lsp0"]
+[ext_resource type="Texture2D" uid="uid://c80a6p3bdf1r1" path="res://assets/ui/sovereign_realm.png" id="5_ngtaj"]
+[ext_resource type="Script" uid="uid://dqvr7dtxx0uqb" path="res://battle/home_battle.gd" id="6_60pxk"]
+[ext_resource type="Texture2D" uid="uid://dfe2i424obkla" path="res://assets/ui/icons/settings.png" id="6_fj8ar"]
+[ext_resource type="Texture2D" uid="uid://4mn74cbggkyy" path="res://assets/ui/immortal_realm.png" id="6_my74w"]
+[ext_resource type="Texture2D" uid="uid://3wfxj0cai0d5" path="res://assets/backgrounds/background.png" id="6_phdw3"]
+[ext_resource type="PackedScene" uid="uid://cy6cwcxrsqfnj" path="res://battle/battlefield.tscn" id="7_32b25"]
+[ext_resource type="Texture2D" uid="uid://dl4rrh72y10kw" path="res://assets/ui/panels/battle_frame.png" id="10_1lsp0"]
+[ext_resource type="PackedScene" uid="uid://6lxlp0pwwnyb" path="res://ui/formation_button.tscn" id="11_ivh2d"]
+[ext_resource type="Texture2D" uid="uid://dqewmfj42teqx" path="res://assets/ui/panels/shared_panel.png" id="11_ngtaj"]
+[ext_resource type="Script" uid="uid://kg12pcvast4w" path="res://ui/stage_label.gd" id="12_1lsp0"]
+[ext_resource type="Texture2D" uid="uid://dg8b7o34vgrbp" path="res://assets/ui/icons/summoning_icon.png" id="12_djufs"]
+[ext_resource type="Texture2D" uid="uid://blmvr4pjwycv0" path="res://assets/ui/icons/partners_icon.png" id="13_ngtaj"]
+[ext_resource type="Texture2D" uid="uid://dwb872q0j02vq" path="res://assets/ui/icons/inventory_icon.png" id="14_m3mii"]
+[ext_resource type="Script" uid="uid://dxt7ao7eand2p" path="res://ui/frame_button.gd" id="15_32b25"]
+[ext_resource type="Texture2D" uid="uid://c385xpqc32jfp" path="res://assets/ui/icons/guild_icon.png" id="15_gjw03"]
+[ext_resource type="Script" uid="uid://c1nj0bfnrr3vs" path="res://ui/slot_row.gd" id="17_djufs"]
+[ext_resource type="PackedScene" uid="uid://iq3mywo6scxc" path="res://ui/formation_slot.tscn" id="17_xmu46"]
+[ext_resource type="PackedScene" uid="uid://c44sh5bnqh2u0" path="res://ui/nav_bar.tscn" id="21_f77xh"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_m3mii"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_gjw03"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_my74w"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_gwnoa"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_xmu46"]
+
+[node name="HomeScreen" type="Control" unique_id=2011501901]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainLayout" type="VBoxContainer" parent="." unique_id=774900976]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TopBar" type="TextureRect" parent="MainLayout" unique_id=125717195]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+texture = ExtResource("1_euwpp")
+expand_mode = 1
+
+[node name="TopMargin" type="MarginContainer" parent="MainLayout/TopBar" unique_id=491777412]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="TopRow" type="HBoxContainer" parent="MainLayout/TopBar/TopMargin" unique_id=256038944]
+layout_mode = 2
+theme_override_constants/separation = 20
+script = ExtResource("2_ngtaj")
+major_emblems = Array[Texture2D]([ExtResource("3_ngtaj"), ExtResource("4_m3mii"), ExtResource("5_ngtaj"), ExtResource("6_my74w")])
+
+[node name="EmblemSlot" type="Control" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=208328526]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="RealmEmblem" type="TextureRect" parent="MainLayout/TopBar/TopMargin/TopRow/EmblemSlot" unique_id=1189398908]
+z_index = 1
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 1
+offset_right = 85.0
+offset_bottom = 90.0
+size_flags_vertical = 4
+texture = ExtResource("2_f77xh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=141656715]
+layout_mode = 2
+theme_override_constants/margin_top = 6
+
+[node name="RealmLabel" type="Label" parent="MainLayout/TopBar/TopMargin/TopRow/MarginContainer" unique_id=764057767]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_1lsp0")
+theme_override_font_sizes/font_size = 20
+text = "Mortal Realm"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=1984912248]
+custom_minimum_size = Vector2(2, 32)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.56078434, 0.627451, 0.6901961, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=841432049]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 6
+
+[node name="CultivationLabel" type="Label" parent="MainLayout/TopBar/TopMargin/TopRow/MarginContainer2" unique_id=259728426]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_1lsp0")
+theme_override_font_sizes/font_size = 16
+text = "Qi Condensation 1"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="TopSpacer" type="Control" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=1291109526]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpirirtStonePill" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=1067118367 instance=ExtResource("4_32b25")]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Immortal JadePill" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=843211759 instance=ExtResource("4_32b25")]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Icon" parent="MainLayout/TopBar/TopMargin/TopRow/Immortal JadePill/MarginContainer/HBoxContainer" parent_id_path=PackedInt32Array(843211759, 776028594) index="0" unique_id=1266716667]
+texture = ExtResource("5_1lsp0")
+
+[node name="TextureButton" type="TextureButton" parent="MainLayout/TopBar/TopMargin/TopRow" unique_id=1812177840]
+custom_minimum_size = Vector2(70, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("6_fj8ar")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="BattleArea" type="Control" parent="MainLayout" unique_id=1853130106 node_paths=PackedStringArray("result_label")]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("6_60pxk")
+result_label = NodePath("ResultLabel")
+
+[node name="StageBG" type="TextureRect" parent="MainLayout/BattleArea" unique_id=993019682]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.015
+anchor_top = -0.11
+anchor_right = 1.01
+anchor_bottom = 1.015
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_phdw3")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FormationLayout" parent="MainLayout/BattleArea" unique_id=1292885072 instance=ExtResource("7_32b25")]
+layout_mode = 1
+offset_left = 37.0
+offset_bottom = 760.0
+
+[node name="BattleFrame" type="NinePatchRect" parent="MainLayout/BattleArea" unique_id=1968710301]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_1lsp0")
+
+[node name="StageLabel" type="Label" parent="MainLayout/BattleArea" unique_id=1579326144]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 44.0
+grow_horizontal = 2
+size_flags_horizontal = 6
+theme_override_colors/font_color = Color(0.92156863, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_1lsp0")
+theme_override_font_sizes/font_size = 22
+text = "Stage 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("12_1lsp0")
+
+[node name="ResultLabel" type="Label" parent="MainLayout/BattleArea" unique_id=1767027850]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 78
+text = "VICTORY!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FxLayer" type="Control" parent="MainLayout/BattleArea" unique_id=1710747378 groups=["battle_fx"]]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LowerPanel" type="NinePatchRect" parent="MainLayout" unique_id=664744479]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("11_ngtaj")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainLayout/LowerPanel" unique_id=244687149]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -67.0
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 82
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="LowerStack" type="VBoxContainer" parent="MainLayout/LowerPanel/MarginContainer" unique_id=234430477]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="QuickMenuPanel" type="NinePatchRect" parent="MainLayout/LowerPanel/MarginContainer/LowerStack" unique_id=109976701]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Texture" type="NinePatchRect" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel" unique_id=1246751888]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel" unique_id=1005714666]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="QuickMenuRow" type="HBoxContainer" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel/MarginContainer" unique_id=761672200]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="FormationTab" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel/MarginContainer/QuickMenuRow" unique_id=1201088525 instance=ExtResource("11_ivh2d")]
+layout_mode = 2
+size_flags_horizontal = 3
+button_group = SubResource("ButtonGroup_m3mii")
+script = ExtResource("15_32b25")
+
+[node name="SummonTab" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel/MarginContainer/QuickMenuRow" unique_id=1488517244 instance=ExtResource("11_ivh2d")]
+layout_mode = 2
+size_flags_horizontal = 3
+button_group = SubResource("ButtonGroup_gjw03")
+text = "Summon"
+icon = ExtResource("12_djufs")
+script = ExtResource("15_32b25")
+
+[node name="PartnerTab" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel/MarginContainer/QuickMenuRow" unique_id=1088152739 instance=ExtResource("11_ivh2d")]
+layout_mode = 2
+size_flags_horizontal = 3
+button_group = SubResource("ButtonGroup_my74w")
+text = "Partner"
+icon = ExtResource("13_ngtaj")
+script = ExtResource("15_32b25")
+
+[node name="InventoryTab" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel/MarginContainer/QuickMenuRow" unique_id=2018021126 instance=ExtResource("11_ivh2d")]
+layout_mode = 2
+size_flags_horizontal = 3
+button_group = SubResource("ButtonGroup_gwnoa")
+text = "Inventory"
+icon = ExtResource("14_m3mii")
+script = ExtResource("15_32b25")
+
+[node name="GuildTab" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/QuickMenuPanel/MarginContainer/QuickMenuRow" unique_id=981961792 instance=ExtResource("11_ivh2d")]
+layout_mode = 2
+size_flags_horizontal = 3
+button_group = SubResource("ButtonGroup_xmu46")
+text = "Guild"
+icon = ExtResource("15_gjw03")
+script = ExtResource("15_32b25")
+
+[node name="FormationPanel" type="PanelContainer" parent="MainLayout/LowerPanel/MarginContainer/LowerStack" unique_id=2110794509]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel" unique_id=1279727629]
+layout_mode = 2
+
+[node name="SlotRow" type="HBoxContainer" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel/MarginContainer" unique_id=937331980]
+layout_mode = 2
+theme_override_constants/separation = 19
+script = ExtResource("17_djufs")
+
+[node name="Slot 1" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel/MarginContainer/SlotRow" unique_id=1144016392 instance=ExtResource("17_xmu46")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Slot 2" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel/MarginContainer/SlotRow" unique_id=2003507500 instance=ExtResource("17_xmu46")]
+layout_mode = 2
+size_flags_horizontal = 3
+preview_stars = 20
+
+[node name="Slot 3" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel/MarginContainer/SlotRow" unique_id=512217245 instance=ExtResource("17_xmu46")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Slot 4" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel/MarginContainer/SlotRow" unique_id=1476661535 instance=ExtResource("17_xmu46")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Slot 5" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel/MarginContainer/SlotRow" unique_id=1517292738 instance=ExtResource("17_xmu46")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Slot 6" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/FormationPanel/MarginContainer/SlotRow" unique_id=1601041799 instance=ExtResource("17_xmu46")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PartnerPanelHolder" type="Control" parent="MainLayout/LowerPanel/MarginContainer/LowerStack" unique_id=581340857]
+custom_minimum_size = Vector2(0, 680)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PartnerPanel" parent="MainLayout/LowerPanel/MarginContainer/LowerStack/PartnerPanelHolder" unique_id=1235915502 instance=ExtResource("3_bmu87")]
+layout_mode = 1
+offset_bottom = -60.0
+
+[node name="BottomNavPanel" type="NinePatchRect" parent="MainLayout" unique_id=756531381]
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+
+[node name="NavBar" parent="MainLayout/BottomNavPanel" unique_id=213950660 instance=ExtResource("21_f77xh")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterCreation" parent="." unique_id=1009358944 instance=ExtResource("1_m3mii")]
+layout_mode = 0
+
+[editable path="MainLayout/TopBar/TopMargin/TopRow/Immortal JadePill"]

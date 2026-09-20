@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dxek2yg4f2tgi"]
+
+[ext_resource type="Texture2D" uid="uid://c1ok1dc8f4pta" path="res://assets/partners/red/yang_kai_late_dragon/card.png" id="1_ueqoe"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_fg8xk"]
+[ext_resource type="Texture2D" uid="uid://bitintydao2lh" path="res://assets/partners/red/yang_kai_late_dragon/sprite.png" id="3_istou"]
+
+[resource]
+script = ExtResource("2_fg8xk")
+partner_id = "yang_kai_late_dragon"
+display_name = "Yang Kai"
+form_name = "True Dragon"
+rarity = 4
+card_texture = ExtResource("1_ueqoe")
+sprite_texture = ExtResource("3_istou")

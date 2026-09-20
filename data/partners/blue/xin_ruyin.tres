@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cfnlg0xo02hkp"]
+
+[ext_resource type="Texture2D" uid="uid://b80bpasmuqglk" path="res://assets/partners/blue/xin_ruyin/card.png" id="1_g8mx5"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_185wx"]
+[ext_resource type="Texture2D" uid="uid://bvpdg8v8nelsy" path="res://assets/partners/blue/xin_ruyin/sprite.png" id="3_wxadr"]
+
+[resource]
+script = ExtResource("2_185wx")
+partner_id = "xin_ruyin"
+display_name = "Xin Ruyin"
+rarity = 1
+path = 2
+card_texture = ExtResource("1_g8mx5")
+sprite_texture = ExtResource("3_wxadr")

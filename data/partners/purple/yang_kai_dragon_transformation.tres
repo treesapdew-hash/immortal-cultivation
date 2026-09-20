@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dikec1eetux31"]
+
+[ext_resource type="Texture2D" uid="uid://cpo6bd0ckm61b" path="res://assets/partners/purple/yang_kai_dragon_transformation/card.png" id="1_qjrs1"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_i1wpg"]
+[ext_resource type="Texture2D" uid="uid://7itsn30tte07" path="res://assets/partners/purple/yang_kai_dragon_transformation/sprite.png" id="3_5ifek"]
+
+[resource]
+script = ExtResource("2_i1wpg")
+partner_id = "yang_kai_dragon_transformation"
+display_name = "Yang Kai"
+form_name = "Dragon Transformation"
+rarity = 3
+card_texture = ExtResource("1_qjrs1")
+sprite_texture = ExtResource("3_5ifek")

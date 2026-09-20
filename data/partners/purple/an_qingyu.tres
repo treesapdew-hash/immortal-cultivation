@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://d3hig1qpngnn4"]
+
+[ext_resource type="Texture2D" uid="uid://ban7yah8n016g" path="res://assets/partners/purple/an_qingyu/card.png" id="1_mxyh4"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_7fthl"]
+[ext_resource type="Texture2D" uid="uid://cdhjub5428xe3" path="res://assets/partners/purple/an_qingyu/sprite.png" id="3_rkw7v"]
+
+[resource]
+script = ExtResource("2_7fthl")
+partner_id = "an_qingyu"
+display_name = "An Qingyu"
+rarity = 3
+path = 2
+card_texture = ExtResource("1_mxyh4")
+sprite_texture = ExtResource("3_rkw7v")

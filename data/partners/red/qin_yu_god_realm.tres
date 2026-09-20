@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://eyrlmtysxito"]
+
+[ext_resource type="Texture2D" uid="uid://dq2jvfvbrwv2d" path="res://assets/partners/red/qin_yu_god_realm/card.png" id="1_a7j8g"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_d2s31"]
+[ext_resource type="Texture2D" uid="uid://ibnalspp6h5" path="res://assets/partners/red/qin_yu_god_realm/sprite.png" id="3_v3o2j"]
+
+[resource]
+script = ExtResource("2_d2s31")
+partner_id = "qin_yu_god_realm"
+display_name = "Qin Yu"
+form_name = "Artisan God"
+rarity = 4
+card_texture = ExtResource("1_a7j8g")
+sprite_texture = ExtResource("3_v3o2j")

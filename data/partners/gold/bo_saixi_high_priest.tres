@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://b31b54j4hn2p4"]
+
+[ext_resource type="Texture2D" uid="uid://cxvpks00m65vj" path="res://assets/partners/gold/bo_saixi_high_priest/card.png" id="1_4bco5"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_uk55m"]
+[ext_resource type="Texture2D" uid="uid://b0glkpc4cflj6" path="res://assets/partners/gold/bo_saixi_high_priest/sprite.png" id="3_swetl"]
+
+[resource]
+script = ExtResource("2_uk55m")
+partner_id = "bo_saixi_high_priest"
+display_name = "Bo Saixi"
+form_name = "Peak High Priest"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_4bco5")
+sprite_texture = ExtResource("3_swetl")

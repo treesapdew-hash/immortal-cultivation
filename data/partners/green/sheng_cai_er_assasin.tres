@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://80fp5g4n0aan"]
+
+[ext_resource type="Texture2D" uid="uid://cv0gpw8pmf5og" path="res://assets/partners/green/sheng_cai_er_assasin/card.png" id="1_nvjii"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_n7wn5"]
+[ext_resource type="Texture2D" uid="uid://w2ma6fvdcaor" path="res://assets/partners/green/sheng_cai_er_assasin/sprite.png" id="3_ojxjk"]
+
+[resource]
+script = ExtResource("2_n7wn5")
+partner_id = "sheng_cai_er_assasin"
+display_name = "Sheng Cai'er"
+form_name = "Assassin"
+rarity = 2
+path = 1
+card_texture = ExtResource("1_nvjii")
+sprite_texture = ExtResource("3_ojxjk")

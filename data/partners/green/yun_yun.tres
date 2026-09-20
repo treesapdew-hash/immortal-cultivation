@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://l7rlni35ehtr"]
+
+[ext_resource type="Texture2D" uid="uid://bf6xb0as1gwil" path="res://assets/partners/green/yun_yun/card.png" id="1_2atmi"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_3l5ds"]
+[ext_resource type="Texture2D" uid="uid://b3nof7h6tfgmx" path="res://assets/partners/green/yun_yun/sprite.png" id="3_1pjqn"]
+
+[resource]
+script = ExtResource("2_3l5ds")
+partner_id = "yun_yun"
+display_name = "Yun Yun"
+form_name = "Cloud Lan Sect"
+rarity = 2
+path = 3
+card_texture = ExtResource("1_2atmi")
+sprite_texture = ExtResource("3_1pjqn")

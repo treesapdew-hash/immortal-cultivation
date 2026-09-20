@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://d1orowu3vexs0"]
+
+[ext_resource type="Texture2D" uid="uid://ck1124lge8qi2" path="res://assets/partners/blue/ye_ziyun/card.png" id="1_bp0oi"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_ivspu"]
+[ext_resource type="Texture2D" uid="uid://cxyl8osclaqje" path="res://assets/partners/blue/ye_ziyun/sprite.png" id="3_tgrk6"]
+
+[resource]
+script = ExtResource("2_ivspu")
+partner_id = "ye_ziyun"
+display_name = "Ye Ziyun"
+rarity = 1
+path = 2
+card_texture = ExtResource("1_bp0oi")
+sprite_texture = ExtResource("3_tgrk6")

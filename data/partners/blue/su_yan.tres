@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://drbi38xqkx3lc"]
+
+[ext_resource type="Texture2D" uid="uid://bqqo3cq7minne" path="res://assets/partners/blue/su_yan/card.png" id="1_6cjfq"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_oef4s"]
+[ext_resource type="Texture2D" uid="uid://b254w0k8ljvi6" path="res://assets/partners/blue/su_yan/sprite.png" id="3_x7prq"]
+
+[resource]
+script = ExtResource("2_oef4s")
+partner_id = "su_yan"
+display_name = "Su Yan"
+rarity = 1
+path = 0
+card_texture = ExtResource("1_6cjfq")
+sprite_texture = ExtResource("3_x7prq")

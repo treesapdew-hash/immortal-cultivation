@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://cv4r40s0w0p4p"]
+
+[ext_resource type="Texture2D" uid="uid://bnrau35ai62wa" path="res://assets/partners/red/wuxin_late/card.png" id="1_brm5b"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_7njtm"]
+[ext_resource type="Texture2D" uid="uid://d2q4r1aurtdxx" path="res://assets/partners/red/wuxin_late/sprite.png" id="3_ehxo7"]
+
+[resource]
+script = ExtResource("2_7njtm")
+partner_id = "wuxin_late"
+display_name = "Wuxin"
+rarity = 4
+path = 1
+card_texture = ExtResource("1_brm5b")
+sprite_texture = ExtResource("3_ehxo7")

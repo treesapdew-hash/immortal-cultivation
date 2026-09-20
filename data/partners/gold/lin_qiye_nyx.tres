@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://c1gglxhwx07uy"]
+
+[ext_resource type="Texture2D" uid="uid://b0ftptitd0qya" path="res://assets/partners/gold/lin_qiye_nyx/card.png" id="1_erxlw"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_n40n1"]
+[ext_resource type="Texture2D" uid="uid://c3nwybv61s58m" path="res://assets/partners/gold/lin_qiye_nyx/sprite.png" id="3_i1hwc"]
+
+[resource]
+script = ExtResource("2_n40n1")
+partner_id = "lin_qiye_nyx"
+display_name = "Lin Qiye"
+form_name = "Nyx Form"
+rarity = 5
+path = 0
+card_texture = ExtResource("1_erxlw")
+sprite_texture = ExtResource("3_i1hwc")

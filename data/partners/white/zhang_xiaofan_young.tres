@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://dxlw1khrn5xvc"]
+
+[ext_resource type="Texture2D" uid="uid://c75cc62e4bd36" path="res://assets/partners/white/zhang_xiaofan_young/zhang_xiaofan_young_card.png" id="1_jqjl4"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_he8jc"]
+[ext_resource type="Texture2D" uid="uid://brkxdyoj60kok" path="res://assets/partners/white/zhang_xiaofan_young/zhang_xiaofan_young_sprite.png" id="3_3svkb"]
+
+[resource]
+script = ExtResource("2_he8jc")
+partner_id = "zhang_xiaofan_young"
+display_name = "Zhang Xiaofan"
+form_name = "Young"
+path = 3
+card_texture = ExtResource("1_jqjl4")
+sprite_texture = ExtResource("3_3svkb")

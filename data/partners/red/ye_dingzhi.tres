@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://d4eyosu4vkiml"]
+
+[ext_resource type="Texture2D" uid="uid://bt54ab56odbl2" path="res://assets/partners/red/ye_dingzhi/card.png" id="1_c204h"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_7oim6"]
+[ext_resource type="Texture2D" uid="uid://c3rx6ybicmnld" path="res://assets/partners/red/ye_dingzhi/sprite.png" id="3_68ulb"]
+
+[resource]
+script = ExtResource("2_7oim6")
+partner_id = "ye_dingzhi"
+display_name = "Ye Dingzhi"
+rarity = 4
+card_texture = ExtResource("1_c204h")
+sprite_texture = ExtResource("3_68ulb")

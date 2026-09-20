@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bx0wgd6xq4b1s"]
+
+[ext_resource type="Script" uid="uid://b4m3gqj0t0u0g" path="res://ui/character_creation.gd" id="1_073lf"]
+
+[node name="CharacterCreation" type="Control" unique_id=1009358944]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_073lf")

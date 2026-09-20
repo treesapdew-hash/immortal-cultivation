@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://b4a248qgknpsc"]
+
+[ext_resource type="Texture2D" uid="uid://bu4xqwog7m5bq" path="res://assets/partners/purple/ying_huanhuan_mature/card.png" id="1_ts5a1"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_cbwh7"]
+[ext_resource type="Texture2D" uid="uid://3kdq7gdeqqx3" path="res://assets/partners/purple/ying_huanhuan_mature/sprite.png" id="3_0qj8l"]
+
+[resource]
+script = ExtResource("2_cbwh7")
+partner_id = "ying_huanhuan_mature"
+display_name = "Ying Huanhuan"
+form_name = "Mature"
+rarity = 3
+path = 1
+card_texture = ExtResource("1_ts5a1")
+sprite_texture = ExtResource("3_0qj8l")

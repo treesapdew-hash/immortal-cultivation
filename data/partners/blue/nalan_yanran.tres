@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://ptyi8wujjuo"]
+
+[ext_resource type="Texture2D" uid="uid://dtug7rj2av088" path="res://assets/partners/blue/nalan_yanran/card.png" id="1_ogs0r"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_kb6m2"]
+[ext_resource type="Texture2D" uid="uid://ceibd48ha16vo" path="res://assets/partners/blue/nalan_yanran/sprite.png" id="3_hwc46"]
+
+[resource]
+script = ExtResource("2_kb6m2")
+partner_id = "nalan_yanran"
+display_name = "Nalan Yanran"
+rarity = 1
+path = 2
+card_texture = ExtResource("1_ogs0r")
+sprite_texture = ExtResource("3_hwc46")

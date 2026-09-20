@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PartnerData" format=3 uid="uid://bfk01lsr47l1n"]
+
+[ext_resource type="Texture2D" uid="uid://bdvhp01cru7xh" path="res://assets/partners/white/luo_feng_student/luo_feng_student_card.png" id="1_vun1s"]
+[ext_resource type="Script" uid="uid://dgn2bdb33dtct" path="res://data/partner_data.gd" id="2_au42k"]
+[ext_resource type="Texture2D" uid="uid://dn8ow0xsirq55" path="res://assets/partners/white/luo_feng_student/luo_feng_student_sprite.png" id="3_x3yq1"]
+
+[resource]
+script = ExtResource("2_au42k")
+partner_id = "luo_feng_student"
+display_name = "Luo Feng"
+form_name = "Student"
+card_texture = ExtResource("1_vun1s")
+sprite_texture = ExtResource("3_x3yq1")
