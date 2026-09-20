@@ -23,6 +23,9 @@ const COL_DIM := Color("7f8ea3")
 const COL_OK := Color("7dffa8")
 
 var _tab := "Partners"
+## Server-held titles are fetched once per visit to this screen, not
+## on every tab switch: they change rarely and it costs a round trip.
+var _titles_synced := false
 var _tab_buttons := {}
 var _body: VBoxContainer
 var _summary: Label
@@ -120,6 +123,12 @@ func _build_titles() -> void:
 	# page existed, so bring them up to date on the way in rather than
 	# waiting for the next thing that happens to bump a stat.
 	Titles.refresh()
+	# Placements and sect ranks live on the server. Fetched alongside,
+	# not awaited: the page draws now with what is already known and
+	# redraws if the server disagrees.
+	if not _titles_synced:
+		_titles_synced = true
+		_sync_server_titles()
 	var owned := Titles.owned_ids()
 	_body.add_child(_label("Earned %d / %d titles" % [owned.size(), Titles.LIST.size()],
 		20, COL_TEXT, HORIZONTAL_ALIGNMENT_LEFT))
@@ -272,6 +281,21 @@ func _title_banner(id: String, tint: Color, have: bool) -> Control:
 		plate.draw_rect(inset, Color(shade, 0.35), false, 1.0)
 	)
 	return plate
+
+
+## Pulls the server-held set and redraws only if it differs, so a
+## rank gained or lost elsewhere shows up without a relaunch. Compares
+## the whole set rather than the newly granted ones, because a sync
+## can take a title away as well as give one.
+func _sync_server_titles() -> void:
+	if not Showcase.available():
+		return
+	var before := Titles.owned_ids()
+	await Showcase.pull_titles()
+	if not is_instance_valid(self) or not is_inside_tree() or _tab != "Titles":
+		return
+	if Titles.owned_ids() != before:
+		_rebuild()
 
 
 func _wear(id: String) -> void:
