@@ -74,6 +74,17 @@ static func claim(code: String) -> Dictionary:
 	return {"ok": true, "text": text, "error": ""}
 
 
+## Frees this account's claimed codes, for when the player wipes
+## their save from Settings. The Supabase account survives that, so
+## without this a welcome code could never be used again.
+## Quiet: failing here costs a code, not a save, and the reset should
+## not be held up by it.
+static func reset_claims() -> void:
+	if not available():
+		return
+	await Backend.call_fn("reset_my_redeems", {})
+
+
 ## The server's message instead of raw JSON.
 static func _error_text(r: Dictionary) -> String:
 	var d = r.get("data", null)

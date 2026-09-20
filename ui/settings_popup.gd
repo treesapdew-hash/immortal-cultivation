@@ -350,14 +350,22 @@ func _on_replay_tutorials() -> void:
 
 
 ## Two confirmations before wiping the account.
+## Wipes the save. The online account stays, so anything the server
+## remembers about it has to be let go here or it outlives the
+## character it belonged to — redeem codes being the one testers hit.
+func _do_reset() -> void:
+	await Redeem.reset_claims()
+	if not is_instance_valid(self) or not is_inside_tree():
+		return
+	GameState.reset_account()
+	queue_free()
+	get_tree().reload_current_scene()
+
+
 func _on_reset() -> void:
 	_confirm("Reset account?", "This deletes ALL your progress: stages, partners, gear, everything.\n"
 		+ "Your settings are kept.", "Continue", func():
-		_confirm("Are you absolutely sure?", "There is no way to undo this.", "Delete Everything", func():
-			GameState.reset_account()
-			queue_free()
-			get_tree().reload_current_scene()
-		)
+		_confirm("Are you absolutely sure?", "There is no way to undo this.", "Delete Everything", _do_reset)
 	)
 
 
