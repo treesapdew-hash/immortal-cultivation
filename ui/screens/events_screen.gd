@@ -36,6 +36,9 @@ var _fighting := false
 ## The Arena duel awaiting a result, so it can be reported once the
 ## fight ends. The panel itself closes to show the battle.
 var _arena_opponent: Dictionary = {}
+## Dungeon boards already fetched this visit, so a redraw does not
+## send the panel round again.
+var _rank_synced: Dictionary = {}
 var _clock := 0.0
 
 
@@ -602,6 +605,13 @@ func _build_rankings() -> void:
 	for c in _rank_body.get_children():
 		_rank_body.remove_child(c)
 		c.queue_free()
+	# Drawn from the cached board, then fetched once per dungeon per
+	# visit: the panel appears at once and redraws if the server has
+	# something newer. The flag is what stops the redraw re-entering
+	# this and fetching again.
+	if not _rank_synced.has(_rank_dungeon):
+		_rank_synced[_rank_dungeon] = true
+		_refresh_rankings(_rank_dungeon)
 
 	var def := Dungeons.get_def(_rank_dungeon)
 	_rank_body.add_child(_label("Dungeon Rankings", 36, COL_TITLE, HORIZONTAL_ALIGNMENT_CENTER, true))
@@ -661,9 +671,30 @@ func _build_rankings() -> void:
 	_rank_body.add_child(close)
 
 
+## Pulls today's Fallen God table. Only meaningful the first time a
+## panel is opened in a session; after that the cache is warm.
+func _refresh_fallen_board() -> void:
+	if not FallenGod.available():
+		return
+	await FallenGod.refresh()
+
+
 func _switch_ranking(dungeon_id: String) -> void:
 	_rank_dungeon = dungeon_id
 	_build_rankings()
+
+
+## Uploads this dungeon's best floor and pulls the board. Redraws
+## only on a change, so it cannot loop: the second pass finds the
+## board identical and stops.
+func _refresh_rankings(dungeon_id: String) -> void:
+	if not Ranking.available():
+		return
+	var changed := await Ranking.refresh(dungeon_id)
+	if not is_instance_valid(self) or not is_inside_tree():
+		return
+	if changed and _rank_dungeon == dungeon_id and _rank_body != null:
+		_build_rankings()
 
 
 func _rank_row(place: int, entry: Dictionary) -> Control:
@@ -1344,10 +1375,13 @@ func _on_fallen_claim() -> void:
 	_rebuild()
 
 
-## Today's board: simulated rivals and you, by best single attack.
+## Today's board: everyone who faced him today, by best single attack.
 func _open_fallen_rankings() -> void:
 	var s := GameState.fallen_god
 	var day := GameState.today()
+	# Fetched without awaiting; the panel opens on what is cached and
+	# is reopened below if the server has more.
+	_refresh_fallen_board()
 	var rows := FallenGod.board(day, float(s.get("best_ratio", 0.0)) if int(s.get("day", 0)) == day else 0.0)
 	var ref := FallenGod.reference_hp()
 

@@ -8,7 +8,8 @@ class_name FallenGod
 # window is open the player gets ATTACKS_PER_WINDOW attacks. Each
 # is a ROUNDS-round fight he can't die in: the damage dealt is
 # the score, and pays Divinity EXP and Divine Essence.
-# The best attack of the day is ranked against simulated rivals;
+# The best attack of the day is ranked against everyone else who
+# faced him today;
 # yesterday's rank reward is claimed from the Events card.
 #
 # He scales with the player's highest stage. Fights run through
@@ -48,10 +49,10 @@ const ESSENCE_BASE := 8.0
 const ESSENCE_POWER := 0.5
 const ESSENCE_MAX := 120
 
-## Daily ranking against RIVALS simulated cultivators.
-const RIVALS := 29
-const RIVAL_RATIO_MIN := 3.0
-const RIVAL_RATIO_MAX := 45.0
+## Daily ranking, against whoever else fought him today
+## (setup_18_boards.sql). It used to be 29 invented cultivators,
+## which pushed every real player 29 places down a table that pays
+## by rank.
 ## [best rank this applies up to, jade, divine essence]
 const RANK_REWARDS := [
 	[1, 300, 200],
@@ -251,6 +252,11 @@ static func finish(window: int, damage: int) -> Dictionary:
 	if damage > int(s["best"]):
 		s["best"] = damage
 		s["best_ratio"] = float(got["ratio"])
+	# A new best goes up straight away, so the table is right for
+	# everyone else looking at it today. Quiet: a failure here costs
+	# nothing and is picked up by the next refresh().
+	if bool(got["new_best"]) and available():
+		refresh()
 	if int(got["exp"]) > 0:
 		Gods.add_exp(int(got["exp"]))
 	if int(got["essence"]) > 0:
@@ -264,24 +270,48 @@ static func finish(window: int, damage: int) -> Dictionary:
 # RANKING
 # ---------------------------------------------------------
 
-## Simulated rivals for a day: [{name, ratio}], same every time for that day.
-static func rivals(day: int) -> Array:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = hash("fallen_god_%d" % day)
-	var first := ["Mo", "Lan", "Feng", "Yun", "Hei", "Bai", "Xue", "Jin", "Long", "Hua", "Ling", "Shen"]
-	var second := ["Tian", "Yue", "Chen", "Xuan", "Ming", "Wu", "Jian", "Qing", "Hao", "Ruo", "Zhi", "Yan"]
-	var out: Array = []
-	for i in RIVALS:
-		var nm := "%s %s" % [first[rng.randi() % first.size()], second[rng.randi() % second.size()]]
-		# More rivals near the middle, a few very strong ones at the top
-		var r := RIVAL_RATIO_MIN + (RIVAL_RATIO_MAX - RIVAL_RATIO_MIN) * pow(rng.randf(), 1.8)
-		out.append({"name": nm, "ratio": r})
-	return out
+## Today's challengers, as last fetched. Cached and returned
+## synchronously, because the Events card asks while being built.
+static var _cache: Array = []
 
 
-## Board for a day with the player in it, best first.
-static func board(day: int, player_ratio: float) -> Array:
-	var rows := rivals(day)
+static func available() -> bool:
+	return Backend.is_configured()
+
+
+## Sends today's best up and brings the table back. Returns true if
+## it changed, so a screen can redraw.
+static func refresh() -> bool:
+	if not available():
+		return false
+	var s := _state()
+	var mine := float(s.get("best_ratio", 0.0))
+	if mine > 0.0 and int(s.get("day", 0)) == GameState.today():
+		await Backend.call_fn("submit_fallen_god", {"p_ratio": mine})
+	var r: Dictionary = await Backend.call_fn("fallen_god_board", {"p_limit": 30})
+	if not r["ok"] or not (r["data"] is Array):
+		return false
+	# Compared as text rather than with !=, which on arrays of
+	# dictionaries is not dependable enough to drive a redraw.
+	var before := JSON.stringify(_cache)
+	_cache = r["data"]
+	return before != JSON.stringify(_cache)
+
+
+## Board for a day with the player in it, best first. `day` is kept
+## in the signature so callers read the same as before; the server
+## only holds today's.
+static func board(_day: int, player_ratio: float) -> Array:
+	var rows: Array = []
+	for row in _cache:
+		# Our own server row is replaced by the live local one below,
+		# which is fresher than whatever was last uploaded.
+		if str(row.get("id", "")) == Backend.user_id:
+			continue
+		rows.append({
+			"name": str(row.get("name", "Cultivator")),
+			"ratio": float(row.get("ratio", 0.0)),
+		})
 	rows.append({"name": str(GameState.mc_name) + " (You)", "ratio": player_ratio, "you": true})
 	rows.sort_custom(func(a, b): return float(a["ratio"]) > float(b["ratio"]))
 	return rows
