@@ -243,6 +243,22 @@ func _run_dungeon() -> void:
 		dungeon_finished.emit(request, true)
 		return
 
+	# Arena duel: the Events screen reports the result to the server,
+	# since only it knows which opponent this was.
+	if str(request.get("kind", "")) == "arena":
+		if outcome != Outcome.RESTART:
+			var who := str(request.get("opponent_name", "your rival"))
+			if won:
+				await _result_banner.show_victory(0, [], RESULT_DELAY, [],
+					"You stand over %s." % who)
+			else:
+				await _result_banner.show_defeat(0, RESULT_DELAY,
+					"%s proved the stronger cultivator." % who)
+		_set_banner("STAGE %d" % GameState.current_stage)
+		GameState.stage_changed.emit()
+		dungeon_finished.emit(request, won)
+		return
+
 	# Beast Forest hunt: a win gives a Beast Ring and Beast Cores
 	if str(request.get("kind", "")) == "beast_hunt":
 		if outcome != Outcome.RESTART:

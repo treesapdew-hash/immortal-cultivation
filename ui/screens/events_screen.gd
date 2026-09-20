@@ -33,6 +33,9 @@ var _reset_label: Label
 var _toast_holder: Control
 var _battle: Node
 var _fighting := false
+## The Arena duel awaiting a result, so it can be reported once the
+## fight ends. The panel itself closes to show the battle.
+var _arena_opponent: Dictionary = {}
 var _clock := 0.0
 
 
@@ -227,6 +230,8 @@ func _rebuild() -> void:
 	_list.add_child(_fallen_god_card() if Unlocks.is_unlocked("god_path") else _locked_card("god_path"))
 	_list.add_child(_fade_line())
 	_list.add_child(_beast_forest_card() if Unlocks.is_unlocked("beast_forest") else _locked_card("beast_forest"))
+	_list.add_child(_fade_line())
+	_list.add_child(_arena_card() if Unlocks.is_unlocked("arena") else _locked_card("arena"))
 
 
 func _dungeon_card(def: Dictionary) -> Control:
@@ -853,6 +858,94 @@ func _on_tribulation() -> void:
 	_rebuild()
 
 
+## Arena: duels against other cultivators of your own major realm.
+func _arena_card() -> Control:
+	var def := {"id": "arena", "emblem": "star"}
+	var color := Color("ff9a5a")
+	var online := Arena.available()
+
+	var card := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(color, 0.08)
+	sb.border_color = Color(color, 0.9) if online else Color("2c3a50")
+	sb.set_border_width_all(2)
+	sb.set_corner_radius_all(12)
+	sb.set_content_margin_all(16)
+	card.add_theme_stylebox_override("panel", sb)
+
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 16)
+	card.add_child(h)
+	h.add_child(_emblem(def, color, online))
+
+	var mid := VBoxContainer.new()
+	mid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mid.add_theme_constant_override("separation", 4)
+	h.add_child(mid)
+	var name_l := _label("Arena  ·  %s" % Arena.bracket_name(), 28,
+		color.lightened(0.2) if online else COL_DIM, HORIZONTAL_ALIGNMENT_LEFT, true)
+	name_l.custom_minimum_size.y = 36
+	mid.add_child(name_l)
+	var desc := _label("Duel cultivators of your own realm for rank and Arena Tokens. "
+		+ "%d duels a day." % Arena.FREE_ATTACKS, 18,
+		COL_TEXT if online else COL_DIM, HORIZONTAL_ALIGNMENT_LEFT)
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	mid.add_child(desc)
+
+	var enter := OrnateButton.new()
+	enter.text = "Enter"
+	enter.custom_minimum_size = Vector2(170, 58)
+	enter.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	enter.disabled = not online or _fighting
+	enter.pressed.connect(_open_arena)
+	h.add_child(enter)
+
+	return card
+
+
+## Opens the Arena. A chosen duel comes back through fight_requested,
+## and is run on the normal battle scene like any other fight.
+func _open_arena() -> void:
+	var panel := ArenaPopup.open(self)
+	if panel == null:
+		_toast("The Arena needs the online server.", COL_SHORT)
+		return
+	panel.fight_requested.connect(_on_arena_fight)
+
+
+func _on_arena_fight(opponent: Dictionary) -> void:
+	if _fighting:
+		return
+	_arena_opponent = opponent
+	var battle := Dungeons.find_battle(self)
+	if battle == null or battle.call("is_in_dungeon"):
+		_toast("Finish the current fight first.", COL_SHORT)
+		return
+
+	var team: Array = opponent["team"] if opponent.get("team", null) is Array else []
+	var enemies := Arena.to_enemies(team)
+	if enemies.is_empty():
+		# Generated opponents carry no team, so they field a stage
+		# force instead. Only the outcome matters: they never touch
+		# the server.
+		enemies = EnemyGenerator.generate(GameState.current_stage)
+
+	var who := str(opponent.get("name", "Rival"))
+	var started: bool = battle.call("start_dungeon", {
+		"kind": "arena",
+		"title": "ARENA  ·  %s" % who.to_upper(),
+		"subtitle": who,
+		"opponent_name": who,
+		"enemies": enemies,
+	})
+	if not started:
+		_toast("Finish the current fight first.", COL_SHORT)
+		return
+	_fighting = true
+	_rebuild()
+	_go_home()
+
+
 ## Descent of the Fallen God: daily boss for Divinity EXP and Divine Essence.
 func _fallen_god_card() -> Control:
 	var def := {"id": "fallen_god", "emblem": "star"}
@@ -1366,6 +1459,29 @@ func _on_challenge(def: Dictionary) -> void:
 	_go_home()   # watch the fight straight away
 
 
+## Reports the duel. The Arena panel is usually gone by now (it
+## closes to show the fight), so the result goes straight to Arena
+## and the player is told here.
+func _settle_arena(won: bool) -> void:
+	if _arena_opponent.is_empty():
+		return
+	var opponent := _arena_opponent
+	_arena_opponent = {}
+
+	var r := await Arena.report(opponent, won)
+	if not is_instance_valid(self):
+		return
+	if not r["ok"]:
+		_toast(str(r["error"]), COL_SHORT)
+		return
+	if bool(r.get("npc", false)):
+		_toast("Practice duel %s  ·  Arena Tokens earned" % ("won" if won else "lost"),
+			COL_OK if won else COL_DIM)
+		return
+	_toast("%s  %+d points" % ["Victory!" if won else "Defeat.", int(r.get("delta", 0))],
+		COL_OK if won else COL_SHORT)
+
+
 ## Switches the lower panel back to Home so the battle is in view.
 func _go_home() -> void:
 	var router := get_parent()
@@ -1377,6 +1493,10 @@ func _go_home() -> void:
 
 func _on_dungeon_finished(request: Dictionary, won: bool) -> void:
 	_fighting = false
+	if str(request.get("kind", "")) == "arena":
+		_settle_arena(won)
+		_rebuild()
+		return
 	if str(request.get("kind", "")) == "fallen_god":
 		_rebuild()
 		return
