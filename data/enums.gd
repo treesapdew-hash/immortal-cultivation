@@ -38,14 +38,22 @@ const RARITY_COLORS := {
 
 # Base stat multiplier per rarity.
 # A Gold partner starts far stronger than a White one.
+## White through Purple keep their original curve (about x1.3 a tier),
+## so early progression is unchanged. Red and above step up harder:
+## they are the rare tiers, Gold and Prismatic are only reachable by
+## evolving a Premium Red, and the old table made Red a mere 33%
+## better than Purple.
+##
+## The MC uses this too (its tier rises with sync_mc_tier), so it
+## gains the same steeper curve as it climbs from White.
 const RARITY_STAT_MULTIPLIER := {
 	Rarity.WHITE:     1.00,
 	Rarity.BLUE:      1.25,
 	Rarity.GREEN:     1.60,
 	Rarity.PURPLE:    2.10,
-	Rarity.RED:       2.80,
-	Rarity.GOLD:      3.80,
-	Rarity.PRISMATIC: 5.20
+	Rarity.RED:       3.40,   # x1.62 Purple
+	Rarity.GOLD:      5.60,   # x1.65 Red
+	Rarity.PRISMATIC: 9.00    # x1.61 Gold
 }
 
 

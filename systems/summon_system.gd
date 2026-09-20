@@ -366,6 +366,54 @@ static func premium_scroll_id(group: String) -> String:
 	return "%s_%s" % [PREMIUM_SCROLL, group]
 
 
+## Evolution starts here. Below Purple a family's forms (a White Han
+## Li, a Green Han Li) are separate partners you summon, not stages
+## of one card.
+const EVOLVE_FROM := Enums.Rarity.PURPLE
+
+
+## Every form a partner can evolve into right now: the members of
+## their family at the next rarity up. Usually one, but Lin Qiye's
+## Red becomes either Nyx or Merlin, so the player picks.
+##
+## How far a line runs is decided purely by which forms exist. A
+## family topping out at Gold stops there; only the seven with a
+## Prismatic form reach Prismatic; a Purple whose family's best is
+## Red is capped at Red.
+static func next_forms(partner_id: String) -> Array:
+	var data = PartnerDatabase.get_partner(partner_id)
+	if data == null or int(data.rarity) < EVOLVE_FROM:
+		return []
+	for fam in PartnerSkills.FAMILIES:
+		var members: Array = PartnerSkills.FAMILIES[fam][5]
+		if members.find(partner_id) < 0:
+			continue
+		# The lowest rarity above this one, and every form at it.
+		var step := -1
+		for id in members:
+			var d = PartnerDatabase.get_partner(str(id))
+			if d == null or int(d.rarity) <= int(data.rarity):
+				continue
+			if step < 0 or int(d.rarity) < step:
+				step = int(d.rarity)
+		if step < 0:
+			return []
+		var out: Array = []
+		for id in members:
+			var d2 = PartnerDatabase.get_partner(str(id))
+			if d2 != null and int(d2.rarity) == step:
+				out.append(str(id))
+		return out
+	return []
+
+
+## The single form a partner evolves into, or "" when there is none
+## or the player has to choose between several.
+static func next_form(partner_id: String) -> String:
+	var forms := next_forms(partner_id)
+	return str(forms[0]) if forms.size() == 1 else ""
+
+
 ## Premium Reds the player actually owns. Soul Fragments are useless
 ## for a partner you don't have, so only these can be forged for.
 static func owned_premium_ids() -> Array:

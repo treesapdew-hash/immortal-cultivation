@@ -518,6 +518,15 @@ const SALVAGE_ESSENCE := {
 ## Premium Red's star is worth. Raise it to make them rarer.
 const ESSENCE_PER_FRAGMENT := 5
 
+## Essence to evolve into the next form, by the form you are leaving.
+## Purple lines mostly cap at Red; Reds become Gold; the seven lines
+## with a Prismatic form go one step further.
+const EVOLVE_ESSENCE := {
+	Enums.Rarity.PURPLE: 20,
+	Enums.Rarity.RED: 50,
+	Enums.Rarity.GOLD: 150,
+}
+
 const SALVAGE_PILLS := {
 	Enums.Rarity.WHITE: 20,
 	Enums.Rarity.BLUE: 60,
@@ -537,6 +546,96 @@ func get_copy_salvage_value(partner_id: String) -> int:
 	if data == null:
 		return 0
 	return int(SALVAGE_PILLS.get(data.rarity, 0))
+
+
+## "" if this partner can evolve right now, otherwise the reason,
+## which the Evolve button shows.
+func can_evolve(partner) -> String:
+	if partner == null or partner.is_mc():
+		return "The MC rises through realms, not forms."
+	var forms: Array = SummonSystem.next_forms(partner.partner_id)
+	if forms.is_empty():
+		return "This cultivator has no higher form."
+	var data = PartnerDatabase.get_partner(partner.partner_id)
+	if data == null:
+		return "This cultivator has no higher form."
+
+	# The rarity's own cap, not get_star_cap(), which is also limited
+	# by realm: evolving should need the form maxed, not the player.
+	var cap := Realms.get_star_cap_for_rarity(data.rarity)
+	if partner.stars < cap:
+		return "Reach %d stars first." % cap
+
+	var cost := int(EVOLVE_ESSENCE.get(data.rarity, 0))
+	if cost <= 0:
+		return "This cultivator has no higher form."
+	if get_item_count(PREMIUM_ESSENCE_ID) < cost:
+		return "Need %d Premium Soul Essence." % cost
+	return ""
+
+
+## Essence this partner's next evolution costs (0 if it can't).
+func evolve_cost(partner) -> int:
+	if partner == null:
+		return 0
+	var data = PartnerDatabase.get_partner(partner.partner_id)
+	return int(EVOLVE_ESSENCE.get(data.rarity, 0)) if data != null else 0
+
+
+## Moves everything stored against a partner id onto the new one, so
+## an evolved cultivator keeps their gear, treasures, artifacts, soul
+## spirit, lifebound artifact and Battle Array place.
+##
+## Spare copies of the old form are deliberately left behind: they
+## still salvage into Essence, and fragments of the old card can't
+## awaken the new one.
+func _rekey_partner(old_id: String, new_id: String) -> void:
+	for item in gear:
+		if str(item.get("owner", "")) == old_id:
+			item["owner"] = new_id
+	for t in treasures:
+		if str(t.get("owner", "")) == old_id:
+			t["owner"] = new_id
+	for a in artifacts:
+		if str(a.get("owner", "")) == old_id:
+			a["owner"] = new_id
+	for spirit in soul_spirits:
+		if str(spirit.get("partner", "")) == old_id:
+			spirit["partner"] = new_id
+	if lifebound.has(old_id):
+		lifebound[new_id] = lifebound[old_id]
+		lifebound.erase(old_id)
+	var slot := battle_array.find(old_id)
+	if slot != -1:
+		battle_array[slot] = new_id
+
+
+## Evolves a partner into `target` (one of SummonSystem.next_forms).
+## Stars, level, gear and everything else carry over: only who they
+## are changes. Returns "" on success, otherwise the reason.
+func evolve_partner(partner, target := "") -> String:
+	var problem := can_evolve(partner)
+	if problem != "":
+		return problem
+
+	var forms: Array = SummonSystem.next_forms(partner.partner_id)
+	var new_id := str(target) if target != "" else str(forms[0])
+	if not forms.has(new_id):
+		return "That is not a form they can take."
+	if find_owned(new_id) != null:
+		return "You already have that form."
+
+	var old_id: String = partner.partner_id
+	var cost := evolve_cost(partner)
+	if not spend_item(PREMIUM_ESSENCE_ID, cost):
+		return "Need %d Premium Soul Essence." % cost
+
+	_rekey_partner(old_id, new_id)
+	partner.partner_id = new_id
+	Codex.discover_partner(new_id)
+	save_game()
+	roster_changed.emit()
+	return ""
 
 
 ## Spends essence to add one Soul Fragment to a Premium Red you own.
