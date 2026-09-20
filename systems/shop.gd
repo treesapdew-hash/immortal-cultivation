@@ -99,16 +99,18 @@ static func stone_exchange_offers() -> Array:
 
 ## Real-money purchase. `on_done` gets (success: bool, jade_gained: int).
 static func buy_jade_pack(host: Node, offer: Dictionary, on_done: Callable) -> void:
-	Payments.purchase(host, offer["sku"], func(_sku: String, success: bool):
+	# The Jade comes back already granted, from the server's own
+	# store_products. Adding offer["amount"] here as well would be
+	# letting the device decide what a purchase was worth, which is
+	# the one thing a paid product must never allow.
+	Payments.purchase(host, offer["sku"], func(_sku: String, success: bool, jade: int):
 		if not success:
 			on_done.call(false, 0)
 			return
-		var total: int = offer["amount"] + offer["bonus"]
-		GameState.add_immortal_jade(total)
 		if not GameState.bought_packs.has(offer["sku"]):
 			GameState.bought_packs.append(offer["sku"])
-		GameState.save_game()
-		on_done.call(true, total)
+			GameState.save_game()
+		on_done.call(true, jade)
 	)
 
 
