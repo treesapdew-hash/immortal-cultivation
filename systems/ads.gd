@@ -16,6 +16,21 @@ class_name Ads
 const TEST_MODE := true
 const FAKE_AD_SECONDS := 5
 
+## Rewarded ad units. While USE_TEST_AD_UNITS is true these are Google's
+## demo units: they never touch your AdMob account, so testing can't
+## generate invalid traffic. Showing or tapping your OWN live ads during
+## development is what gets AdMob accounts banned, so only set this to
+## false once the app is published.
+const USE_TEST_AD_UNITS := true
+const TEST_REWARDED_ANDROID := "ca-app-pub-3940256099942544/5224354917"
+const TEST_REWARDED_IOS := "ca-app-pub-3940256099942544/1712485313"
+## Fill these in from the AdMob console, then flip USE_TEST_AD_UNITS off.
+const REAL_REWARDED_ANDROID := ""
+const REAL_REWARDED_IOS := ""
+
+## Give up if an ad never loads or never reports back (seconds).
+const REAL_AD_TIMEOUT := 45.0
+
 ## placement: [name, per day]
 const PLACEMENTS := {
 	"fortune": ["Heavenly Fortune", 5],
@@ -95,17 +110,80 @@ static func watch(host: Node, placement: String) -> bool:
 	return ok
 
 
-## Real ads (AdMob). To switch on, when you're ready:
-##   1. Create an AdMob account and app, and a Rewarded ad unit.
-##   2. Install the Godot 4 AdMob plugin (e.g. Poing Studios'
-##      "godot-admob-plugin") and enable it for the Android export.
-##   3. Load a rewarded ad at start-up, show it here, and return true
-##      in its "user earned reward" callback.
-##   4. Set TEST_MODE to false.
-## Until then this returns false, so nothing is given.
-static func _show_real(_host: Node, _placement: String) -> bool:
-	push_warning("Ads: real ads aren't set up yet (TEST_MODE is off)")
-	return false
+static var _initialized := false
+
+
+## MobileAds.initialize() only needs calling once per run. Doing it
+## lazily here keeps this file self-contained (no autoload to change);
+## the only cost is a slightly slower first ad.
+static func _ensure_initialized() -> void:
+	if _initialized:
+		return
+	_initialized = true
+	MobileAds.initialize()
+
+
+static func _rewarded_unit_id() -> String:
+	var is_android := OS.get_name() == "Android"
+	if USE_TEST_AD_UNITS:
+		return TEST_REWARDED_ANDROID if is_android else TEST_REWARDED_IOS
+	return REAL_REWARDED_ANDROID if is_android else REAL_REWARDED_IOS
+
+
+## Real rewarded ads, through the AdMob plugin. Returns true only when
+## the user actually earned the reward; closing early returns false,
+## exactly like _show_fake().
+##
+## The plugin ships in-editor mock ads, so this path can be tested in
+## the editor with TEST_MODE off, without building to a device.
+static func _show_real(host: Node, placement: String) -> bool:
+	var unit_id := _rewarded_unit_id()
+	if unit_id == "":
+		push_warning("Ads: no rewarded ad unit id for this platform (%s)" % placement)
+		return false
+
+	_ensure_initialized()
+
+	# GDScript lambdas capture by value, so the flags live in a
+	# Dictionary and the ad in an Array: both are shared by reference.
+	var state := {"done": false, "earned": false}
+	var loaded: Array[RewardedAd] = []
+
+	var reward_listener := OnUserEarnedRewardListener.new()
+	reward_listener.on_user_earned_reward = func(_item: RewardedItem) -> void:
+		state["earned"] = true
+
+	var content_callback := FullScreenContentCallback.new()
+	content_callback.on_ad_dismissed_full_screen_content = func() -> void:
+		state["done"] = true
+	content_callback.on_ad_failed_to_show_full_screen_content = func(err: AdError) -> void:
+		push_warning("Ads: failed to show (%s)" % err.message)
+		state["done"] = true
+
+	var load_callback := RewardedAdLoadCallback.new()
+	load_callback.on_ad_loaded = func(ad: RewardedAd) -> void:
+		ad.full_screen_content_callback = content_callback
+		loaded.append(ad)
+		ad.show(reward_listener)
+	load_callback.on_ad_failed_to_load = func(error: LoadAdError) -> void:
+		push_warning("Ads: failed to load (%s)" % error.message)
+		state["done"] = true
+
+	# Held in a variable so it isn't freed while the load is in flight.
+	var loader := RewardedAdLoader.new()
+	loader.load(unit_id, AdRequest.new(), load_callback)
+
+	# Wait for the ad to be dismissed, to fail, or to time out.
+	var deadline := Time.get_ticks_msec() + int(REAL_AD_TIMEOUT * 1000.0)
+	while not bool(state["done"]) and Time.get_ticks_msec() < deadline:
+		if not is_instance_valid(host) or not host.is_inside_tree():
+			break
+		await host.get_tree().process_frame
+
+	for ad in loaded:
+		ad.destroy()
+
+	return bool(state["earned"])
 
 
 ## Test mode: a full-screen fake ad with a countdown, then Claim.
