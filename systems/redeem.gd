@@ -74,15 +74,21 @@ static func claim(code: String) -> Dictionary:
 	return {"ok": true, "text": text, "error": ""}
 
 
-## Frees this account's claimed codes, for when the player wipes
-## their save from Settings. The Supabase account survives that, so
-## without this a welcome code could never be used again.
-## Quiet: failing here costs a code, not a save, and the reset should
-## not be held up by it.
+## Lets go of everything the server remembered about this character,
+## for when the player wipes their save from Settings. The Supabase
+## account survives that, so without it a new character inherits the
+## old one's Arena rank, leaderboard places and claimed codes, and the
+## cloud save sits waiting to restore what was just deleted.
+##
+## Tester and founding titles are kept: those were given to the
+## person, not the save file.
+##
+## Quiet: a failure here costs some server tidying, not the reset
+## itself, which the player has already confirmed twice.
 static func reset_claims() -> void:
 	if not available():
 		return
-	await Backend.call_fn("reset_my_redeems", {})
+	await Backend.call_fn("reset_my_character", {})
 
 
 ## The server's message instead of raw JSON.

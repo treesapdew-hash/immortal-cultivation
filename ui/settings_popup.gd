@@ -363,7 +363,8 @@ func _do_reset() -> void:
 
 
 func _on_reset() -> void:
-	_confirm("Reset account?", "This deletes ALL your progress: stages, partners, gear, everything.\n"
+	_confirm("Reset account?", "This deletes ALL your progress: stages, partners, gear, everything, "
+		+ "including your cloud save, Arena standing and leaderboard places.\n"
 		+ "Your settings are kept.", "Continue", func():
 		_confirm("Are you absolutely sure?", "There is no way to undo this.", "Delete Everything", _do_reset)
 	)
