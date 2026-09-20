@@ -244,6 +244,15 @@ func _build() -> void:
 	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tabs.add_child(spacer)
 
+	var friends_button := Button.new()
+	friends_button.text = "Friends"
+	friends_button.flat = true
+	friends_button.focus_mode = Control.FOCUS_NONE
+	friends_button.add_theme_font_size_override("font_size", 22)
+	friends_button.add_theme_color_override("font_color", COL_GOLD)
+	friends_button.pressed.connect(_open_friends)
+	tabs.add_child(friends_button)
+
 	var close := Button.new()
 	close.text = "X"
 	close.flat = true
@@ -518,15 +527,27 @@ func _open_actions(user_id: String, who: String, body: String) -> void:
 	menu.position = Vector2i(screen * 0.5 - Vector2(menu.size) * 0.5)
 
 
+## The friends panel sits above this one and can hand back a whisper
+## target, so picking "Whisper" there lands in the right thread here.
+func _open_friends() -> void:
+	var panel := FriendsPopup.open(self)
+	if panel != null:
+		panel.whisper_requested.connect(_start_whisper)
+
+
+func _start_whisper(user_id: String, who: String) -> void:
+	_whisper_target = user_id
+	_whisper_name = who
+	if _channel == Chat.Channel.WHISPER:
+		_reload()
+	else:
+		_set_channel(Chat.Channel.WHISPER)
+
+
 func _do_action(id: int, user_id: String, who: String, body: String) -> void:
 	match id:
 		0:
-			_whisper_target = user_id
-			_whisper_name = who
-			if _channel == Chat.Channel.WHISPER:
-				_reload()
-			else:
-				_set_channel(Chat.Channel.WHISPER)
+			_start_whisper(user_id, who)
 		1:
 			var r := await Friends.request(user_id)
 			_add_system(("Friend request sent to %s." % who) if r["ok"] else str(r["error"]))
