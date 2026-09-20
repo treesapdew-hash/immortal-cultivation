@@ -25,6 +25,7 @@ const FEATURES := {
 	"beast_forest": ["Beast Forest", 120, -1, "events:beast_forest", "Hunt spirit beasts for Soul Spirits and rings."],
 	"trials": ["Daily Trials", 150, -1, "events:trials", "A themed challenge every day."],
 	"guild": ["Sects", 200, -1, "quick:Guild", "Join a sect: daily duties, research, a shop and the Sect Trial."],
+	"arena": ["Arena", 250, -1, "events:arena", "Duel other cultivators of your realm for rank and Arena Tokens."],
 	"battle_array": ["Battle Array", 300, -1, "growth:Array", "Bench partners lend their strength to your team."],
 	"tribulation": ["Tribulation Lightning", 500, -1, "events:tribulation", "Endure the heavens' lightning for rewards."],
 	"god_path": ["God Path", 0, 9, "growth:God Path", "Walk the path of a god; the Fallen God descends."],
