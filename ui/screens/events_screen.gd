@@ -367,8 +367,14 @@ const EMBLEM_DIR := "res://assets/ui/dungeons/"
 
 ## Dungeon emblem: the art in EMBLEM_DIR if it exists, else drawn.
 ## Locked dungeons show the art darkened, with a padlock.
+##
+## A card can name its own art with "art" when the piece doesn't live
+## in EMBLEM_DIR — the Arena's emblem sits with the UI icons, since it
+## is not a dungeon.
 func _emblem(def: Dictionary, color: Color, lit: bool) -> Control:
-	var path := EMBLEM_DIR + "%s.png" % str(def["id"])
+	var path := str(def.get("art", ""))
+	if path == "":
+		path = EMBLEM_DIR + "%s.png" % str(def["id"])
 	if not ResourceLoader.exists(path):
 		return _drawn_emblem(str(def["emblem"]), color, lit)
 
@@ -860,7 +866,8 @@ func _on_tribulation() -> void:
 
 ## Arena: duels against other cultivators of your own major realm.
 func _arena_card() -> Control:
-	var def := {"id": "arena", "emblem": "star"}
+	var def := {"id": "arena", "emblem": "star",
+		"art": "res://assets/ui/icons/arena_icon.png"}
 	var color := Color("ff9a5a")
 	var online := Arena.available()
 
