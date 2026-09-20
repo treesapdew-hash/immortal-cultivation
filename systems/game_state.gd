@@ -504,6 +504,20 @@ func get_copies(partner_id: String) -> int:
 # ---------------------------------------------------------
 
 ## Pills for one copy of a partner, by tier.
+## Premium Soul Essence from salvaging one spare copy. Premium Reds
+## can't be summoned, so spare Reds and better are the only route to
+## their Soul Fragments. Tiers below Red give none.
+const PREMIUM_ESSENCE_ID := "premium_essence"
+const SALVAGE_ESSENCE := {
+	Enums.Rarity.RED: 1,
+	Enums.Rarity.GOLD: 3,
+	Enums.Rarity.PRISMATIC: 10,
+}
+## Essence spent to forge one Soul Fragment. A star costs 1-4
+## fragments (COPIES_PER_STAR), so this sets how many spare Reds a
+## Premium Red's star is worth. Raise it to make them rarer.
+const ESSENCE_PER_FRAGMENT := 5
+
 const SALVAGE_PILLS := {
 	Enums.Rarity.WHITE: 20,
 	Enums.Rarity.BLUE: 60,
@@ -525,7 +539,31 @@ func get_copy_salvage_value(partner_id: String) -> int:
 	return int(SALVAGE_PILLS.get(data.rarity, 0))
 
 
+## Spends essence to add one Soul Fragment to a Premium Red you own.
+## Returns "" on success, otherwise the reason it didn't happen.
+func forge_premium_fragment(partner_id: String) -> String:
+	if find_owned(partner_id) == null:
+		return "You don't have that cultivator yet."
+	if get_item_count(PREMIUM_ESSENCE_ID) < ESSENCE_PER_FRAGMENT:
+		return "Need %d Premium Soul Essence." % ESSENCE_PER_FRAGMENT
+	if not spend_item(PREMIUM_ESSENCE_ID, ESSENCE_PER_FRAGMENT):
+		return "Need %d Premium Soul Essence." % ESSENCE_PER_FRAGMENT
+	partner_copies[partner_id] = get_copies(partner_id) + 1
+	save_game()
+	roster_changed.emit()
+	return ""
+
+
+## Premium Soul Essence from salvaging one spare copy of this partner.
+func get_copy_essence_value(partner_id: String) -> int:
+	var data = PartnerDatabase.get_partner(partner_id)
+	if data == null:
+		return 0
+	return int(SALVAGE_ESSENCE.get(data.rarity, 0))
+
+
 ## Salvages up to `count` spare copies. Returns the pills gained.
+## Red and better also give Premium Soul Essence, on top of the pills.
 func salvage_copies(partner_id: String, count: int) -> int:
 	var have := get_copies(partner_id)
 	count = mini(count, have)
@@ -535,6 +573,10 @@ func salvage_copies(partner_id: String, count: int) -> int:
 	partner_copies[partner_id] = have - count
 	if partner_copies[partner_id] <= 0:
 		partner_copies.erase(partner_id)
+
+	var essence := count * get_copy_essence_value(partner_id)
+	if essence > 0:
+		add_items({PREMIUM_ESSENCE_ID: essence})
 
 	var pills := count * get_copy_salvage_value(partner_id)
 	add_starup_pills(pills)
@@ -550,11 +592,22 @@ func get_all_copies_salvage_value() -> int:
 	return total
 
 
+## Essence the whole spare pile would give, for the preview text.
+func get_all_copies_essence_value() -> int:
+	var total := 0
+	for id in partner_copies:
+		total += get_copies(id) * get_copy_essence_value(str(id))
+	return total
+
+
 func salvage_all_copies() -> int:
 	var pills := get_all_copies_salvage_value()
-	if pills <= 0:
+	var essence := get_all_copies_essence_value()
+	if pills <= 0 and essence <= 0:
 		return 0
 	partner_copies.clear()
+	if essence > 0:
+		add_items({PREMIUM_ESSENCE_ID: essence})
 	add_starup_pills(pills)
 	save_game()
 	roster_changed.emit()

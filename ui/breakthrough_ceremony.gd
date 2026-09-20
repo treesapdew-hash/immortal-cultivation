@@ -265,15 +265,8 @@ func _build_plaque(screen: Vector2) -> Control:
 		v.add_child(_text("Your Qi scattered  ·  lost %s Qi" % NumberFormat.short(_qi_lost), int(22 * ui), COL_FAIL_SUB, false))
 		v.add_child(_text("Gather yourself and try again", int(18 * ui), COL_FAIL_SUB, false))
 
-	# Fit the text inside the plaque's middle
-	var need := v.get_combined_minimum_size()
-	var fit := minf(1.0, minf(box.size.x / maxf(need.x, 1.0), box.size.y / maxf(need.y, 1.0)))
-	var box_size := Vector2(maxf(box.size.x, need.x), maxf(box.size.y, need.y))
-	var centre := box.position + box.size * 0.5
-	box.size = box_size
-	box.position = centre - box_size * 0.5
-	box.pivot_offset = box_size * 0.5
-	box.scale = Vector2(fit, fit)
+	# Fit the text inside the plaque's middle, once the layout is known.
+	_fit_plaque_text(box, v, box.position, box.size)
 
 	# A shine that sweeps across once (success)
 	if _success:
@@ -485,6 +478,33 @@ func _image(art_name: String) -> TextureRect:
 	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return t
+
+
+## Scales the plaque text down until it fits, and keeps it centred on
+## the plaque's text area.
+##
+## A container's minimum size is only known after a layout pass, so
+## measuring in the same frame the labels were added returned a stale
+## size: nothing was scaled down and the box never re-centred, so long
+## lines spilled past the plaque and were clipped. Two frames is what
+## screen_router waits for the same reason.
+func _fit_plaque_text(box: Control, v: Control, base_pos: Vector2, base_size: Vector2) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_instance_valid(box) or not is_instance_valid(v):
+		return
+
+	var need := v.get_combined_minimum_size()
+	if need.x <= 0.0 or need.y <= 0.0:
+		return
+
+	var fit := minf(1.0, minf(base_size.x / need.x, base_size.y / need.y))
+	var box_size := Vector2(maxf(base_size.x, need.x), maxf(base_size.y, need.y))
+	var centre := base_pos + base_size * 0.5
+	box.size = box_size
+	box.position = centre - box_size * 0.5
+	box.pivot_offset = box_size * 0.5
+	box.scale = Vector2(fit, fit)
 
 
 func _text(value: String, font_size: int, color: Color, heading: bool) -> Label:

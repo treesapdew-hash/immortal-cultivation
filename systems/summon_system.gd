@@ -366,6 +366,16 @@ static func premium_scroll_id(group: String) -> String:
 	return "%s_%s" % [PREMIUM_SCROLL, group]
 
 
+## Premium Reds the player actually owns. Soul Fragments are useless
+## for a partner you don't have, so only these can be forged for.
+static func owned_premium_ids() -> Array:
+	var out: Array = []
+	for id in premium_ids():
+		if GameState.find_owned(str(id)) != null:
+			out.append(str(id))
+	return out
+
+
 ## The tier a Selection Scroll belongs to, or -1 if the item isn't
 ## one. Premium scrolls count as Red, since that is the tier their
 ## partners are before evolving.

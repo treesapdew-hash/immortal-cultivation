@@ -129,6 +129,12 @@ const ITEMS := {
 		"desc": "A full ×10 summon at the Summoning Altar, with its guaranteed Purple. Used before Jade.",
 		"source": "Events, mission chests and the Treasure Pavilion.",
 	},
+	"premium_essence": {
+		"name": "Premium Soul Essence", "category": Category.MATERIAL, "grade": 5, "icon": "core",
+		"tint": Color("ff7ad0"),
+		"desc": "Distilled from spare Red and better cultivators. Spend it on a Premium Red you own to forge a Soul Fragment, the only way to awaken them.",
+		"source": "Salvaging spare Red, Gold and Prismatic copies.",
+	},
 	"premium_scroll": {
 		"name": "Premium Selection Scroll", "category": Category.MATERIAL, "grade": 5, "icon": "core",
 		"tint": Color("ff4a3a"),

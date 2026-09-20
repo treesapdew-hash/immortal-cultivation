@@ -697,11 +697,43 @@ func _on_item_pressed(slot: ItemSlot, id: String) -> void:
 		_set_actions("Open", _open_scroll.bind(id, tier))
 		return
 
+	# Premium Soul Essence forges a Soul Fragment for a Premium Red,
+	# which is the only way to awaken one (they can't be summoned).
+	if id == GameState.PREMIUM_ESSENCE_ID:
+		_detail_desc.text += "\n\n%d Essence forges 1 Soul Fragment." % GameState.ESSENCE_PER_FRAGMENT
+		if n >= GameState.ESSENCE_PER_FRAGMENT:
+			_set_actions("Forge\nFragment", _open_essence_forge)
+		else:
+			_set_actions("", Callable())
+		return
+
 	match item.get("action", ""):
 		"awaken":
 			_set_actions("Awaken\nPartners", _go_to.bind("Partner"))
 		_:
 			_set_actions("", Callable())
+
+
+## Turns Premium Soul Essence into a Soul Fragment for a chosen
+## Premium Red. Only partners you already own are offered: a fragment
+## for someone you don't have can't be spent.
+func _open_essence_forge() -> void:
+	var owned := SummonSystem.owned_premium_ids()
+	if owned.is_empty():
+		_toast("You have no Premium Reds yet.", COL_WARN)
+		return
+	var note := "Tap a cultivator, then Choose. Costs %d Essence for 1 Soul Fragment." \
+		% GameState.ESSENCE_PER_FRAGMENT
+	var popup := CardChoicePopup.open(self, "Premium Soul Essence", owned, Enums.Rarity.RED, note)
+	var on_chosen := func(partner_id: String) -> void:
+		var problem := GameState.forge_premium_fragment(partner_id)
+		if problem == "":
+			var data = PartnerDatabase.get_partner(partner_id)
+			_toast("+1 Soul Fragment for %s." % (data.display_name if data != null else "them"), COL_GOOD)
+		else:
+			_toast(problem, COL_WARN)
+		_rebuild()
+	popup.chosen.connect(on_chosen)
 
 
 ## Picks a partner from a Selection Scroll. The scroll is only spent
