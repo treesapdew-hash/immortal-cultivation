@@ -214,7 +214,7 @@ func _title_row(id: String) -> Control:
 	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(h)
 
-	h.add_child(_title_banner(id, tint, have))
+	h.add_child(_title_banner(id, have))
 
 	var texts := VBoxContainer.new()
 	texts.add_theme_constant_override("separation", 1)
@@ -255,9 +255,10 @@ func _title_row(id: String) -> Control:
 	return b
 
 
-## The banner art, or a drawn plate in the tier's colour while the
-## art is still being made.
-func _title_banner(id: String, tint: Color, have: bool) -> Control:
+## The banner art if there is any, otherwise one drawn in the tier's
+## colour. TitleBanner takes its own colour from the tier, so nothing
+## needs passing in.
+func _title_banner(id: String, have: bool) -> Control:
 	var art := Titles.art_of(id)
 	if art != null:
 		var tex := TextureRect.new()
@@ -271,18 +272,10 @@ func _title_banner(id: String, tint: Color, have: bool) -> Control:
 			tex.modulate = Color(0.35, 0.37, 0.42)
 		return tex
 
-	var plate := Control.new()
+	var plate := TitleBanner.new()
 	plate.custom_minimum_size = Vector2(256, 64)
 	plate.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var shade := tint if have else Color(0.35, 0.37, 0.42)
-	plate.draw.connect(func():
-		var r := Rect2(Vector2.ZERO, plate.size)
-		plate.draw_rect(r, Color(shade, 0.12))
-		plate.draw_rect(r, Color(shade, 0.7), false, 1.5)
-		var inset := r.grow(-6.0)
-		plate.draw_rect(inset, Color(shade, 0.35), false, 1.0)
-	)
+	plate.setup(Titles.tier_of(id), have)
 	return plate
 
 
