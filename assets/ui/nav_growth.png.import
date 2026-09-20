@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/nav_growth.png-28b8aeee2c5061d332c737b0d0ea4b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

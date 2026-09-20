@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/power_panel.png-b58b520cba71be2837467d8678141
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

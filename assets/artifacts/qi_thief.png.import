@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/qi_thief.png-5596af421e3a49bb884edf84e2ccfdf8
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

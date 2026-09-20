@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/executioner.png-a15c9223d1c42bcc6c7afa3324971
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

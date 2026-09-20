@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/guild_icon.png-618d1c0393d784e30095b730d0268f
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

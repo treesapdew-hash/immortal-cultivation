@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/immortal_realm.png-5617f8a4dc67dabb0c4b031e42
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

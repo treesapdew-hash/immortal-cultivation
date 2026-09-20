@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/jiangshi.png-57f6e9b93b570d8121f24b00e202b5fd
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

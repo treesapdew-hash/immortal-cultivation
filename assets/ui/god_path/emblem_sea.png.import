@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/emblem_sea.png-8ef81d1bb42ce3c000a6483ead8545
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

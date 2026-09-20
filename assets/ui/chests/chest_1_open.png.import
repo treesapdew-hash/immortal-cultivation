@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/chest_1_open.png-2d97337c640c2326db59aed43bdd
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

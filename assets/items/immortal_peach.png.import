@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/immortal_peach.png-4d82fd9f74cb10be2db3673d59
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

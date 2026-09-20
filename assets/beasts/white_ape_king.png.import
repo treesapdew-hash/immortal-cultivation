@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/white_ape_king.png-a6e347f677c0717e63925e2c09
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

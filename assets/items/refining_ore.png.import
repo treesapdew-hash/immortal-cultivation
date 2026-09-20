@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/refining_ore.png-b5b0cd18c4c6ccd7e38d6a4e939b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

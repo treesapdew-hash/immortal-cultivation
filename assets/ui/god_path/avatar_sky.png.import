@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/avatar_sky.png-c0cea564cfd23aba3f2e49bfe58563
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

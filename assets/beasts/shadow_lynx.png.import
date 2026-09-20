@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/shadow_lynx.png-5c74df526a4518074232253e26f10
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

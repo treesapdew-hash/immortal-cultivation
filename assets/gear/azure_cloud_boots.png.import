@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/azure_cloud_boots.png-d1d2fbc0afc344d8a0f7d19
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

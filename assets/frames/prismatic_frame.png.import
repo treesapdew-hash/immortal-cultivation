@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/prismatic_frame.png-e3971d654bddf5ad82e9d2291
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

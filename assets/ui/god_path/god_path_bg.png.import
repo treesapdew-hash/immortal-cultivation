@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/god_path_bg.png-3ce2b6b76a74a56287b2525919605
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

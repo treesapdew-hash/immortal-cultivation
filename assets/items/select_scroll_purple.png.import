@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/select_scroll_purple.png-eeadf50de96a5f58df8b
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

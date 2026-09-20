@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ghost_banner.png-0b6bc14028ffa0072b054060048c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

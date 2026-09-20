@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/beast_core_3.png-2cb7ec270ccc53a68fbcd62b8566
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

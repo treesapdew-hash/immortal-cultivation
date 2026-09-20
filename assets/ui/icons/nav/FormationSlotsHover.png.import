@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/FormationSlotsHover.png-71fd4bd5d8c06c556b534
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

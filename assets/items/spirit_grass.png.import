@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/spirit_grass.png-0725a5b5d136e74b7025ec50fab2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

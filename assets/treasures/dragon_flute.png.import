@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/dragon_flute.png-d872a5a06b9c36201f764ffc7f5d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

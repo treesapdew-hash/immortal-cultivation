@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/blade_wing_falcon.png-8c537ae60d0df6de6f91fe2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

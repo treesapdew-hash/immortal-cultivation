@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/vault.png-ea159af140f880b9d5a0fd750a5af7a8.ct
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

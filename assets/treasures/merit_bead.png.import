@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/merit_bead.png-89784b0139afee46d1c7dbc9171a1e
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

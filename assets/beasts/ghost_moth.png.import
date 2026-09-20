@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/ghost_moth.png-46b66bfee2fcfe9e4d98e58d1f3d5a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

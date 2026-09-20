@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/nav_home.png-41b4c342e89562c72d8b2872108297d2
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

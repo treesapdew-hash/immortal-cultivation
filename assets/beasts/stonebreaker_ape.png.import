@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/stonebreaker_ape.png-5cf0a0062ab1e025c5cfea80
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

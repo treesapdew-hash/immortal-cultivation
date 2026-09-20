@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/first_blood.png-9eff2c84e1449697caf7f608607b9
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

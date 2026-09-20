@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/avatar_asura.png-af47f8bdc762207548b164529dd4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

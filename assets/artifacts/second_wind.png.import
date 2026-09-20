@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/second_wind.png-ddb12d53e2dc2928b74a984d8a6c6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

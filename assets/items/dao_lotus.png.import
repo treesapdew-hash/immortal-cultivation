@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/dao_lotus.png-35d6471a7d1e80f6e185e8b7936be84
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

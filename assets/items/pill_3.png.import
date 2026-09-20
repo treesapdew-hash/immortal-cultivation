@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/pill_3.png-3c117b0223180565c283b780a29236dd.c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

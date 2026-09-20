@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bat_demon.png-b7a1a4cd30e310e786bf24a909c7ed8
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/spirit_ring_million.png-d182a1d204d6b249ca365
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

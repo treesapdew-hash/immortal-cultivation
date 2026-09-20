@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/plus_icon.png-7be02bb07fde2a258bde5b47b9ccb24
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/armor_piercer.png-35e340217efc3e90366c04a32c4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

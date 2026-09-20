@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bronze_mantis.png-884c54bfba19ee333598814fa1d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/jade_lotus_weapon.png-ceb7c916b9f3fd417d6a3ea
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

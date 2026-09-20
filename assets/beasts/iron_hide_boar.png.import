@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/iron_hide_boar.png-01e683aa154be3fd764a261fcf
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

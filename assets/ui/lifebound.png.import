@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/lifebound.png-8be3c422779651819649015b84131c6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

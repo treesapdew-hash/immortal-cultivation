@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/immortal_jade_frame.png-b4f7d575e4610c88cf3ae
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/card.png-f8e2a5e7ac554a7d1bba04838f86eae1.cte
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

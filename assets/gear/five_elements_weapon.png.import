@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/five_elements_weapon.png-b907b64672b5c53620fd
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

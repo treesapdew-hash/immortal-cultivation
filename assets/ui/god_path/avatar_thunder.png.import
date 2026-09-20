@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/avatar_thunder.png-8c3d32d55e3db68eb7b5ad80fe
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/summoning_icon.png-98ccc5edc97b596845cdbe7938
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

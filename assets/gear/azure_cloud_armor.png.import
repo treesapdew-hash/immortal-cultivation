@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/azure_cloud_armor.png-8c3a32521bcdf65595d8ba1
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

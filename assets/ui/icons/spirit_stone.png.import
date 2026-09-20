@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/spirit_stone.png-5b87607216325e18a084f41ff0e4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

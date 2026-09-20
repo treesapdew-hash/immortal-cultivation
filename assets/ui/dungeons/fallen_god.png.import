@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/fallen_god.png-ecd6e759215a8ab6bc8ec8d68fa537
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

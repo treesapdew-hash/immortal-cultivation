@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/nav_codex.png-b965c9c6eb15b0ffa37bd7866114cc3
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

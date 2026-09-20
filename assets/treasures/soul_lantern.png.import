@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/soul_lantern.png-87f678de2341d3d04e328b66af54
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

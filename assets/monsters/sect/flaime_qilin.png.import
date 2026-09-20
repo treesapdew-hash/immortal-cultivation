@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/flaime_qilin.png-0c3b6c79248e0ab7c1858d7f6858
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

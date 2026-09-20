@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/dragon_pearl.png-260e4cbd3cf83b15d720e5634c80
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

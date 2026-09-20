@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/hp_bar.png-3a7f370a6d41a5d93de128df8b720e4f.c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

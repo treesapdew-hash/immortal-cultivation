@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/thunder_rhino.png-fd2408f7e4ed42d069486c9805d
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
