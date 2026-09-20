@@ -97,10 +97,26 @@ const TIER_ORDER := ["WHITE", "BLUE", "GREEN", "PURPLE", "RED", "GOLD", "PRISMAT
 #   x QI_MAJOR_MULT when it moves into the next major realm
 # ---------------------------------------------------------
 
-const QI_BASE := 50.0
-## 1.0745 keeps the whole ladder (30 realms) at about 4 years with
-## GameState.QI_STRENGTH_EXP 0.35 (Transcendence around day 1,440).
-const QI_GROWTH := 1.0745
+## Retuned after alpha. The old 50 / 1.0745 made the Mortal Realm
+## cost 757K Qi — about eight hours of idling — while the whole
+## ladder came to 2.72T. That curve was steeply back-loaded: Spirit
+## cost 314 times Mortal, so the early realms went by in an afternoon
+## and testers were in the Spirit Realm the first day.
+##
+## Raising the base alone would not do: multiplying everything by the
+## 22 the early game needed would have pushed the far end past eighty
+## years. A bigger base with a gentler growth flattens it instead —
+## the early realms cost far more, the late ones slightly less.
+##
+##   Mortal   757.5K -> 28.93M   (8 h -> 289 h of idling)
+##   Spirit   238.1M -> 2.12B
+##   Whole    2.72T  -> 2.24T    (the end barely moves)
+##
+## Spirit over Mortal falls from 314x to 73x, which is the point.
+## Those hours are idle only; missions, achievements and chests make
+## the real figure lower, so expect nearer a week than twelve days.
+const QI_BASE := 8000.0
+const QI_GROWTH := 1.055
 const QI_MINOR_MULT := 3.0
 const QI_MAJOR_MULT := 10.0
 
