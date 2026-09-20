@@ -123,6 +123,9 @@ func _build_titles() -> void:
 	# page existed, so bring them up to date on the way in rather than
 	# waiting for the next thing that happens to bump a stat.
 	Titles.refresh()
+	# Nothing gates the Titles page, so no unlock announces it; this
+	# is the first time the player can have seen it.
+	Tutorial.start("titles", self)
 	# Placements and sect ranks live on the server. Fetched alongside,
 	# not awaited: the page draws now with what is already known and
 	# redraws if the server disagrees.

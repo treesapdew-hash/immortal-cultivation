@@ -1186,6 +1186,12 @@ func _update_costs() -> void:
 		_evolve_button.visible = can
 		_set_ready(_evolve_button, can)
 
+	# Explained the first time they hold someone who can evolve at
+	# all, not the first time they can afford to: by then they have
+	# already had to work out where Soul Fragments come from.
+	if not SummonSystem.next_forms(p.partner_id).is_empty():
+		Tutorial.start("evolution", self)
+
 	# Awaken: pill bar (+ copy pips for partners)
 	if p.stars >= p.get_star_cap():
 		awaken_button.disabled = true

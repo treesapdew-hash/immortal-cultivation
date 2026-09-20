@@ -82,6 +82,29 @@ const UNLOCK_LINES := {
 	"god_path": ["You have reached Ascendant. Choose a god to follow, earn Divinity, and face the Fallen God when he descends."],
 }
 
+## Tutorials for things that are not gated behind Unlocks, so no
+## unlock ever announces them. Each starts when the player first
+## reaches the thing itself, and is plain dialogue: the mentor talks
+## over whatever is already open rather than pointing at a widget
+## inside a popup, which is fragile and rarely clearer.
+const EXTRA := {
+	"chat": [
+		{"text": "So you have found the other cultivators. The World carries every voice; the Sect only your own; a Whisper only one."},
+		{"text": "Tap a name to whisper to them, ask for their friendship, or look over the team and treasures they are fielding."},
+		{"text": "Friends may send each other a small gift once a day, and it costs the sender nothing. There is no reason not to."},
+	],
+	"titles": [
+		{"text": "Titles are the marks of what you have done. Every one you hold strengthens your whole team, whether or not you are wearing it."},
+		{"text": "Wearing one puts it beside your name for everyone to see. That part is vanity. The strength is yours either way."},
+		{"text": "Some fade. A week at the top of the Arena is worth a week of the title, no longer. Others, once earned, are yours for good."},
+	],
+	"evolution": [
+		{"text": "This one is not finished growing. A few rare cultivators can be reforged into a greater form entirely: Red into Gold, and a very few beyond even that."},
+		{"text": "It asks for Soul Fragments, and those are made from Premium Soul Essence. Salvage the spare Red and better cultivators you will never field, and their essence passes to one who matters."},
+		{"text": "Do not rush it. A duplicate spent today is a Prismatic you cannot forge tomorrow."},
+	],
+}
+
 static var _queue: Array = []
 static var _running: Tutorial = null
 
@@ -178,6 +201,8 @@ static func _run_next(from: Node) -> void:
 static func _steps_for(id: String) -> Array:
 	if id == "intro":
 		return INTRO
+	if EXTRA.has(id):
+		return EXTRA[id]
 	if not id.begins_with("unlock_"):
 		return []
 	var feature := id.trim_prefix("unlock_")

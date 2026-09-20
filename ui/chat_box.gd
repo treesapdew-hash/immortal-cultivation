@@ -184,6 +184,9 @@ func _ready() -> void:
 	_show()
 	_refresh_sect()
 	_reload()
+	# Chat is not gated behind Unlocks, so nothing else would ever
+	# introduce it, the friends panel or inspecting someone.
+	Tutorial.start("chat", self)
 
 
 func _build() -> void:
