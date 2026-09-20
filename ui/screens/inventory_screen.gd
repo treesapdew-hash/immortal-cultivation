@@ -690,11 +690,35 @@ func _on_item_pressed(slot: ItemSlot, id: String) -> void:
 	_detail_desc.text = item.get("desc", "")
 	_detail_owned.text = "Owned:  %s" % NumberFormat.full(n)
 
+	# Selection Scrolls open straight from the bag, rather than
+	# sending the player to the Summoning Altar to do it.
+	var tier := SummonSystem.scroll_tier(id)
+	if tier >= 0 and n > 0:
+		_set_actions("Open", _open_scroll.bind(id, tier))
+		return
+
 	match item.get("action", ""):
 		"awaken":
 			_set_actions("Awaken\nPartners", _go_to.bind("Partner"))
 		_:
 			_set_actions("", Callable())
+
+
+## Picks a partner from a Selection Scroll. The scroll is only spent
+## once a choice is confirmed, so backing out costs nothing.
+func _open_scroll(item_id: String, tier: int) -> void:
+	var options := SummonSystem.options_for_scroll(item_id)
+	if options.is_empty():
+		_toast("This scroll has nothing to offer.", COL_WARN)
+		return
+	var title := str(ItemDB.get_item(item_id).get("name", "Selection Scroll"))
+	var popup := CardChoicePopup.open(self, title, options, tier)
+	var on_chosen := func(partner_id: String) -> void:
+		if SummonSystem.choose_from_scroll(item_id, partner_id):
+			var data = PartnerDatabase.get_partner(partner_id)
+			_toast("%s joined you!" % (data.display_name if data != null else "A partner"), COL_GOOD)
+		_rebuild()
+	popup.chosen.connect(on_chosen)
 
 
 func _on_fragment_pressed(slot: ItemSlot, partner_id: String) -> void:

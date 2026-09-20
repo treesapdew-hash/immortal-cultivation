@@ -366,6 +366,21 @@ static func premium_scroll_id(group: String) -> String:
 	return "%s_%s" % [PREMIUM_SCROLL, group]
 
 
+## The tier a Selection Scroll belongs to, or -1 if the item isn't
+## one. Premium scrolls count as Red, since that is the tier their
+## partners are before evolving.
+static func scroll_tier(item_id: String) -> int:
+	if item_id == PREMIUM_SCROLL:
+		return Enums.Rarity.RED
+	for g in PREMIUM_GROUPS:
+		if item_id == premium_scroll_id(str(g)):
+			return Enums.Rarity.RED
+	for tier in SELECT_SCROLLS:
+		if str(SELECT_SCROLLS[tier]) == item_id:
+			return int(tier)
+	return -1
+
+
 ## The partners a scroll offers (any Selection Scroll item).
 static func options_for_scroll(item_id: String) -> Array:
 	if item_id == PREMIUM_SCROLL:
