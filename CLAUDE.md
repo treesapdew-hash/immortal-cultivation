@@ -51,6 +51,8 @@ All 16 are applied to the live project.
 14. `setup_14_code_titles.sql` a redeem code can carry a title (tester titles)
 15. `setup_15_title_expiry.sql` `player_titles`, so standings lapse
 16. `setup_16_sect_titles.sql` sect titles derived from membership
+17. `setup_17_integrity.sql` server-owned store products, one-claim receipts, save guard
+18. `setup_18_boards.sql` real dungeon and Fallen God rankings
 
 Every script is idempotent, so re-running one is safe.
 Sects client: `sects.gd`, `sect_trial.gd`, `ui/screens/guild_screen.gd` (quiet refresh).
@@ -75,12 +77,16 @@ Live at `https://treesapdew-hash.github.io/immortal-cultivation/legal/` (privacy
   plate until the art lands, so nothing is blocked. Check import settings when
   they arrive — Godot's defaults are lossless/uncapped, and the rest of the art
   uses `compress/mode=1` + `process/size_limit=1024`.
-- Arena unlock is at stage 20 for alpha; raise back to 250 before launch
-  (TODO in `unlocks.gd`).
-- Fake leaderboards: `ranking.gd` and `fallen_god.gd` still simulate rivals
-  with hardcoded names. Only the Sect Trial, Arena and profiles are real.
-- Server wallet (currencies on server) before real payments; Google sign-in.
-  Note a server wallet only helps if the *grants* move server-side too.
+- **Play Billing not wired.** `payments.gd` has a marked block where the
+  plugin call goes; `store_products` is empty, so `claim_purchase` refuses
+  everything until the SKUs are filled in. The server decides what a SKU
+  grants — never add Jade on the device.
+- The economy is **not** server-authoritative and is not meant to be: qi,
+  drops and offline rewards are worked out on the device. `setup_17` makes a
+  tampered save visible (`save_audit`, `profiles.flagged`) rather than
+  impossible. Genuinely server-held: purchases, Arena, titles, sect
+  contributions, redeem codes.
+- Google sign-in.
 - Sect: account-safe moderation beyond report/block, red dots on Guild,
   member activity, weekly ranking
 - Summon card red spikes (needs `summon_card.gd`)
