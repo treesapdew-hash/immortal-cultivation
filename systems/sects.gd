@@ -128,9 +128,19 @@ static func my_requests() -> Array:
 	return r["data"] if r["ok"] and r["data"] is Array else []
 
 
+## How far back sect chat reaches. Matches chat_window_hours() in
+## setup_19_chat_window.sql, which does the same for World chat.
+const CHAT_WINDOW_HOURS := 6
+
+
 ## Latest chat messages, oldest first. after_id > 0 = only newer ones.
+## Only the last few hours: opening chat after a quiet night used to
+## show yesterday's conversation as though it had just happened.
 static func messages(sect_id: String, after_id := 0) -> Array:
-	var path := "sect_messages?select=id,user_id,name,body,created_at&sect_id=eq." + sect_id
+	var since := Time.get_datetime_string_from_unix_time(
+		GameState.now_unix() - CHAT_WINDOW_HOURS * 3600, true) + "Z"
+	var path := "sect_messages?select=id,user_id,name,title,body,created_at&sect_id=eq." + sect_id
+	path += "&created_at=gte." + since
 	if after_id > 0:
 		path += "&id=gt.%d" % after_id
 	path += "&order=id.desc&limit=50"
