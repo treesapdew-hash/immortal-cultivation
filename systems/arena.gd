@@ -220,6 +220,69 @@ static func buy_attack(bought_today: int) -> Dictionary:
 	return {"ok": true, "error": "", "attacks_left": int(d.get("attacks_left", 0))}
 
 
+# ---------------------------------------------------------
+# THE EXCHANGE
+# ---------------------------------------------------------
+
+## Stock with this week's purchase counts:
+## [{item_id, amount, cost, weekly_limit, bought}]
+static func shop_state() -> Array:
+	var r: Dictionary = await Backend.call_fn("arena_shop_state", {})
+	return r["data"] if r["ok"] and r["data"] is Array else []
+
+
+## Buys one. Tokens are taken first and refunded if the server
+## refuses, so a failed call never costs anything.
+static func buy(item_id: String, cost: int) -> Dictionary:
+	if GameState.get_item_count(TOKEN_ID) < cost:
+		return {"ok": false, "error": "Not enough Arena Tokens."}
+	if not GameState.spend_item(TOKEN_ID, cost):
+		return {"ok": false, "error": "Not enough Arena Tokens."}
+
+	var r: Dictionary = await Backend.call_fn("buy_arena_item", {"p_item": item_id})
+	var d: Dictionary = r["data"] if r["ok"] and r["data"] is Dictionary else {}
+	if not r["ok"] or not bool(d.get("ok", false)):
+		GameState.add_items({TOKEN_ID: cost})
+		GameState.save_game()
+		return {"ok": false, "error": str(d.get("error", _error_text(r)))}
+
+	# Only what the server says was bought is granted.
+	GameState.add_items({str(d["item_id"]): int(d["amount"])})
+	GameState.save_game()
+	return {"ok": true, "error": "", "item_id": str(d["item_id"]), "amount": int(d["amount"])}
+
+
+# ---------------------------------------------------------
+# STANDING REWARDS
+# ---------------------------------------------------------
+
+## {daily: bool, weekly: bool} — what is waiting.
+static func rewards_pending() -> Dictionary:
+	var r: Dictionary = await Backend.call_fn("arena_rewards_pending", {})
+	return r["data"] if r["ok"] and r["data"] is Dictionary else {}
+
+
+## Claims yesterday's standing, or last week's. The rank comes from
+## the server's table, so only what it grants is added.
+static func claim_reward(weekly := false) -> Dictionary:
+	var r: Dictionary = await Backend.call_fn("arena_claim_reward", {"p_weekly": weekly})
+	if not r["ok"]:
+		return {"ok": false, "error": _error_text(r)}
+	var d: Dictionary = r["data"] if r["data"] is Dictionary else {}
+	if not bool(d.get("ok", false)):
+		return {"ok": false, "error": str(d.get("error", "Nothing to claim."))}
+
+	var tokens := int(d.get("tokens", 0))
+	var jade := int(d.get("jade", 0))
+	if tokens > 0:
+		GameState.add_items({TOKEN_ID: tokens})
+	if jade > 0:
+		GameState.add_immortal_jade(jade)
+	GameState.save_game()
+	return {"ok": true, "error": "", "rank": int(d.get("rank", 0)),
+		"tokens": tokens, "jade": jade, "weekly": weekly}
+
+
 ## The bracket's top cultivators.
 static func board(count := 20) -> Array:
 	var r: Dictionary = await Backend.call_fn("arena_board", {"p_limit": count})

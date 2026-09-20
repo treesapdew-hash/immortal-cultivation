@@ -344,6 +344,33 @@ const CHAINS := [
 			{"goal": 200, "name": "Heaven's Chosen", "desc": "Receive 200 heavenly gifts from ads",
 				"rewards": {"jade": 1500, "card_choice": Enums.Rarity.PURPLE}},
 		]},
+	# --- arena ---
+	{"id": "arena_fights", "track": "arena_fights", "name": "Trial by Combat", "desc": "Duel %s times",
+		"growth": 1.5, "step": 100, "max_goal": 0,
+		"endless": {"jade": 500, "arena_token": 150},
+		"tiers": [
+			{"goal": 1, "name": "First Blood", "desc": "Fight your first Arena duel",
+				"rewards": {"arena_token": 50}},
+			{"goal": 25, "name": "Contender", "desc": "Fight 25 Arena duels",
+				"rewards": {"jade": 300, "arena_token": 150}},
+			{"goal": 100, "name": "Veteran of the Ring", "desc": "Fight 100 Arena duels",
+				"rewards": {"jade": 800, "arena_token": 400}},
+			{"goal": 300, "name": "Undying Challenger", "desc": "Fight 300 Arena duels",
+				"rewards": {"jade": 1500, "arena_token": 900, "card_choice": Enums.Rarity.PURPLE}},
+		]},
+	{"id": "arena_wins", "track": "arena_wins", "name": "Unbroken", "desc": "Win %s duels",
+		"growth": 1.5, "step": 50, "max_goal": 0,
+		"endless": {"jade": 800, "arena_token": 250},
+		"tiers": [
+			{"goal": 1, "name": "First Victory", "desc": "Win an Arena duel",
+				"rewards": {"jade": 200, "arena_token": 80}},
+			{"goal": 10, "name": "Rising Name", "desc": "Win 10 Arena duels",
+				"rewards": {"jade": 500, "arena_token": 200}},
+			{"goal": 50, "name": "Feared in the Ring", "desc": "Win 50 Arena duels",
+				"rewards": {"jade": 1200, "arena_token": 600, "summon_scroll": 3}},
+			{"goal": 150, "name": "Realm Champion", "desc": "Win 150 Arena duels",
+				"rewards": {"jade": 2500, "arena_token": 1500, "card_choice": Enums.Rarity.RED}},
+		]},
 ]
 
 

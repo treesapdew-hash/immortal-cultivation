@@ -142,7 +142,7 @@ func _build() -> void:
 	var tabs := HBoxContainer.new()
 	tabs.add_theme_constant_override("separation", 8)
 	v.add_child(tabs)
-	for t in ["Duel", "Board"]:
+	for t in ["Duel", "Board", "Exchange"]:
 		tabs.add_child(_tab_button(t))
 
 	v.add_child(_line())
@@ -207,10 +207,12 @@ func _reload() -> void:
 	# Register first: without a snapshot there is nothing to fight.
 	await Arena.sync()
 	var s := await Arena.state()
+	var pending := await Arena.rewards_pending()
 	var opp := await Arena.opponents(int(s.get("points", 1000)))
 	_busy = false
 	if not is_instance_valid(self) or not is_inside_tree():
 		return
+	s["pending"] = pending
 	_state = s
 	_opponents = opp
 	_render()
@@ -233,10 +235,89 @@ func _render() -> void:
 	if bought < Arena.MAX_EXTRA:
 		_attacks.text += "  One more costs %d Jade." % Arena.extra_cost(bought)
 
-	if _tab == "Board":
-		_render_board()
-	else:
-		_render_duel(left, bought)
+	match _tab:
+		"Board":
+			_render_board()
+		"Exchange":
+			_render_shop()
+		_:
+			_render_rewards()
+			_render_duel(left, bought)
+
+
+## Yesterday's and last week's standing, if they haven't been taken.
+func _render_rewards() -> void:
+	var pending: Dictionary = _state.get("pending", {}) if _state.get("pending", null) is Dictionary else {}
+	if pending.is_empty():
+		return
+	for weekly in [false, true]:
+		var key := "weekly" if weekly else "daily"
+		if not bool(pending.get(key, false)):
+			continue
+		var b := OrnateButton.new()
+		b.text = "Claim %s standing" % ("weekly" if weekly else "daily")
+		b.variant = OrnateButton.Variant.CRIMSON if weekly else OrnateButton.Variant.GOLD
+		b.custom_minimum_size = Vector2(400, 58)
+		b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		var on_claim := func() -> void:
+			_on_claim(weekly)
+		b.pressed.connect(on_claim)
+		_body.add_child(b)
+	_body.add_child(_line())
+
+
+func _render_shop() -> void:
+	_body.add_child(_label("Arena Exchange  ·  %s Tokens" %
+		NumberFormat.short(GameState.get_item_count(Arena.TOKEN_ID)), 22, COL_GOLD))
+	var stock := await Arena.shop_state()
+	if not is_instance_valid(self) or _tab != "Exchange":
+		return
+	if stock.is_empty():
+		_body.add_child(_note("The Exchange is closed."))
+		return
+	for entry in stock:
+		_body.add_child(_shop_row(entry))
+
+
+func _shop_row(entry: Dictionary) -> Control:
+	var item_id := str(entry.get("item_id", ""))
+	var cost := int(entry.get("cost", 0))
+	var amount := int(entry.get("amount", 1))
+	var bought := int(entry.get("bought", 0))
+	var limit := int(entry.get("weekly_limit", 1))
+	var sold_out := bought >= limit
+	var item := ItemDB.get_item(item_id)
+
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 12)
+	h.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	var icon := ItemSlot.new()
+	icon.custom_minimum_size = Vector2(72, 72)
+	icon.setup_item(item_id, amount)
+	icon.disabled = true
+	h.add_child(icon)
+
+	var texts := VBoxContainer.new()
+	texts.add_theme_constant_override("separation", 0)
+	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	texts.alignment = BoxContainer.ALIGNMENT_CENTER
+	h.add_child(texts)
+	texts.add_child(_label("%s x%d" % [str(item.get("name", item_id)), amount], 20, COL_TEXT))
+	texts.add_child(_label("%s Tokens  ·  %d of %d this week" %
+		[NumberFormat.short(cost), bought, limit], 16, COL_DIM))
+
+	var buy := OrnateButton.new()
+	buy.text = "Sold out" if sold_out else "Buy"
+	buy.disabled = sold_out or GameState.get_item_count(Arena.TOKEN_ID) < cost
+	buy.custom_minimum_size = Vector2(150, 56)
+	buy.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var on_buy := func() -> void:
+		_on_buy(item_id, cost)
+	buy.pressed.connect(on_buy)
+	h.add_child(buy)
+
+	return h
 
 
 func _render_duel(left: int, bought: int) -> void:
@@ -245,7 +326,7 @@ func _render_duel(left: int, bought: int) -> void:
 		buy.text = "Buy a duel  ·  %d Jade" % Arena.extra_cost(bought)
 		buy.custom_minimum_size = Vector2(360, 60)
 		buy.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		buy.pressed.connect(_on_buy)
+		buy.pressed.connect(_on_buy_duel)
 		_body.add_child(buy)
 		_body.add_child(_line())
 
@@ -343,7 +424,39 @@ func settle(o: Dictionary, won: bool) -> void:
 	_reload()
 
 
-func _on_buy() -> void:
+func _on_buy(item_id: String, cost: int) -> void:
+	if _busy:
+		return
+	_busy = true
+	var r := await Arena.buy(item_id, cost)
+	_busy = false
+	if not is_instance_valid(self) or not is_inside_tree():
+		return
+	if not r["ok"]:
+		_toast(str(r["error"]), COL_BAD)
+		return
+	var item := ItemDB.get_item(str(r["item_id"]))
+	_toast("+%d %s" % [int(r["amount"]), str(item.get("name", r["item_id"]))], COL_OK)
+	_render()
+
+
+func _on_claim(weekly: bool) -> void:
+	if _busy:
+		return
+	_busy = true
+	var r := await Arena.claim_reward(weekly)
+	_busy = false
+	if not is_instance_valid(self) or not is_inside_tree():
+		return
+	if not r["ok"]:
+		_toast(str(r["error"]), COL_BAD)
+		return
+	_toast("Rank %d  ·  +%s Tokens, +%s Jade" % [int(r["rank"]),
+		NumberFormat.short(int(r["tokens"])), NumberFormat.short(int(r["jade"]))], COL_OK)
+	_reload()
+
+
+func _on_buy_duel() -> void:
 	if _busy:
 		return
 	_busy = true
