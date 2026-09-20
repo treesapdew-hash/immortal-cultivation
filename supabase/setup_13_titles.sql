@@ -94,9 +94,11 @@ begin
 end $$;
 
 -- What the server says this player has been awarded.
+-- The column is jsonb, so the fallback must be too; the cast to json
+-- happens after, on the result.
 create or replace function public.my_titles()
 returns json language sql stable security definer set search_path = public as $$
-  select coalesce((select titles from profiles where id = auth.uid()), '[]'::json)
+  select coalesce((select titles from profiles where id = auth.uid()), '[]'::jsonb)::json
 $$;
 
 -- ---------------------------------------------------------
