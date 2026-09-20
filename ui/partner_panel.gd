@@ -59,6 +59,8 @@ extends Control
 @onready var stat_grid: GridContainer = %StatGrid
 @onready var ascend_button: Button = %AscendButton
 @onready var awaken_button: Button = %AwakenButton
+## Built in code in _ready, cloned from awaken_button.
+var _evolve_button: Button
 
 # Reading order: left column then right column, row by row
 const STATS := [
@@ -101,6 +103,16 @@ func _ready() -> void:
 		realm_label.clip_text = false
 		realm_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_build_stat_rows()
+
+	# Evolve sits beside Awaken. Cloned from it (before any signals or
+	# bars are attached) so it inherits the scene's styling without
+	# the scene file needing to change. Hidden unless it can be used.
+	_evolve_button = awaken_button.duplicate(DUPLICATE_GROUPS | DUPLICATE_SCRIPTS)
+	_evolve_button.name = "EvolveButton"
+	_evolve_button.text = "Evolve"
+	_evolve_button.visible = false
+	awaken_button.get_parent().add_child(_evolve_button)
+	_evolve_button.pressed.connect(_on_evolve_button)
 
 	ascend_button.pressed.connect(_on_ascend_pressed)
 	awaken_button.pressed.connect(_on_awaken_pressed)
@@ -882,11 +894,6 @@ func _on_awaken_pressed() -> void:
 	if p == null:
 		return
 
-	# At the star cap this button is Evolve (see _update_costs).
-	if p.stars >= p.get_star_cap() and not SummonSystem.next_forms(p.partner_id).is_empty():
-		_on_evolve_pressed(p)
-		return
-
 	var need_copies := p.get_awaken_copies()
 	var have_copies := GameState.get_copies(p.partner_id)
 	var need_pills := p.get_awaken_pills()
@@ -1140,6 +1147,8 @@ func _update_costs() -> void:
 	if p == null:
 		ascend_button.disabled = true
 		awaken_button.disabled = true
+		if _evolve_button != null:
+			_evolve_button.visible = false
 		_qi_bar.visible = false
 		_pill_bar.visible = false
 		_pips.visible = false
@@ -1170,23 +1179,20 @@ func _update_costs() -> void:
 			_set_cost_label(ascend_cost_label,
 				"Qi  %s / %s" % [_fmt(GameState.qi), _fmt(cost)], ratio >= 1.0)
 
+	# Evolve: its own button, shown only when it can actually be done.
+	# A button that is there and refuses reads as broken.
+	if _evolve_button != null:
+		var can := GameState.can_evolve(p) == ""
+		_evolve_button.visible = can
+		_set_ready(_evolve_button, can)
+
 	# Awaken: pill bar (+ copy pips for partners)
 	if p.stars >= p.get_star_cap():
+		awaken_button.disabled = true
 		_pill_bar.visible = false
 		_pips.visible = false
-		# At the star cap Awaken is dead, so the button becomes Evolve —
-		# but only once it can actually be done. A button that is there
-		# and refuses reads as broken, so until then this stays "Max".
-		if GameState.can_evolve(p) == "":
-			awaken_button.text = "Evolve"
-			awaken_button.disabled = false
-			_set_ready(awaken_button, true)
-			_set_cost_label(awaken_cost_label,
-				"%d Essence" % GameState.evolve_cost(p), true)
-		else:
-			awaken_button.disabled = true
-			_set_ready(awaken_button, false)
-			_set_cost_label(awaken_cost_label, "Max", true)
+		_set_ready(awaken_button, false)
+		_set_cost_label(awaken_cost_label, "Max", true)
 	else:
 		var need_copies := p.get_awaken_copies()
 		var have_copies := GameState.get_copies(p.partner_id)
@@ -1304,13 +1310,18 @@ func _make_pips(button: Button) -> Control:
 
 
 ## Small message that floats up from a button and fades.
+func _on_evolve_button() -> void:
+	if current != null:
+		_on_evolve_pressed(current)
+
+
 ## Evolves the shown partner. Most lines have one next form and go
 ## straight through; Lin Qiye's Red can become Nyx or Merlin, so that
 ## one asks first.
 func _on_evolve_pressed(p) -> void:
 	var blocked := GameState.can_evolve(p)
 	if blocked != "":
-		_toast(awaken_button, blocked, Color("ff9a8a"))
+		_toast(_evolve_button, blocked, Color("ff9a8a"))
 		return
 
 	var forms: Array = SummonSystem.next_forms(p.partner_id)
@@ -1328,10 +1339,10 @@ func _on_evolve_pressed(p) -> void:
 func _finish_evolve(p, target: String) -> void:
 	var problem := GameState.evolve_partner(p, target)
 	if problem != "":
-		_toast(awaken_button, problem, Color("ff9a8a"))
+		_toast(_evolve_button, problem, Color("ff9a8a"))
 		return
 	var data = PartnerDatabase.get_partner(p.partner_id)
-	_toast(awaken_button, "Evolved into %s!" % (data.display_name if data != null else "a new form"), pip_color)
+	_toast(_evolve_button, "Evolved into %s!" % (data.display_name if data != null else "a new form"), pip_color)
 
 
 func _toast(button: Control, text: String, color: Color) -> void:

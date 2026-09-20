@@ -565,12 +565,12 @@ func can_evolve(partner) -> String:
 	if data == null:
 		return "This cultivator has no higher form."
 
-	# The rarity's own cap, not get_star_cap(), which is also limited
-	# by realm: evolving should need the form maxed, not the player.
-	var cap := Realms.get_star_cap_for_rarity(data.rarity)
-	if partner.stars < cap:
-		return "Reach %d stars first." % cap
-
+	# No star requirement. Stars carry over but the new form restarts
+	# the star bonus, so evolving early is its own punishment: a Gold
+	# at 1 star (x5.60) is weaker than the Red at 15 (x9.11) it came
+	# from, and needs 7 stars just to break even. That makes it a
+	# choice — dip now for a higher ceiling, or max the Red first —
+	# rather than a queue, and Essence is already the real cost.
 	var cost := int(EVOLVE_ESSENCE.get(data.rarity, 0))
 	if cost <= 0:
 		return "This cultivator has no higher form."
