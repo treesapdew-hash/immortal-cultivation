@@ -13,6 +13,13 @@ extends PanelContainer
 
 const TABS := ["Partners", "Beasts", "Treasures", "Titles"]
 const CELL := Vector2(150, 200)
+## A title's banner in the list. 3:1, which is close to how the art
+## is drawn, so it neither letterboxes nor crops.
+const PLATE := Vector2(348, 116)
+## Kept clear at each end for the banner's ornament, as a share of
+## its width. One figure for all of them; a banner that needs more
+## than this is better regenerated than special-cased.
+const PLATE_SAFE := 0.24
 
 const COL_BG_TOP := Color("0d1a31")
 const COL_BG_BOTTOM := Color("060c1a")
@@ -192,7 +199,7 @@ func _title_row(id: String) -> Control:
 	b.flat = true
 	b.focus_mode = Control.FOCUS_NONE
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	b.custom_minimum_size = Vector2(0, 104)
+	b.custom_minimum_size = Vector2(0, PLATE.y + 16.0)
 	var normal := StyleBoxFlat.new()
 	normal.bg_color = Color(tint, 0.16 if is_worn else (0.06 if have else 0.02))
 	normal.border_color = Color(tint, 0.9 if is_worn else (0.5 if have else 0.18))
@@ -214,7 +221,7 @@ func _title_row(id: String) -> Control:
 	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(h)
 
-	h.add_child(_title_banner(id, have))
+	h.add_child(_title_plate(id, have))
 
 	var texts := VBoxContainer.new()
 	texts.add_theme_constant_override("separation", 1)
@@ -223,8 +230,12 @@ func _title_row(id: String) -> Control:
 	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	h.add_child(texts)
 
-	var head := "%s%s" % [Titles.title_name(id), "   (worn)" if is_worn else ""]
-	texts.add_child(_label(head, 20, tint if have else COL_DIM, HORIZONTAL_ALIGNMENT_LEFT))
+	# The name lives on the banner now, so this column carries only
+	# what the banner cannot say.
+	if is_worn:
+		texts.add_child(_label("Worn", 18, COL_GOLD, HORIZONTAL_ALIGNMENT_LEFT))
+	elif have:
+		texts.add_child(_label("Tap to wear", 16, COL_DIM, HORIZONTAL_ALIGNMENT_LEFT))
 
 	var bonus_row := HBoxContainer.new()
 	bonus_row.add_theme_constant_override("separation", 10)
@@ -255,28 +266,72 @@ func _title_row(id: String) -> Control:
 	return b
 
 
-## The banner art if there is any, otherwise one drawn in the tier's
-## colour. TitleBanner takes its own colour from the tier, so nothing
-## needs passing in.
-func _title_banner(id: String, have: bool) -> Control:
+## The banner with the title's name laid across it, which is what the
+## art was drawn for: every banner frames a clear panel in the middle
+## and puts its ornament at the two ends.
+##
+## One safe zone serves all of them rather than a measurement per
+## title. The ornament runs to roughly a fifth of the width at each
+## end, so the name is held well inside that, wraps to a second line
+## when it is long, and carries an outline so a banner that crowds
+## the middle a little more than its neighbours is still legible.
+func _title_plate(id: String, have: bool) -> Control:
+	var plate := Control.new()
+	plate.custom_minimum_size = PLATE
+	plate.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 	var art := Titles.art_of(id)
 	if art != null:
 		var tex := TextureRect.new()
 		tex.texture = art
-		tex.custom_minimum_size = Vector2(256, 64)
 		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		tex.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		tex.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		if not have:
-			tex.modulate = Color(0.35, 0.37, 0.42)
-		return tex
+			tex.modulate = Color(0.4, 0.42, 0.48)
+		plate.add_child(tex)
+		tex.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	else:
+		var drawn := TitleBanner.new()
+		drawn.setup(Titles.tier_of(id), have)
+		plate.add_child(drawn)
+		drawn.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-	var plate := TitleBanner.new()
-	plate.custom_minimum_size = Vector2(256, 64)
-	plate.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	plate.setup(Titles.tier_of(id), have)
+	var title_text := Titles.title_name(id)
+	var nm := _label(title_text, _plate_font(title_text),
+		Titles.colour_of(id).lightened(0.35) if have else COL_DIM)
+	nm.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	nm.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	nm.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+	nm.add_theme_constant_override("outline_size", 5)
+	plate.add_child(nm)
+	nm.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	nm.anchor_left = PLATE_SAFE
+	nm.anchor_right = 1.0 - PLATE_SAFE
+	nm.offset_left = 0.0
+	nm.offset_right = 0.0
 	return plate
+
+
+## The largest face whose longest single word still fits between the
+## banner's ornaments. Measured rather than guessed from the length:
+## "Thousandfold" is only twelve characters and still overruns at 22,
+## and a title added later should sort itself out without anyone
+## remembering this existed.
+func _plate_font(value: String) -> int:
+	var safe := PLATE.x * (1.0 - 2.0 * PLATE_SAFE)
+	var f: Font = get_theme_font("font", "Label")
+	if f == null:
+		return 17
+	for candidate in [22, 20, 18, 16, 14]:
+		var widest := 0.0
+		for word in value.split(" "):
+			widest = maxf(widest, f.get_string_size(
+				str(word), HORIZONTAL_ALIGNMENT_LEFT, -1, int(candidate)).x)
+		if widest <= safe:
+			return int(candidate)
+	return 13
 
 
 ## Pulls the server-held set and redraws only if it differs, so a
