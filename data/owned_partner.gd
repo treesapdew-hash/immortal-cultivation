@@ -142,7 +142,7 @@ func _get_stat_multiplier() -> float:
 func _gear() -> Dictionary:
 	var totals := Gear.totals_for(partner_id)
 	for source in [Treasures.totals_for(partner_id), Lifebound.totals_for(partner_id), Beasts.totals_for(partner_id),
-			Codex.totals(), GameState.sect_bonus, GameState.path_bonus]:
+			Codex.totals(), GameState.sect_bonus, GameState.path_bonus, GameState.title_bonus]:
 		for stat in source:
 			totals[stat] = float(totals.get(stat, 0.0)) + source[stat]
 	return totals

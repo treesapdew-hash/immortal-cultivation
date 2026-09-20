@@ -449,6 +449,11 @@ func _add_message(channel: int, row: Dictionary) -> void:
 	line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_rows.add_child(line)
 
+	# The speaker's worn title, when they have one.
+	var title_id := str(row.get("title", ""))
+	if title_id != "" and Titles.LIST.has(title_id):
+		line.add_child(_title_tag(title_id))
+
 	var name_button := Button.new()
 	name_button.text = who + ":"
 	name_button.flat = true
@@ -464,6 +469,29 @@ func _add_message(channel: int, row: Dictionary) -> void:
 	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	line.add_child(text)
+
+
+## A worn title beside a name: the tier's colour on a matching plate,
+## so it reads at a glance without crowding the line.
+func _title_tag(id: String) -> Control:
+	var tint := Titles.colour_of(id)
+	var plate := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(tint, 0.14)
+	sb.border_color = Color(tint, 0.6)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(6)
+	sb.content_margin_left = 7
+	sb.content_margin_right = 7
+	sb.content_margin_top = 1
+	sb.content_margin_bottom = 1
+	plate.add_theme_stylebox_override("panel", sb)
+	plate.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var l := _label(Titles.title_name(id), 16, tint)
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	plate.add_child(l)
+	return plate
 
 
 func _add_system(message: String) -> void:

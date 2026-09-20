@@ -68,6 +68,9 @@ func _ready() -> void:
 	print("Backend: already logged in on this device (%s), no welcome screen" % ("guest" if is_guest else email))
 	if await ensure_session():
 		print("Backend: signed in as %s" % user_id)
+		# Titles the server awarded while they were away, before the
+		# profile goes up, so a new one is worn-able straight away.
+		await Showcase.pull_titles()
 		await update_profile()
 		note_saved()
 		# Sect Research bonus for the team
@@ -242,6 +245,7 @@ func update_profile() -> void:
 		"highest_stage": int(GameState.highest_stage),
 		"power": int(GameState.get_team_power()),
 		"showcase": Showcase.build(),
+		"title": str(GameState.title_worn),
 		"updated_at": Time.get_datetime_string_from_system(true) + "Z",
 	}
 	await rest(HTTPClient.METHOD_POST, "profiles?on_conflict=id", row,

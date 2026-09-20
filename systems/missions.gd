@@ -122,8 +122,28 @@ static func refresh() -> void:
 		m["day_base"] = GameState.stats.duplicate()
 		m["day_done"] = []
 		m["day_chests"] = []
+		_count_streak()
 		# After the daily snapshot, so it counts for the week only
 		GameState.bump("login_days")
+
+
+## Days logged in back to back. Counted off a day number rather than
+## GameState.today(), whose YYYYMMDD jumps at the end of every month.
+static func _count_streak() -> void:
+	var today_n := _day_number()
+	var last := int(GameState.login_streak_day)
+	if last == today_n:
+		return
+	GameState.login_streak = int(GameState.login_streak) + 1 if last == today_n - 1 else 1
+	GameState.login_streak_day = today_n
+
+
+static func _day_number() -> int:
+	var t := Time.get_datetime_dict_from_system()
+	var unix := Time.get_unix_time_from_datetime_dict({
+		"year": t["year"], "month": t["month"], "day": t["day"],
+		"hour": 0, "minute": 0, "second": 0})
+	return int(unix / 86400)
 
 
 ## Monday of this week, as a day number (local time).

@@ -26,6 +26,7 @@ signal expeditions_updated # expeditions started, finished or rerolled
 @warning_ignore("unused_signal")   # emitted by Mail, not in this file
 signal mail_changed      # a message arrived or was claimed
 signal achievements_changed  # a milestone was reached or claimed
+signal titles_changed     # a title was earned, or a different one worn
 signal array_changed      # Battle Array partners placed, removed or upgraded
 
 
@@ -141,6 +142,14 @@ var pending_boss: int = 0
 var stats: Dictionary = {}
 ## Milestones already claimed (see Achievements).
 var claimed_achievements: Array = []
+## Titles earned (see Titles): {id: true}. Every one adds its bonus.
+var titles_owned: Dictionary = {}
+## The title shown beside your name, or "" for none.
+var title_worn: String = ""
+## Days logged in back to back, and the day the streak last counted.
+## Missing a day sends the streak back to 1.
+var login_streak: int = 0
+var login_streak_day: int = 0
 ## Card choices waiting to be picked: [{tier, options, from}]
 var pending_card_choices: Array = []
 ## Daily and weekly missions (see Missions): reset days, stat
@@ -178,6 +187,9 @@ var sect_bonus: Dictionary = {}
 ## rather than recomputed, because _gear() runs on every stat read.
 ## Rebuilt by refresh_path_bonus() whenever the formation changes.
 var path_bonus: Dictionary = {}
+## Every earned title added up (see Titles). Cached for the same
+## reason; rebuilt by Titles.refresh_bonus().
+var title_bonus: Dictionary = {}
 ## Sect Shop weekly purchases: {week, bought {item: count}}.
 var sect_shop: Dictionary = {}
 ## Unlocked features already announced (see Unlocks).
@@ -479,6 +491,9 @@ func bump(key: String, amount := 1) -> void:
 	# Start a new mission day/week first, so this counts for the new one
 	Missions.refresh()
 	stats[key] = int(stats.get(key, 0)) + amount
+	# Most titles ride these same counters, so this is where they fall
+	# due. Only a newly earned one costs anything.
+	Titles.refresh()
 	achievements_changed.emit()
 
 
@@ -1249,6 +1264,10 @@ func to_dict() -> Dictionary:
 		"pending_boss": pending_boss,
 		"stats": stats,
 		"claimed_achievements": claimed_achievements,
+		"titles_owned": titles_owned,
+		"title_worn": title_worn,
+		"login_streak": login_streak,
+		"login_streak_day": login_streak_day,
 		"pending_card_choices": pending_card_choices,
 		"missions": missions,
 		"array_level": array_level,
@@ -1797,6 +1816,15 @@ func load_game() -> bool:
 	claimed_achievements.clear()
 	for id in dict.get("claimed_achievements", []):
 		claimed_achievements.append(str(id))
+	titles_owned = {}
+	var saved_titles = dict.get("titles_owned", {})
+	if saved_titles is Dictionary:
+		for id in saved_titles:
+			titles_owned[str(id)] = true
+	title_worn = str(dict.get("title_worn", ""))
+	login_streak = int(dict.get("login_streak", 0))
+	login_streak_day = int(dict.get("login_streak_day", 0))
+	Titles.refresh_bonus()
 	pending_card_choices.clear()
 	for choice in dict.get("pending_card_choices", []):
 		if choice is Dictionary:
@@ -2041,6 +2069,11 @@ func reset_account():
 	pending_boss = 0
 	stats.clear()
 	claimed_achievements.clear()
+	titles_owned.clear()
+	title_worn = ""
+	login_streak = 0
+	login_streak_day = 0
+	title_bonus = {}
 	pending_card_choices.clear()
 	missions = {}
 	array_level = 1

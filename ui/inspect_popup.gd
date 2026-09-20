@@ -113,6 +113,11 @@ func _render(data: Dictionary) -> void:
 	if power > 0:
 		bits.append("Power %s" % NumberFormat.short(power))
 	_body.add_child(_label("   ·   ".join(PackedStringArray(bits)), 19, COL_GOLD))
+
+	var title_id := str(data.get("title", ""))
+	if title_id != "" and Titles.LIST.has(title_id):
+		_body.add_child(_label(Titles.title_name(title_id), 22, Titles.colour_of(title_id)))
+
 	_body.add_child(_line())
 
 	var show: Dictionary = data["showcase"] if data.get("showcase") is Dictionary else {}

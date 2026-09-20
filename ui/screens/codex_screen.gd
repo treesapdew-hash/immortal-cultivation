@@ -11,7 +11,7 @@ extends PanelContainer
 # Tap a discovered entry for its background.
 # =========================================================
 
-const TABS := ["Partners", "Beasts", "Treasures"]
+const TABS := ["Partners", "Beasts", "Treasures", "Titles"]
 const CELL := Vector2(150, 200)
 
 const COL_BG_TOP := Color("0d1a31")
@@ -103,8 +103,166 @@ func _rebuild() -> void:
 			_build_beasts()
 		"Treasures":
 			_build_treasures()
+		"Titles":
+			_build_titles()
 		_:
 			_build_partners()
+
+
+# ---------------------------------------------------------
+# TITLES
+# ---------------------------------------------------------
+
+## Every title, earned or not, grouped by tier. Every one you hold
+## adds its bonus; the worn one is what others see beside your name.
+func _build_titles() -> void:
+	var owned := Titles.owned_ids()
+	_body.add_child(_label("Earned %d / %d titles" % [owned.size(), Titles.LIST.size()],
+		20, COL_TEXT, HORIZONTAL_ALIGNMENT_LEFT))
+	var note := _label("Every title you hold adds its bonus. The one you wear is what "
+		+ "other cultivators see beside your name.", 16, COL_DIM, HORIZONTAL_ALIGNMENT_LEFT)
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_body.add_child(note)
+
+	# What they add up to, so the stacking is visible rather than implied.
+	var totals := Titles.totals()
+	if not totals.is_empty():
+		var parts := PackedStringArray()
+		for stat in totals:
+			var stat_label: String = Gear.STAT_NAMES.get(str(stat), str(stat))
+			parts.append("+%s%% %s" % [_pct(float(totals[stat])), stat_label])
+		var sum_l := _label("  ·  ".join(parts), 17, COL_OK, HORIZONTAL_ALIGNMENT_LEFT)
+		sum_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_body.add_child(sum_l)
+
+	if Titles.worn() != "":
+		var off := Button.new()
+		off.text = "Wear no title"
+		off.flat = true
+		off.focus_mode = Control.FOCUS_NONE
+		off.add_theme_font_size_override("font_size", 17)
+		off.add_theme_color_override("font_color", COL_DIM)
+		off.pressed.connect(func(): _wear(""))
+		_body.add_child(off)
+
+	# Rarest first: the page should open on something worth seeing.
+	for tier in range(ItemDB.GRADE_NAMES.size() - 1, -1, -1):
+		var ids: Array = []
+		for id in Titles.LIST:
+			if Titles.tier_of(str(id)) == tier:
+				ids.append(str(id))
+		if ids.is_empty():
+			continue
+		ids.sort_custom(func(a, b): return Titles.title_name(a) < Titles.title_name(b))
+		var have := ids.filter(func(x): return Titles.owns(str(x))).size()
+		_body.add_child(_heading("%s  (%d / %d)" % [ItemDB.grade_name(tier), have, ids.size()],
+			ItemDB.grade_color(tier)))
+		for id in ids:
+			_body.add_child(_title_row(str(id)))
+
+
+func _pct(v: float) -> String:
+	return str(snappedf(v, 0.1)).trim_suffix(".0")
+
+
+## One title: its banner (or a drawn plate until the art lands), what
+## it grants, and how it is earned. Tapping an owned one wears it.
+func _title_row(id: String) -> Control:
+	var have := Titles.owns(id)
+	var tint := Titles.colour_of(id)
+	var is_worn := Titles.worn() == id
+
+	var b := Button.new()
+	b.flat = true
+	b.focus_mode = Control.FOCUS_NONE
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.custom_minimum_size = Vector2(0, 104)
+	var normal := StyleBoxFlat.new()
+	normal.bg_color = Color(tint, 0.16 if is_worn else (0.06 if have else 0.02))
+	normal.border_color = Color(tint, 0.9 if is_worn else (0.5 if have else 0.18))
+	normal.set_border_width_all(2 if is_worn else 1)
+	normal.set_corner_radius_all(10)
+	normal.set_content_margin_all(10)
+	var hover := normal.duplicate() as StyleBoxFlat
+	hover.bg_color = Color(tint, 0.2 if have else 0.05)
+	for state in ["normal", "focus"]:
+		b.add_theme_stylebox_override(state, normal)
+	for state in ["hover", "pressed"]:
+		b.add_theme_stylebox_override(state, hover)
+	if have:
+		b.pressed.connect(func(): _wear(id))
+
+	var h := HBoxContainer.new()
+	h.add_theme_constant_override("separation", 12)
+	h.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(h)
+
+	h.add_child(_title_banner(id, tint, have))
+
+	var texts := VBoxContainer.new()
+	texts.add_theme_constant_override("separation", 1)
+	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	texts.alignment = BoxContainer.ALIGNMENT_CENTER
+	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	h.add_child(texts)
+
+	var head := "%s%s" % [Titles.title_name(id), "   (worn)" if is_worn else ""]
+	texts.add_child(_label(head, 20, tint if have else COL_DIM, HORIZONTAL_ALIGNMENT_LEFT))
+	texts.add_child(_label(Titles.bonus_text(id), 16,
+		COL_OK if have else COL_DIM, HORIZONTAL_ALIGNMENT_LEFT))
+
+	var t: Dictionary = Titles.get_title(id)
+	var how := str(t.get("how", ""))
+	if not have:
+		# Say how far along they are, when it is something countable.
+		var need := Titles.goal(id)
+		var at := Titles.progress(id)
+		if t.has("track") and need > 1:
+			how += "   (%s / %s)" % [NumberFormat.short(at), NumberFormat.short(need)]
+		elif bool(t.get("server", false)):
+			how += "   (awarded by the heavens)"
+	var how_l := _label(how, 15, COL_DIM, HORIZONTAL_ALIGNMENT_LEFT)
+	how_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	how_l.custom_minimum_size.x = 1
+	texts.add_child(how_l)
+	return b
+
+
+## The banner art, or a drawn plate in the tier's colour while the
+## art is still being made.
+func _title_banner(id: String, tint: Color, have: bool) -> Control:
+	var art := Titles.art_of(id)
+	if art != null:
+		var tex := TextureRect.new()
+		tex.texture = art
+		tex.custom_minimum_size = Vector2(256, 64)
+		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tex.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		tex.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if not have:
+			tex.modulate = Color(0.35, 0.37, 0.42)
+		return tex
+
+	var plate := Control.new()
+	plate.custom_minimum_size = Vector2(256, 64)
+	plate.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var shade := tint if have else Color(0.35, 0.37, 0.42)
+	plate.draw.connect(func():
+		var r := Rect2(Vector2.ZERO, plate.size)
+		plate.draw_rect(r, Color(shade, 0.12))
+		plate.draw_rect(r, Color(shade, 0.7), false, 1.5)
+		var inset := r.grow(-6.0)
+		plate.draw_rect(inset, Color(shade, 0.35), false, 1.0)
+	)
+	return plate
+
+
+func _wear(id: String) -> void:
+	Titles.wear(id)
+	_rebuild()
 
 
 # ---------------------------------------------------------

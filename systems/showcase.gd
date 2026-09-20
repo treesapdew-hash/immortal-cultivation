@@ -89,7 +89,18 @@ static func _battle_array_names() -> Array:
 # READING SOMEONE ELSE'S
 # ---------------------------------------------------------
 
-## {id, name, realm, stage, power, showcase} or {} if they are
+## The titles the server has awarded this player (Arena placements,
+## tester codes). Merged into what they already hold.
+static func pull_titles() -> Array:
+	if not available():
+		return []
+	var r: Dictionary = await Backend.call_fn("my_titles", {})
+	if not r["ok"] or not (r["data"] is Array):
+		return []
+	return Titles.grant_all(r["data"])
+
+
+## {id, name, realm, stage, power, title, showcase} or {} if they are
 ## blocked, gone, or have never synced.
 static func fetch(user_id: String) -> Dictionary:
 	if user_id == "" or not available():
