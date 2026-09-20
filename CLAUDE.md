@@ -59,7 +59,23 @@ Sects client: `sects.gd`, `sect_trial.gd`, `ui/screens/guild_screen.gd` (quiet r
 Social client: `chat.gd`, `friends.gd`, `ui/chat_box.gd`, `ui/friends_popup.gd`.
 Arena client: `arena.gd`, `ui/arena_popup.gd`; inspect: `showcase.gd`, `ui/inspect_popup.gd`.
 Titles: `titles.gd`, Codex tab in `ui/screens/codex_screen.gd`, spec in `docs/titles.md`.
-Supabase settings: anonymous sign-ins ON, manual linking ON, email templates include `{{ .Token }}`; need custom SMTP before testers.
+Supabase settings: anonymous sign-ins ON, manual linking ON.
+
+**Email is code-based, never link-based.** `verify_email_code()` and
+`verify_recovery()` POST to `/auth/v1/verify` with a `token`, so the
+templates under Authentication > Emails > Templates must carry
+`{{ .Token }}`. Leaving Supabase's default `{{ .ConfirmationURL }}`
+sends a link to the Site URL instead — which was `http://localhost:3000`
+and gave testers ERR_CONNECTION_REFUSED with no code to type. Only two
+templates are used: **Change Email Address** (from `link_email`) and
+**Reset Password** (from `request_password_reset`).
+
+Custom SMTP: **done**, Gmail relay via an App Password on
+cultivationimmortal0@gmail.com. Supabase raises the limit to 30
+emails/hour once custom SMTP is on. Gmail is an alpha measure only —
+it caps near 500/day and, with no domain to set SPF/DKIM on, real
+volume from a gmail.com sender drifts into spam. Before launch: buy a
+domain and move to Resend or Postmark.
 
 ## Legal
 Live at `https://treesapdew-hash.github.io/immortal-cultivation/legal/` (privacy.html, terms.html, delete-account.html). Contact cultivationimmortal0@gmail.com. URLs in `settings.gd`.
@@ -69,7 +85,9 @@ Live at `https://treesapdew-hash.github.io/immortal-cultivation/legal/` (privacy
 - Android export + release keystore (back it up), package name fixed forever
 - Play Console: content rating, 13+ audience, Data safety, contains ads, privacy + deletion links
 - TrajanPro licence; IP question for novel characters
-- Custom SMTP in Supabase; Supabase free projects pause after ~7 days idle
+- Custom SMTP: done for alpha (Gmail); needs a real domain + Resend/Postmark before launch
+- Supabase free projects pause after ~7 days idle — chat, Arena, titles,
+  leaderboards and cloud save all stop until the project is woken
 
 ## Open / next
 - **46 title banners** not generated yet: `assets/ui/titles/<id>.png`, spec
