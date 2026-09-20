@@ -382,11 +382,17 @@ static func scroll_tier(item_id: String) -> int:
 
 
 ## The partners a scroll offers (any Selection Scroll item).
+##
+## Premium scrolls offer EVERY partner they cover, not a random
+## handful: they are rare enough that the pick should be the
+## player's, and the group scrolls already worked this way. Tier
+## scrolls still offer a random CHOICE_SIZE, which is what makes
+## them the common reward.
 static func options_for_scroll(item_id: String) -> Array:
 	if item_id == PREMIUM_SCROLL:
-		var all := premium_ids()
-		all.shuffle()
-		return all.slice(0, mini(Achievements.CHOICE_SIZE, all.size()))
+		# Kept in group order (the cache is built from PREMIUM_GROUPS),
+		# so the list reads as themed sets rather than a jumble.
+		return premium_ids()
 	for g in PREMIUM_GROUPS:
 		if item_id == premium_scroll_id(str(g)):
 			var ids: Array = []

@@ -18,6 +18,10 @@ signal closed
 
 const LAYER := 60
 const CARD_WIDTH := 200.0
+## Rows of cards shown before the grid starts scrolling.
+const MAX_VISIBLE_ROWS := 2
+## Name label and row separation under each card.
+const ROW_EXTRA := 54.0
 
 const COL_TITLE := Color("f2d98a")
 const COL_TEXT := Color("c9d4e3")
@@ -81,8 +85,8 @@ func _ready() -> void:
 	grid.add_theme_constant_override("h_separation", 14)
 	grid.add_theme_constant_override("v_separation", 14)
 	var grid_center := CenterContainer.new()
+	grid_center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	grid_center.add_child(grid)
-	v.add_child(grid_center)
 
 	SummonCard.find_frames(center)
 	var card_size := SummonCard.size_for_width(CARD_WIDTH)
@@ -91,6 +95,22 @@ func _ready() -> void:
 		if data == null:
 			continue
 		grid.add_child(_card(str(id), data, card_size))
+
+	# A Premium Selection Scroll offers all 15 Premium Reds, which is
+	# four rows of cards: far taller than the screen. Past
+	# MAX_VISIBLE_ROWS the cards scroll instead of stretching the
+	# panel past the buttons below it.
+	var rows := int(ceil(float(grid.get_child_count()) / float(maxi(grid.columns, 1))))
+	if rows > MAX_VISIBLE_ROWS:
+		var scroller := ScrollContainer.new()
+		scroller.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		scroller.custom_minimum_size = Vector2(0, (card_size.y + ROW_EXTRA) * MAX_VISIBLE_ROWS)
+		scroller.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		scroller.add_child(grid_center)
+		v.add_child(scroller)
+	else:
+		v.add_child(grid_center)
+
 	if _options.is_empty():
 		v.add_child(_label("No partners of this tier exist yet.", 20, COL_DIM))
 
