@@ -13,8 +13,9 @@ Beasts and Treasures.
   hold most of them at once.
 - **One worn at a time**, for display: chat, the inspect popup, the
   Arena board, the friends list.
-- **Bonuses spread across five stats** so no single one balloons when
-  forty titles stack. Roughly +25% to each stat for a complete set.
+- **Bonuses spread across six stats** so no single one balloons when
+  forty-odd titles stack. A complete set totals roughly +119%, which
+  lands near +20% on each stat.
 - **Server-granted titles cannot be earned locally.** Arena placements,
   tester titles and Founding Cultivator are awarded by the server and
   carried on the profile, the same route the showcase takes. Everything
@@ -37,7 +38,11 @@ Reusing the existing item grade ladder (`ItemDB.GRADE_NAMES` /
 
 ## The titles
 
-`STAT` is one of: `atk_pct`, `hp_pct`, `def_pct`, `crit`, `qi` (idle income).
+`STAT` is one of: `atk_pct`, `hp_pct`, `def_pct`, `mdef_pct`, `crit`,
+`crit_dmg`. These are the six a partner's `_gear()` actually consumes —
+idle qi income is not a partner stat, so titles do not touch it. The
+tables below predate that correction; `systems/titles.gd` is the
+authority on which stat each one lifts.
 
 ### Arena — server-granted
 
@@ -132,13 +137,13 @@ you hand a code to testers rather than maintaining a list.
 | `evolve_first` | Awakener | Epic | Evolve a Premium Red | atk_pct |
 | `evolve_prismatic` | Prismatic Sovereign | Heaven-Defying | Evolve a partner to Prismatic | atk_pct |
 
-**Total: 44 titles.**
+**Total: 46 titles.**
 
 ---
 
 # Asset list
 
-**44 banner images**, at `assets/ui/titles/<id>.png` — the filename must
+**46 banner images**, at `assets/ui/titles/<id>.png` — the filename must
 match the `id` column exactly, that is how the game finds it.
 
 ## The one rule that matters

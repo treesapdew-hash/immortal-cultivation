@@ -116,6 +116,10 @@ func _rebuild() -> void:
 ## Every title, earned or not, grouped by tier. Every one you hold
 ## adds its bonus; the worn one is what others see beside your name.
 func _build_titles() -> void:
+	# Most titles ride counters that were already ticking before this
+	# page existed, so bring them up to date on the way in rather than
+	# waiting for the next thing that happens to bump a stat.
+	Titles.refresh()
 	var owned := Titles.owned_ids()
 	_body.add_child(_label("Earned %d / %d titles" % [owned.size(), Titles.LIST.size()],
 		20, COL_TEXT, HORIZONTAL_ALIGNMENT_LEFT))
@@ -374,7 +378,14 @@ func _sets_line(sets: Array) -> Control:
 		total[stat] = float(total.get(stat, 0.0)) + float(GameState.sect_bonus[stat])
 	var summary := _label(Codex.bonus_text(total).replace(", ", "  ·  "), 16, COL_OK if not total.is_empty() else COL_DIM,
 		HORIZONTAL_ALIGNMENT_LEFT)
-	summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# One line, trimmed. NOT autowrapped: an autowrapped Label whose
+	# minimum width is pinned to 1 reports the height it would need
+	# wrapping at one pixel, which grew with every bonus earned until
+	# this strip stood 710px tall and pushed the whole page off the
+	# screen. The full breakdown is a tap away in All Bonuses.
+	summary.autowrap_mode = TextServer.AUTOWRAP_OFF
+	summary.clip_text = true
+	summary.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	summary.custom_minimum_size.x = 1
 	rv.add_child(summary)
 	row.add_child(right)
