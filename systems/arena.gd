@@ -88,8 +88,15 @@ static func extra_cost(bought: int) -> int:
 # THE PLAYER'S TEAM
 # ---------------------------------------------------------
 
-## The formation, as the snapshot others fight: enough to rebuild
-## the team without reading the owner's save.
+## The formation as the snapshot others fight.
+##
+## Final stats, not identity: gear, treasures, beasts, codex, sect
+## and Path bonuses are all baked in here. Rebuilding an opponent
+## from partner_id alone would read the VIEWER's gear for that id,
+## which would be wrong in both directions.
+##
+## partner_id and dao ride along anyway, because PartnerSkills is
+## global data — so an opponent still fights with their real skill.
 static func my_team() -> Array:
 	var out: Array = []
 	for index in GameState.formation:
@@ -99,14 +106,44 @@ static func my_team() -> Array:
 		var p = GameState.roster[i]
 		if p == null:
 			continue
+		var data = p.get_data()
 		out.append({
+			"name": p.get_display_name(),
 			"partner_id": p.partner_id,
-			"stars": p.stars,
-			"realm": p.realm_index,
-			"tier": p.tier,
-			"awakening": p.awakening,
+			"rarity": int(data.rarity) if data != null else -1,
+			"dao": int(data.path) if data != null else -1,
+			"hp": p.get_max_hp(),
+			"atk": p.get_atk(),
+			"def": p.get_def(),
+			"mdef": p.get_mdef(),
+			"spd": p.get_spd(),
+			"crit": p.get_crit(),
+			"crit_damage": p.get_crit_damage(),
+			"eva": p.get_eva(),
+			"accuracy": p.get_accuracy(),
+			"energy_regen": p.get_energy_regen(),
 			"power": p.get_power(),
 		})
+	return out
+
+
+## A stored snapshot turned into the enemy dictionaries BattleCore
+## expects. Skills come back via partner_id; the sprite is looked up
+## locally, since art is shipped with the game rather than stored.
+static func to_enemies(team: Array) -> Array:
+	var out: Array = []
+	for entry in team:
+		var e: Dictionary = entry if entry is Dictionary else {}
+		if e.is_empty():
+			continue
+		var foe := e.duplicate()
+		var pid := str(e.get("partner_id", ""))
+		if pid != "":
+			var data = PartnerDatabase.get_partner(pid)
+			if data != null:
+				foe["sprite"] = data.sprite_texture
+				foe["skill_mode"] = PartnerSkills.mode_for(int(data.rarity))
+		out.append(foe)
 	return out
 
 

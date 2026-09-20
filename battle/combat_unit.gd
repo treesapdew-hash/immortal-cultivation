@@ -320,4 +320,17 @@ static func from_enemy(enemy: Dictionary, index: int) -> CombatUnit:
 	unit.monster_id = str(enemy.get("monster_id", ""))
 	unit.immune_to_debuffs = bool(enemy.get("immune", false))
 
+	# An Arena opponent is a real cultivator's team, so it fights with
+	# their skills. PartnerSkills is global data, keyed by partner id,
+	# so none of this reads the viewer's save. Enemies that don't
+	# supply these keep the plain behaviour above.
+	if enemy.has("partner_id"):
+		unit.partner_id = str(enemy["partner_id"])
+	if enemy.has("dao"):
+		unit.dao = int(enemy["dao"])
+	if enemy.has("rarity"):
+		unit.rarity = int(enemy["rarity"])
+	if enemy.has("skill_mode"):
+		unit.skill_mode = str(enemy["skill_mode"])
+
 	return unit
