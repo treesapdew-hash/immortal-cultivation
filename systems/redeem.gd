@@ -53,10 +53,22 @@ static func claim(code: String) -> Dictionary:
 	if rewards.is_empty():
 		return {"ok": false, "text": "", "error": "That code has nothing to give."}
 
+	# A title is not an item, so it comes out before the rest is
+	# granted: give_fortune() would read it as an item id. The server
+	# has already recorded it; this is for the message and so it can
+	# be worn without waiting for the next sign-in.
+	var goods := rewards.duplicate()
+	var title_id := str(goods.get("title", ""))
+	goods.erase("title")
+
 	# give_fortune() lives on Ads but is a plain reward granter: it
 	# understands jade / stones_hours / item ids, which is exactly the
 	# shape the server stores. Reused rather than duplicated.
-	var text := Ads.give_fortune(rewards)
+	var text := Ads.give_fortune(goods) if not goods.is_empty() else ""
+	if title_id != "" and Titles.LIST.has(title_id):
+		Titles.grant(title_id)
+		var earned := "Title earned: %s" % Titles.title_name(title_id)
+		text = earned if text == "" else text + "  ·  " + earned
 	GameState.bump("codes_redeemed")
 	GameState.save_game()
 	return {"ok": true, "text": text, "error": ""}
