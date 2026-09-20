@@ -41,6 +41,13 @@ class_name Titles
 ## Banner art, by title id. Falls back to a drawn plate.
 const ART_DIR := "res://assets/ui/titles/"
 
+## Set by the dev cheat that grants everything. While it is on, a
+## server sync stops taking server-held titles away — otherwise the
+## Arena and tester ones would be stripped the moment the Codex page
+## refreshed, seconds after unlocking them. Session only: never
+## saved, and gone on the next launch.
+static var dev_all_unlocked := false
+
 ## What each tier is worth, as a percentage. Small on purpose.
 const TIER_BONUS := [0.5, 1.0, 1.5, 2.5, 4.0, 6.0, 10.0]
 
@@ -394,7 +401,7 @@ static func sync_server(rows: Array) -> Array:
 			if not owns(key):
 				fresh.append(key)
 			GameState.titles_owned[key] = int(sent[key])
-		else:
+		elif not dev_all_unlocked:
 			GameState.titles_owned.erase(key)
 	if GameState.title_worn != "" and not owns(str(GameState.title_worn)):
 		GameState.title_worn = ""

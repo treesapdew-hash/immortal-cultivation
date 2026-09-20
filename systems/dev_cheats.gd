@@ -11,7 +11,11 @@ extends CanvasLayer
 # release builds.
 # =========================================================
 
-const ENABLED := false
+## Safe to leave on: _ready() also frees the panel unless this is a
+## debug build or the editor, so a RELEASE export never carries it.
+## That guard is the only thing keeping it out of a shipped build —
+## never hand out a DEBUG export with this true.
+const ENABLED := true
 
 const COL_PANEL := Color(0.05, 0.07, 0.12, 0.96)
 const COL_GOLD := Color("e2c27a")
@@ -123,6 +127,8 @@ func _build() -> void:
 		["Fallen God: reset attacks", _fallen_reset],
 		["Tame every Spirit Beast", _tame_all],
 		["Codex: discover everything", _codex_all],
+		["Titles: unlock every one", _titles_all],
+		["Titles: clear all", _titles_clear],
 		["Cloud: upload save now", _cloud_upload],
 		["Cloud: restore save", _cloud_restore],
 		["FRESH START (sign out + wipe save)", _fresh_start],
@@ -456,6 +462,36 @@ func _reset_achievements() -> void:
 	GameState.claimed_achievements.clear()
 	_refresh_all()
 	_say("Achievements unclaimed (progress kept).")
+
+
+## Grants all 46, permanently, so every banner and the full stacked
+## bonus can be looked at. Granted with no expiry even for the ones
+## that normally lapse: a standing that ran out mid-test would look
+## like a bug rather than the point.
+func _titles_all() -> void:
+	# Stops the next server sync taking the Arena, tester and sect
+	# ones straight back off, since the server has not granted them.
+	Titles.dev_all_unlocked = true
+	for id in Titles.LIST:
+		GameState.titles_owned[str(id)] = 0
+	Titles.refresh_bonus()
+	_refresh_all()
+	GameState.titles_changed.emit()
+	_say("All %d titles unlocked. Codex > Titles to wear one." % Titles.LIST.size())
+
+
+## Back to nothing, so the earning path can be tested from clean.
+## The worn one goes too, or it would sit there unowned.
+func _titles_clear() -> void:
+	Titles.dev_all_unlocked = false
+	GameState.titles_owned.clear()
+	GameState.title_worn = ""
+	Titles.refresh_bonus()
+	_refresh_all()
+	GameState.titles_changed.emit()
+	if Backend.is_configured():
+		Backend.update_profile()
+	_say("Titles cleared. They come back as their conditions are met again.")
 
 
 func _finish_expeditions() -> void:
