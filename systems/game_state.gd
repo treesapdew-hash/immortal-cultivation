@@ -173,6 +173,11 @@ var codex_treasures: Dictionary = {}
 ## Sect Research bonus for every partner (see Sects.refresh_bonus),
 ## kept locally so it also applies offline.
 var sect_bonus: Dictionary = {}
+
+## Path Resonance for the current formation (see Paths). Cached
+## rather than recomputed, because _gear() runs on every stat read.
+## Rebuilt by refresh_path_bonus() whenever the formation changes.
+var path_bonus: Dictionary = {}
 ## Sect Shop weekly purchases: {week, bought {item: count}}.
 var sect_shop: Dictionary = {}
 ## Unlocked features already announced (see Unlocks).
@@ -276,6 +281,19 @@ func _ready():
 
 	# Anything that changes a unit might change the MC's realm.
 	roster_changed.connect(func(): realm_changed.emit())
+
+	# Path Resonance depends on who is in the formation, so it is
+	# rebuilt whenever that (or the roster behind it) changes.
+	formation_changed.connect(refresh_path_bonus)
+	roster_changed.connect(refresh_path_bonus)
+	refresh_path_bonus()
+
+
+## Recomputes the formation's Path Resonance into path_bonus.
+## Cheap, but not free, so it is cached rather than read live by
+## OwnedPartner._gear(), which runs on every stat lookup.
+func refresh_path_bonus() -> void:
+	path_bonus = Paths.active()
 
 
 # ---------------------------------------------------------

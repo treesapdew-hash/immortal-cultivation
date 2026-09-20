@@ -34,6 +34,8 @@ const TIER_COLORS := [
 ]
 
 var _team_label: Label
+var _path_title: Label
+var _path_detail: Label
 var _stuck_time := 0.0
 var _hint: Label
 var _grid: GridContainer
@@ -79,6 +81,36 @@ func _mark_dirty() -> void:
 # BUILD
 # ---------------------------------------------------------
 
+## Shows the Path Resonance the team currently earns, and what the
+## next step needs. Without this nothing in the game mentions that
+## stacking a Path does anything at all.
+func _refresh_path() -> void:
+	if _path_title == null or _path_detail == null:
+		return
+
+	var best := Paths.strongest()
+	var path := int(best[0])
+	var count := int(best[1])
+	if path < 0 or count < 2:
+		_path_title.text = "Path Resonance"
+		_path_detail.text = "Two or more partners sharing a Path strengthen the whole team."
+		return
+
+	_path_title.text = "%s  ·  %d partners" % [Paths.active_text(), count]
+
+	var now := Paths.describe(Paths.bonus_for(path, count))
+	var next_step := 0
+	for s in Paths.STEPS:
+		if int(s) > count:
+			next_step = int(s)
+			break
+	if next_step > 0:
+		var gain := Paths.describe(Paths.bonus_for(path, next_step))
+		_path_detail.text = "%s  —  %d of this Path gives %s" % [now, next_step, gain]
+	else:
+		_path_detail.text = now
+
+
 func _build() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -108,6 +140,13 @@ func _build() -> void:
 	_hint = _label("", 22, COL_ERROR, HORIZONTAL_ALIGNMENT_LEFT)
 	_hint.custom_minimum_size.y = 26
 	v.add_child(_hint)
+
+	# Path Resonance: nothing told the player this existed before.
+	_path_title = _label("", 24, COL_GOLD_TX, HORIZONTAL_ALIGNMENT_LEFT)
+	v.add_child(_path_title)
+	_path_detail = _label("", 20, COL_DIM, HORIZONTAL_ALIGNMENT_LEFT)
+	_path_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	v.add_child(_path_detail)
 
 	var center := CenterContainer.new()
 	v.add_child(center)
@@ -150,6 +189,7 @@ func _rebuild() -> void:
 		c.queue_free()
 
 	_team_label.text = "Team  %d / %d" % [GameState.get_team_size(), GameState.FORMATION_SIZE]
+	_refresh_path()
 
 	# Every partner except the MC (roster index 0)
 	var entries: Array = []
