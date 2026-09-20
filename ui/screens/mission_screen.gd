@@ -150,7 +150,13 @@ func _make_tab(tab: String) -> Button:
 	b.draw.connect(func():
 		var w := b.size.x
 		if int(_tab_dots.get(tab, 0)) > 0:
-			b.draw_circle(Vector2(w * 0.5 + 58.0, 14.0), 7.0, COL_DOT)
+			# Just past the end of the label, measured: a fixed offset
+			# landed inside longer words like "Achievements".
+			var font := b.get_theme_font("font")
+			var fs := b.get_theme_font_size("font_size")
+			var text_w := font.get_string_size(b.text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+			var dot_x := minf(w * 0.5 + text_w * 0.5 + 11.0, w - 9.0)
+			b.draw_circle(Vector2(dot_x, 14.0), 7.0, COL_DOT)
 		if tab != _tab:
 			return
 		var y := b.size.y - 4.0

@@ -77,13 +77,10 @@ func _ready() -> void:
 	# Rewards from closed-door cultivation (time away)
 	OfflineRewardsPopup.open(self)
 
-	# Floating chat on Home (World / Sect / Whispers). Does nothing
-	# when the backend isn't configured, so offline play is unchanged.
-	ChatBox.attach(self)
-
 	# Yesterday's dungeon ranking rewards, delivered by mail
 	Ranking.check_daily()
 	_add_mail_button()
+	_add_chat_button()
 	_add_boss_button()
 	GameState.stage_changed.connect(_refresh_boss_button)
 	# New or removed team members join the fight straight away.
@@ -430,6 +427,22 @@ func _add_mail_button() -> void:
 	button.offset_right = -10.0
 	button.offset_top = 6.0
 	button.offset_bottom = MailPopup.ICON_SIZE + 6.0
+	add_child(button)
+
+
+## Chat icon in the bottom-left corner of the battle area.
+## Skipped entirely when the backend isn't configured, so offline
+## play never shows a button that can't open anything.
+func _add_chat_button() -> void:
+	if not Chat.available():
+		return
+	var button := ChatBox.make_button()
+	button.anchor_top = 1.0
+	button.anchor_bottom = 1.0
+	button.offset_left = 10.0
+	button.offset_right = ChatBox.ICON_SIZE + 10.0
+	button.offset_top = -ChatBox.ICON_SIZE - 10.0
+	button.offset_bottom = -10.0
 	add_child(button)
 
 
