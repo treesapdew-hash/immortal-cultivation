@@ -53,6 +53,11 @@ All 16 are applied to the live project.
 16. `setup_16_sect_titles.sql` sect titles derived from membership
 17. `setup_17_integrity.sql` server-owned store products, one-claim receipts, save guard
 18. `setup_18_boards.sql` real dungeon and Fallen God rankings
+19. `setup_19_chat_window.sql` chat reaches back 6 hours; sect chat gains `title`
+20. `setup_20_reset_redeems.sql` a save wipe frees the codes it claimed
+21. `setup_21_reset_character.sql` a save wipe lets go of the rest of the
+    server-side character too (cloud save, Arena, boards, earned titles).
+    Tester and founding titles survive: those were given to the person.
 
 Every script is idempotent, so re-running one is safe.
 Sects client: `sects.gd`, `sect_trial.gd`, `ui/screens/guild_screen.gd` (quiet refresh).
@@ -89,12 +94,25 @@ Live at `https://treesapdew-hash.github.io/immortal-cultivation/legal/` (privacy
 - Supabase free projects pause after ~7 days idle — chat, Arena, titles,
   leaderboards and cloud save all stop until the project is woken
 
+## Time
+**Nothing reads the device clock.** Daily resets, login streaks, offline
+rewards, expedition timers, trial days, Fallen God windows, the Fate
+rotation and title expiry all go through `GameState.now_unix()` /
+`now_dict()`, which take the server's time from the `Date` header of
+every HTTP response — free with traffic the game already makes. Only the
+offset is kept. Falls back to the device until the first response.
+Day boundaries are therefore **UTC**, and `FallenGod.WINDOWS` (12/18/21)
+are UTC hours, not local.
+
 ## Open / next
-- **46 title banners** not generated yet: `assets/ui/titles/<id>.png`, spec
-  and per-title prompts in `docs/titles.md`. Titles draw a plain tier-coloured
-  plate until the art lands, so nothing is blocked. Check import settings when
-  they arrive — Godot's defaults are lossless/uncapped, and the rest of the art
-  uses `compress/mode=1` + `process/size_limit=1024`.
+- **Formation swap** reported as only changing one side. Not reproduced:
+  the `_slot_drop` / `set_formation_slot` path reads correctly and a
+  headless save with one partner cannot exercise it. Needs a repro.
+- **Fallen God windows are UTC** since the clock move — 12/18/21 UTC is
+  20:00/02:00/05:00 in Singapore. Probably wants shifting.
+- 46 title banners are all in and correctly imported (0.90MB for the set).
+  New art lands on Godot's lossless defaults, so check
+  `compress/mode=1` + `process/size_limit` whenever any is added.
 - **Play Billing not wired.** `payments.gd` has a marked block where the
   plugin call goes; `store_products` is empty, so `claim_purchase` refuses
   everything until the SKUs are filled in. The server decides what a SKU
