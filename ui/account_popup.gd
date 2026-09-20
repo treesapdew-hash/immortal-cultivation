@@ -594,13 +594,15 @@ func _text_field(placeholder: String, secret: bool) -> LineEdit:
 	return e
 
 
-func _label(value: String, font_size: int, color: Color, glow := false, wrap := false) -> Label:
+## `wrap_text`, not `wrap`: that name shadows GDScript's global
+## wrap() function.
+func _label(value: String, font_size: int, color: Color, glow := false, wrap_text := false) -> Label:
 	var l := Label.new()
 	l.text = value
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.add_theme_font_size_override("font_size", font_size)
 	l.add_theme_color_override("font_color", color)
-	if wrap:
+	if wrap_text:
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	if glow:
 		l.add_theme_color_override("font_shadow_color", Color(COL_GOLD, 0.25))

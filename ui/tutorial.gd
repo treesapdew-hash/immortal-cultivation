@@ -431,8 +431,10 @@ func _scroll_into_view(c: Control) -> void:
 	while node != null:
 		if node is ScrollContainer:
 			var sc := node as ScrollContainer
-			var offset := c.get_global_rect().position.y - sc.get_global_rect().position.y + float(sc.scroll_vertical)
-			sc.scroll_vertical = int(maxf(0.0, offset - sc.size.y * 0.3))
+			# `scroll_to`, not `offset`: CanvasLayer already has an
+			# `offset` property and this would shadow it.
+			var scroll_to := c.get_global_rect().position.y - sc.get_global_rect().position.y + float(sc.scroll_vertical)
+			sc.scroll_vertical = int(maxf(0.0, scroll_to - sc.size.y * 0.3))
 			scrolled = true
 		node = node.get_parent()
 	if scrolled:
