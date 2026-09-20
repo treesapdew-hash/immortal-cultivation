@@ -882,6 +882,11 @@ func _on_awaken_pressed() -> void:
 	if p == null:
 		return
 
+	# At the star cap this button is Evolve (see _update_costs).
+	if p.stars >= p.get_star_cap() and not SummonSystem.next_forms(p.partner_id).is_empty():
+		_on_evolve_pressed(p)
+		return
+
 	var need_copies := p.get_awaken_copies()
 	var have_copies := GameState.get_copies(p.partner_id)
 	var need_pills := p.get_awaken_pills()
@@ -1167,11 +1172,24 @@ func _update_costs() -> void:
 
 	# Awaken: pill bar (+ copy pips for partners)
 	if p.stars >= p.get_star_cap():
-		awaken_button.disabled = true
 		_pill_bar.visible = false
 		_pips.visible = false
-		_set_ready(awaken_button, false)
-		_set_cost_label(awaken_cost_label, "Max", true)
+		# At the star cap Awaken is dead, so the button becomes Evolve
+		# for anyone with a higher form. Keeps it off the scene file.
+		if not SummonSystem.next_forms(p.partner_id).is_empty():
+			var blocked := GameState.can_evolve(p)
+			awaken_button.text = "Evolve"
+			awaken_button.disabled = false
+			_set_ready(awaken_button, blocked == "")
+			if blocked == "":
+				_set_cost_label(awaken_cost_label,
+					"%d Essence" % GameState.evolve_cost(p), true)
+			else:
+				_set_cost_label(awaken_cost_label, blocked, false)
+		else:
+			awaken_button.disabled = true
+			_set_ready(awaken_button, false)
+			_set_cost_label(awaken_cost_label, "Max", true)
 	else:
 		var need_copies := p.get_awaken_copies()
 		var have_copies := GameState.get_copies(p.partner_id)
@@ -1289,6 +1307,36 @@ func _make_pips(button: Button) -> Control:
 
 
 ## Small message that floats up from a button and fades.
+## Evolves the shown partner. Most lines have one next form and go
+## straight through; Lin Qiye's Red can become Nyx or Merlin, so that
+## one asks first.
+func _on_evolve_pressed(p) -> void:
+	var blocked := GameState.can_evolve(p)
+	if blocked != "":
+		_toast(awaken_button, blocked, Color("ff9a8a"))
+		return
+
+	var forms: Array = SummonSystem.next_forms(p.partner_id)
+	if forms.size() <= 1:
+		_finish_evolve(p, str(forms[0]) if not forms.is_empty() else "")
+		return
+
+	var note := "Choose their next form. This cannot be undone."
+	var popup := CardChoicePopup.open(self, "Evolution", forms, Enums.Rarity.GOLD, note)
+	var on_chosen := func(partner_id: String) -> void:
+		_finish_evolve(p, partner_id)
+	popup.chosen.connect(on_chosen)
+
+
+func _finish_evolve(p, target: String) -> void:
+	var problem := GameState.evolve_partner(p, target)
+	if problem != "":
+		_toast(awaken_button, problem, Color("ff9a8a"))
+		return
+	var data = PartnerDatabase.get_partner(p.partner_id)
+	_toast(awaken_button, "Evolved into %s!" % (data.display_name if data != null else "a new form"), pip_color)
+
+
 func _toast(button: Control, text: String, color: Color) -> void:
 	var l := Label.new()
 	l.text = text
