@@ -406,10 +406,13 @@ func _sets_line(sets: Array) -> Control:
 	var right := _strip_card(func(): BonusesPopup.open(self))
 	var rv: VBoxContainer = right.get_child(0)
 	rv.add_child(_label("Team Bonus  »", 20, COL_TITLE, HORIZONTAL_ALIGNMENT_LEFT))
-	var total := Codex.totals()
-	for stat in GameState.sect_bonus:
-		total = total.duplicate()
-		total[stat] = float(total.get(stat, 0.0)) + float(GameState.sect_bonus[stat])
+	# Every team-wide source, so this agrees with All Bonuses. Path
+	# Resonance and Titles were missing, which made the strip read
+	# lower than the stats the player actually had.
+	var total := Codex.totals().duplicate()
+	for source in [GameState.sect_bonus, GameState.path_bonus, GameState.title_bonus]:
+		for stat in source:
+			total[stat] = float(total.get(stat, 0.0)) + float(source[stat])
 	var summary := _label(Codex.bonus_text(total).replace(", ", "  ·  "), 16, COL_OK if not total.is_empty() else COL_DIM,
 		HORIZONTAL_ALIGNMENT_LEFT)
 	# One line, trimmed. NOT autowrapped: an autowrapped Label whose

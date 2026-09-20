@@ -70,7 +70,19 @@ const TREASURE_BONUS := {
 	"netherworld": ["crit", 0.5],
 }
 
-const STAT_LABELS := {"hp_pct": "HP", "atk_pct": "ATK", "def_pct": "DEF", "crit": "Crit"}
+## Every stat a team-wide bonus can lift. Path Resonance and Titles
+## reach past the original four, and a bonus that cannot be named
+## here is a bonus the player never sees.
+const STAT_LABELS := {
+	"hp_pct": "HP", "atk_pct": "ATK", "def_pct": "DEF", "mdef_pct": "MDEF",
+	"crit": "Crit", "crit_dmg": "Crit DMG", "spd": "Speed", "acc": "Accuracy",
+	"eva": "Evasion", "energy": "Energy Regen",
+}
+## The order they read in, so summaries always line up.
+const STAT_ORDER := ["hp_pct", "atk_pct", "def_pct", "mdef_pct",
+	"crit", "crit_dmg", "spd", "acc", "eva", "energy"]
+## Named flat rather than as a percentage.
+const FLAT_STATS := ["spd", "energy"]
 
 
 # ---------------------------------------------------------
@@ -232,10 +244,20 @@ static func bonus_text(bonus: Dictionary) -> String:
 	if bonus.is_empty():
 		return "None yet"
 	var parts := PackedStringArray()
-	for stat in ["hp_pct", "atk_pct", "def_pct", "crit"]:
-		if bonus.has(stat):
-			parts.append("+%s%% %s" % [str(snappedf(float(bonus[stat]), 0.1)).trim_suffix(".0"), STAT_LABELS[stat]])
-	return ", ".join(parts)
+	for stat in STAT_ORDER:
+		if bonus.has(stat) and float(bonus[stat]) != 0.0:
+			# Speed and Energy Regen are flat figures, not percentages.
+			var suffix := "" if FLAT_STATS.has(stat) else "%"
+			parts.append("+%s%s %s" % [
+				str(snappedf(float(bonus[stat]), 0.1)).trim_suffix(".0"),
+				suffix, STAT_LABELS[stat]])
+	# Anything new that has not been given a label yet, rather than
+	# dropping it silently the way this used to.
+	for stat in bonus:
+		if not STAT_LABELS.has(str(stat)) and float(bonus[stat]) != 0.0:
+			parts.append("+%s %s" % [
+				str(snappedf(float(bonus[stat]), 0.1)).trim_suffix(".0"), str(stat)])
+	return ", ".join(parts) if not parts.is_empty() else "None yet"
 
 
 static func set_bonus_text(s: Dictionary) -> String:

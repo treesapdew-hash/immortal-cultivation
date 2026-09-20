@@ -8,8 +8,10 @@ extends CanvasLayer
 #
 #   BonusesPopup.open(self)
 #
-# Sources: Codex collection sets (partners, beasts, treasures)
-# and Sect Research. These apply to every partner's stats.
+# Sources: Codex collection sets (partners, beasts, treasures),
+# Sect Research, Path Resonance and Titles. These apply to every
+# partner's stats. Gear, treasures, spirits and Lifebound are left
+# out on purpose: those belong to one partner, not the team.
 # =========================================================
 
 const COL_PANEL := Color("0b1629")
@@ -19,7 +21,9 @@ const COL_TEXT := Color("c9d4e3")
 const COL_DIM := Color("7f8ea3")
 const COL_OK := Color("7dffa8")
 
-const STATS := ["hp_pct", "atk_pct", "def_pct", "crit"]
+## Tiles in the grand total. Covers everything Path Resonance and
+## Titles can lift, not just the original four.
+const STATS := ["hp_pct", "atk_pct", "def_pct", "mdef_pct", "crit", "crit_dmg"]
 
 
 static func open(host: Node) -> BonusesPopup:
@@ -63,6 +67,11 @@ func _ready() -> void:
 		["Codex: Beast Sets", _sum_sets(Codex.beast_sets())],
 		["Codex: Treasure Sets", _sum_sets(Codex.treasure_sets())],
 		["Sect Research", GameState.sect_bonus],
+		# Both of these change every partner's stats and neither was
+		# listed here, so this screen under-reported what the player
+		# actually had.
+		["Path Resonance", GameState.path_bonus],
+		["Titles", GameState.title_bonus],
 	]
 	var total := {}
 	for src in sources:
@@ -101,7 +110,7 @@ func _sum_sets(sets: Array) -> Dictionary:
 ## The grand total: one big tile per stat.
 func _total_block(total: Dictionary) -> Control:
 	var grid := GridContainer.new()
-	grid.columns = 4
+	grid.columns = 3
 	grid.add_theme_constant_override("h_separation", 12)
 	for stat in STATS:
 		var tile := PanelContainer.new()
