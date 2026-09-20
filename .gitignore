@@ -1,3 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Supabase CLI scratch (keep schema.sql and the setup scripts tracked)
+supabase/.temp/
+supabase/.branches/
