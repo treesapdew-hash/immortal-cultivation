@@ -267,12 +267,19 @@ static func worn() -> String:
 
 
 ## Wears a title, or clears it with "". Only one shows at a time.
+##
+## The profile goes up at once rather than waiting for the next cloud
+## save. A message carries the sender's title stamped on at the moment
+## it is sent, so anything said in the minute after changing it would
+## otherwise go out under the old one and stay that way.
 static func wear(id: String) -> void:
 	if id != "" and not owns(id):
 		return
 	GameState.title_worn = id
 	GameState.save_game()
 	GameState.titles_changed.emit()
+	if Backend.is_configured():
+		Backend.update_profile()
 
 
 # ---------------------------------------------------------
