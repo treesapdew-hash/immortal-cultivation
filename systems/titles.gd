@@ -182,10 +182,19 @@ static func tier_name(id: String) -> String:
 	return ItemDB.grade_name(tier_of(id))
 
 
-## The banner behind the name, or null when the art isn't in yet.
+## The banner behind the name. Its own art if that exists, otherwise
+## the frame for its tier, otherwise null and the Codex draws a plain
+## plate.
+##
+## The tier frames are what make this shippable: seven images dress
+## all forty-six, and a title that later gets art of its own picks it
+## up without anything being rewired.
 static func art_of(id: String) -> Texture2D:
 	var path := ART_DIR + id + ".png"
-	return load(path) if ResourceLoader.exists(path) else null
+	if ResourceLoader.exists(path):
+		return load(path) as Texture2D
+	var tier_path := ART_DIR + "tier_%d.png" % tier_of(id)
+	return load(tier_path) as Texture2D if ResourceLoader.exists(tier_path) else null
 
 
 static func bonus_text(id: String) -> String:

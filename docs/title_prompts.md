@@ -1,7 +1,67 @@
-# Title banner prompts — all 46
+# Title banner prompts
 
-One prompt per banner, ready to paste. Save each result as the
-filename in its heading, into `assets/ui/titles/`.
+**Start with the seven tier frames below.** They dress all forty-six
+titles on their own, so the feature is finished-looking after seven
+images instead of forty-six. A title with no art of its own falls
+back to its tier's frame; generate an individual banner later and it
+takes over automatically, nothing to rewire.
+
+The forty-six individual prompts follow after them. Treat those as
+something to chip away at — best done for the rarest titles first,
+where a player is most likely to be looking.
+
+Save each result as the filename in its heading, into
+`assets/ui/titles/`.
+
+---
+
+# The seven tier frames — do these first
+
+Same spec as everything else: 512×128, transparent, no text, centre
+kept clear. These carry no title-specific motif, because they stand
+behind forty-six different names.
+
+### `tier_0.png` — Common
+```
+A horizontal fantasy game UI name banner, 512x128 pixels, 4:1 aspect ratio, transparent background, centered composition. A plain worn stone plaque with a simple bevel, no glow, slightly chipped at the corners, humble and unremarkable. Chinese xianxia cultivation aesthetic, dark navy ground with gold linework, ink-wash texture. Simple squared corner brackets at the left and right ends, no other ornament. The centre of the banner must be flat, clear and uncluttered so text can be placed over it later. Absolutely no text, no letters, no words, no numbers, no characters of any kind anywhere in the image. Bold readable shapes, no fine filigree. Game asset, clean edges, PNG with alpha.
+```
+
+### `tier_1.png` — Uncommon
+```
+A horizontal fantasy game UI name banner, 512x128 pixels, 4:1 aspect ratio, transparent background, centered composition. A polished blue jade plaque with a thin silver rim and a soft inner light. Chinese xianxia cultivation aesthetic, dark navy ground with gold linework, ink-wash texture. Slim silver end-caps with a small cloud curl at each end, no other ornament. The centre of the banner must be flat, clear and uncluttered so text can be placed over it later. Absolutely no text, no letters, no words, no numbers, no characters of any kind anywhere in the image. Bold readable shapes, no fine filigree. Game asset, clean edges, PNG with alpha.
+```
+
+### `tier_2.png` — Rare
+```
+A horizontal fantasy game UI name banner, 512x128 pixels, 4:1 aspect ratio, transparent background, centered composition. A green jade plaque set in bronze, with faint spirit mist drifting across it. Chinese xianxia cultivation aesthetic, dark navy ground with gold linework, ink-wash texture. Bronze end-caps with small leaf and vine motifs at each end, no other ornament. The centre of the banner must be flat, clear and uncluttered so text can be placed over it later. Absolutely no text, no letters, no words, no numbers, no characters of any kind anywhere in the image. Bold readable shapes, no fine filigree. Game asset, clean edges, PNG with alpha.
+```
+
+### `tier_3.png` — Epic
+```
+A horizontal fantasy game UI name banner, 512x128 pixels, 4:1 aspect ratio, transparent background, centered composition. A violet crystal plaque set in dark iron with a low purple glow. Chinese xianxia cultivation aesthetic, dark navy ground with gold linework, ink-wash texture. Arcane sigils worked into the four corners and angular iron end-caps, no other ornament. The centre of the banner must be flat, clear and uncluttered so text can be placed over it later. Absolutely no text, no letters, no words, no numbers, no characters of any kind anywhere in the image. Bold readable shapes, no fine filigree. Game asset, clean edges, PNG with alpha.
+```
+
+### `tier_4.png` — Legendary
+```
+A horizontal fantasy game UI name banner, 512x128 pixels, 4:1 aspect ratio, transparent background, centered composition. A crimson lacquer plaque with blackened gold fittings, flame curling from both ends and a few drifting embers. Chinese xianxia cultivation aesthetic, dark navy ground with gold linework, ink-wash texture. Flame scrollwork at the left and right ends, no other ornament. The centre of the banner must be flat, clear and uncluttered so text can be placed over it later. Absolutely no text, no letters, no words, no numbers, no characters of any kind anywhere in the image. Bold readable shapes, no fine filigree. Game asset, clean edges, PNG with alpha.
+```
+
+### `tier_5.png` — Mythical
+```
+A horizontal fantasy game UI name banner, 512x128 pixels, 4:1 aspect ratio, transparent background, centered composition. An imperial gold plaque with a radiant aura and hanging tassels beneath each end. Chinese xianxia cultivation aesthetic, dark navy ground with gold linework, ink-wash texture. A dragon head facing inward at each end, no other ornament. The centre of the banner must be flat, clear and uncluttered so text can be placed over it later. Absolutely no text, no letters, no words, no numbers, no characters of any kind anywhere in the image. Bold readable shapes, no fine filigree. Game asset, clean edges, PNG with alpha.
+```
+
+### `tier_6.png` — Heaven-Defying
+```
+A horizontal fantasy game UI name banner, 512x128 pixels, 4:1 aspect ratio, transparent background, centered composition. A prismatic iridescent plaque with celestial runes, fractured light, and visible cracks in reality at the edges, as though it does not belong in the same world as the others. Chinese xianxia cultivation aesthetic, dark navy ground with gold linework, ink-wash texture. Shattered light splitting into a spectrum at the left and right ends, no other ornament. The centre of the banner must be flat, clear and uncluttered so text can be placed over it later. Absolutely no text, no letters, no words, no numbers, no characters of any kind anywhere in the image. Bold readable shapes, no fine filigree. Game asset, clean edges, PNG with alpha.
+```
+
+---
+
+# The 46 individual banners
+
+Optional. Each one overrides its tier frame the moment the file
+exists.
 
 **The filename must match exactly.** `arena_sovereign.png`, not
 `Sovereign of the Ring.png` — the game looks the art up by id.
