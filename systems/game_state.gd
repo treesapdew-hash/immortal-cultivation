@@ -142,7 +142,8 @@ var pending_boss: int = 0
 var stats: Dictionary = {}
 ## Milestones already claimed (see Achievements).
 var claimed_achievements: Array = []
-## Titles earned (see Titles): {id: true}. Every one adds its bonus.
+## Titles earned (see Titles): {id: expiry unix, 0 = kept for good}.
+## Every one still in date adds its bonus.
 var titles_owned: Dictionary = {}
 ## The title shown beside your name, or "" for none.
 var title_worn: String = ""
@@ -1820,7 +1821,11 @@ func load_game() -> bool:
 	var saved_titles = dict.get("titles_owned", {})
 	if saved_titles is Dictionary:
 		for id in saved_titles:
-			titles_owned[str(id)] = true
+			# Saves from before titles could lapse stored `true`.
+			# Those become 0, meaning kept for good; refresh() puts a
+			# clock on any that should have one.
+			var until = saved_titles[id]
+			titles_owned[str(id)] = 0 if until is bool else int(until)
 	title_worn = str(dict.get("title_worn", ""))
 	login_streak = int(dict.get("login_streak", 0))
 	login_streak_day = int(dict.get("login_streak_day", 0))

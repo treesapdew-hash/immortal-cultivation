@@ -213,8 +213,18 @@ func _title_row(id: String) -> Control:
 
 	var head := "%s%s" % [Titles.title_name(id), "   (worn)" if is_worn else ""]
 	texts.add_child(_label(head, 20, tint if have else COL_DIM, HORIZONTAL_ALIGNMENT_LEFT))
-	texts.add_child(_label(Titles.bonus_text(id), 16,
+
+	var bonus_row := HBoxContainer.new()
+	bonus_row.add_theme_constant_override("separation", 10)
+	bonus_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	texts.add_child(bonus_row)
+	bonus_row.add_child(_label(Titles.bonus_text(id), 16,
 		COL_OK if have else COL_DIM, HORIZONTAL_ALIGNMENT_LEFT))
+	# Standings run out; say so on the row rather than letting one
+	# quietly vanish between visits.
+	var left := Titles.remaining_text(id)
+	if left != "":
+		bonus_row.add_child(_label(left, 15, COL_GOLD, HORIZONTAL_ALIGNMENT_LEFT))
 
 	var t: Dictionary = Titles.get_title(id)
 	var how := str(t.get("how", ""))

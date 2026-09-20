@@ -97,7 +97,9 @@ static func pull_titles() -> Array:
 	var r: Dictionary = await Backend.call_fn("my_titles", {})
 	if not r["ok"] or not (r["data"] is Array):
 		return []
-	return Titles.grant_all(r["data"])
+	# Replaces rather than merges: a placement that has run out on the
+	# server has to stop counting here too.
+	return Titles.sync_server(r["data"])
 
 
 ## {id, name, realm, stage, power, title, showcase} or {} if they are

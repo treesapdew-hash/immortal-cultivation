@@ -22,7 +22,20 @@ class_name Titles
 #   track   a progress counter, with `goal`; omitted when server-granted
 #   goal    the number that earns it
 #   server  true = only the server can grant it (placements, testers)
+#   days    how long it lasts before lapsing; absent = kept for good
 # }
+#
+# ON EXPIRY. A title only really expires if the thing that earned it
+# can stop being true. Standings can: you held rank one last week and
+# this week you do not, so those run out. A streak can: miss a day and
+# it is gone. But "cleared stage 500" cannot go back to being false,
+# so putting a clock on it would do nothing except re-grant it a
+# moment later. Those are kept, and are the reason `days` is optional
+# rather than a number on every line.
+#
+# Local titles renew themselves: refresh() pushes the clock forward
+# every time it sees the condition still holding, so a title lapses
+# only once you stop meeting it.
 # =========================================================
 
 ## Banner art, by title id. Falls back to a drawn plate.
@@ -40,13 +53,13 @@ const LIST := {
 	"arena_veteran": {"name": "Arena Veteran", "tier": 2, "stat": "atk_pct",
 		"track": "arena_wins", "goal": 100, "how": "Win 100 duels."},
 	"arena_unfallen": {"name": "The Unfallen", "tier": 4, "stat": "crit",
-		"server": true, "how": "Win 20 duels without a loss between them."},
+		"server": true, "days": 7, "how": "Win 20 duels without a loss between them."},
 	"arena_top_ten": {"name": "Among the Ten", "tier": 3, "stat": "crit",
-		"server": true, "how": "Finish a week in your bracket's top ten."},
+		"server": true, "days": 7, "how": "Finish a week in your bracket's top ten."},
 	"arena_champion": {"name": "Bracket Champion", "tier": 5, "stat": "atk_pct",
-		"server": true, "how": "Finish a week at rank one."},
+		"server": true, "days": 7, "how": "Finish a week at rank one."},
 	"arena_sovereign": {"name": "Sovereign of the Ring", "tier": 6, "stat": "crit",
-		"server": true, "how": "Hold rank one for three weeks running."},
+		"server": true, "days": 30, "how": "Hold rank one for three weeks running."},
 
 	# --- Achievements ------------------------------------------
 	"ach_diligent": {"name": "Diligent", "tier": 0, "stat": "crit_dmg",
@@ -66,7 +79,8 @@ const LIST := {
 	"login_devoted": {"name": "Devoted Cultivator", "tier": 2, "stat": "hp_pct",
 		"track": "login_days", "goal": 100, "how": "Log in on 100 days."},
 	"login_vigil": {"name": "Unbroken Vigil", "tier": 3, "stat": "mdef_pct",
-		"track": "login_streak", "goal": 30, "how": "Log in 30 days in a row."},
+		"track": "login_streak", "goal": 30, "days": 2,
+		"how": "Log in 30 days in a row. Lost when the streak breaks."},
 	"login_eternal": {"name": "Eternal Presence", "tier": 5, "stat": "mdef_pct",
 		"track": "login_days", "goal": 365, "how": "Log in on 365 days."},
 
@@ -110,13 +124,13 @@ const LIST := {
 
 	# --- Sect --------------------------------------------------
 	"sect_disciple": {"name": "Sect Disciple", "tier": 0, "stat": "def_pct",
-		"server": true, "how": "Join a sect."},
+		"server": true, "days": 30, "how": "Join a sect."},
 	"sect_elder": {"name": "Sect Elder", "tier": 2, "stat": "def_pct",
-		"server": true, "how": "Rise to Elder of your sect."},
+		"server": true, "days": 30, "how": "Rise to Elder of your sect."},
 	"sect_master": {"name": "Sect Master", "tier": 4, "stat": "hp_pct",
-		"server": true, "how": "Lead a sect."},
+		"server": true, "days": 30, "how": "Lead a sect."},
 	"sect_vanguard": {"name": "Trial Vanguard", "tier": 5, "stat": "crit",
-		"server": true, "how": "Lead your sect's Trial contribution."},
+		"server": true, "days": 7, "how": "Lead your sect's Trial contribution."},
 
 	# --- Trials and gods ---------------------------------------
 	"trial_daily": {"name": "Trialgoer", "tier": 0, "stat": "crit_dmg",
@@ -126,7 +140,7 @@ const LIST := {
 	"god_slayer": {"name": "God Slayer", "tier": 4, "stat": "crit",
 		"track": "fallen_god", "goal": 1, "how": "Strike down the Fallen God."},
 	"god_defier": {"name": "Heaven Defier", "tier": 6, "stat": "crit",
-		"server": true, "how": "Top the Fallen God ranking."},
+		"server": true, "days": 30, "how": "Top the Fallen God ranking."},
 	"forge_master": {"name": "Forge Master", "tier": 1, "stat": "atk_pct",
 		"track": "refine", "goal": 50, "how": "Refine a piece to +50."},
 	"alchemy_sage": {"name": "Alchemy Sage", "tier": 1, "stat": "crit_dmg",
@@ -189,16 +203,53 @@ static func _num(v: float) -> String:
 # OWNING AND WEARING
 # ---------------------------------------------------------
 
+## When a held title lapses, as a unix time. 0 = never.
+static func expires_at(id: String) -> int:
+	return int(GameState.titles_owned.get(id, 0))
+
+
 static func owns(id: String) -> bool:
-	return GameState.titles_owned.has(id)
+	if not GameState.titles_owned.has(id):
+		return false
+	var until := expires_at(id)
+	return until <= 0 or until > int(Time.get_unix_time_from_system())
+
+
+## How long a title has left, for the Codex ("6 days left"). "" when
+## it is kept for good or already gone.
+static func remaining_text(id: String) -> String:
+	var until := expires_at(id)
+	if until <= 0 or not owns(id):
+		return ""
+	var left := until - int(Time.get_unix_time_from_system())
+	if left >= 172800:
+		return "%d days left" % int(left / 86400.0)
+	if left >= 7200:
+		return "%d hours left" % int(left / 3600.0)
+	return "less than an hour left"
 
 
 static func owned_ids() -> Array:
 	var out: Array = []
 	for id in LIST:
-		if GameState.titles_owned.has(id):
+		if owns(str(id)):
 			out.append(str(id))
 	return out
+
+
+## Drops anything that has run out. Returns the ids that lapsed.
+static func prune() -> Array:
+	var gone: Array = []
+	for id in GameState.titles_owned.keys():
+		var key := str(id)
+		if not owns(key):
+			GameState.titles_owned.erase(key)
+			gone.append(key)
+	if not gone.is_empty():
+		if gone.has(str(GameState.title_worn)):
+			GameState.title_worn = ""
+		refresh_bonus()
+	return gone
 
 
 static func worn() -> String:
@@ -255,45 +306,85 @@ static func _progress(track: String) -> int:
 			return Achievements.progress(track)
 
 
-## Grants any title whose condition is now met. Returns the ids that
-## were newly earned, so the caller can announce them.
+## When a title earned now would lapse. 0 for the ones kept for good.
+static func _until(id: String) -> int:
+	var t: Dictionary = LIST.get(id, {})
+	if not t.has("days"):
+		return 0
+	return int(Time.get_unix_time_from_system()) + int(t["days"]) * 86400
+
+
+## Grants any local title whose condition is met, and pushes the clock
+## forward on the ones still being met. Clears anything that has run
+## out. Returns the ids that were newly earned.
 static func refresh() -> Array:
 	var fresh: Array = []
+	var touched := not prune().is_empty()
 	for id in LIST:
 		var key := str(id)
-		if GameState.titles_owned.has(key):
-			continue
 		var t: Dictionary = LIST[key]
 		if bool(t.get("server", false)) or not t.has("track"):
 			continue
-		if _progress(str(t["track"])) >= int(t.get("goal", 1)):
-			GameState.titles_owned[key] = true
+		if _progress(str(t["track"])) < int(t.get("goal", 1)):
+			continue
+		var held := owns(key)
+		if held and not t.has("days"):
+			continue
+		# Still earning it, so the clock starts again from now.
+		GameState.titles_owned[key] = _until(key)
+		touched = true
+		if not held:
 			fresh.append(key)
-	if not fresh.is_empty():
+	if touched:
 		refresh_bonus()
 		GameState.save_game()
 		GameState.titles_changed.emit()
 	return fresh
 
 
-## Grants a title the server says the player has earned (placements,
-## tester codes). Returns true if it is new to them.
-static func grant(id: String) -> bool:
-	if not LIST.has(id) or GameState.titles_owned.has(id):
+## Grants a title the server says the player has earned. `until` is a
+## unix time, or 0 to keep it for good; left out, the title's own
+## `days` decides. Returns true if it is new to them.
+static func grant(id: String, until := -1) -> bool:
+	if not LIST.has(id):
 		return false
-	GameState.titles_owned[id] = true
+	var was := owns(id)
+	GameState.titles_owned[id] = _until(id) if until < 0 else until
 	refresh_bonus()
 	GameState.save_game()
 	GameState.titles_changed.emit()
-	return true
+	return not was
 
 
-## Merges the set of server-granted titles from the profile.
-static func grant_all(ids: Array) -> Array:
+## Replaces the server-held set with what the server just said, so a
+## placement that has run out there stops counting here too. Rows are
+## {id, expires} or plain ids. Returns the ids that are new.
+static func sync_server(rows: Array) -> Array:
+	var sent := {}
+	for row in rows:
+		if row is Dictionary:
+			var id := str(row.get("id", ""))
+			if LIST.has(id):
+				sent[id] = int(row.get("expires", 0))
+		elif LIST.has(str(row)):
+			sent[str(row)] = 0
+
 	var fresh: Array = []
-	for id in ids:
-		if grant(str(id)):
-			fresh.append(str(id))
+	for id in LIST:
+		var key := str(id)
+		if not bool(LIST[key].get("server", false)):
+			continue
+		if sent.has(key):
+			if not owns(key):
+				fresh.append(key)
+			GameState.titles_owned[key] = int(sent[key])
+		else:
+			GameState.titles_owned.erase(key)
+	if GameState.title_worn != "" and not owns(str(GameState.title_worn)):
+		GameState.title_worn = ""
+	refresh_bonus()
+	GameState.save_game()
+	GameState.titles_changed.emit()
 	return fresh
 
 
@@ -306,11 +397,15 @@ static func grant_all(ids: Array) -> Array:
 static func totals() -> Dictionary:
 	var out := {}
 	for id in GameState.titles_owned:
-		var t: Dictionary = LIST.get(str(id), {})
-		if t.is_empty():
+		var key := str(id)
+		var t: Dictionary = LIST.get(key, {})
+		# owns() rather than mere presence: a lapsed title is still in
+		# the dictionary until something prunes it, and it must not
+		# keep paying out in the meantime.
+		if t.is_empty() or not owns(key):
 			continue
 		var stat := str(t.get("stat", "atk_pct"))
-		out[stat] = float(out.get(stat, 0.0)) + TIER_BONUS[tier_of(str(id))]
+		out[stat] = float(out.get(stat, 0.0)) + TIER_BONUS[tier_of(key)]
 	return out
 
 
