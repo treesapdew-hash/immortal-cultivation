@@ -44,6 +44,9 @@ var _result_banner: ResultBanner
 
 ## Emitted when a dungeon fight ends (won or not).
 signal dungeon_finished(request: Dictionary, won: bool)
+## Emitted when one was dropped before it could finish. Not a loss:
+## whoever asked for the fight should forget it, not report it.
+signal dungeon_aborted(request: Dictionary)
 
 var _dungeon_request: Dictionary = {}
 var _in_dungeon := false
@@ -92,6 +95,13 @@ func _ready() -> void:
 
 
 func _on_mc_changed() -> void:
+	# Never mid-dungeon. A stage fight is endless and restarting it
+	# costs nothing, but a duel or a hunt is one decisive fight: the
+	# restart was being reported as its result, so opening Formation
+	# during an Arena duel handed the other cultivator a free win and
+	# spent the attempt.
+	if _in_dungeon or not _dungeon_request.is_empty():
+		return
 	_restart_requested = true
 
 
@@ -246,14 +256,22 @@ func _run_dungeon() -> void:
 	# Arena duel: the Events screen reports the result to the server,
 	# since only it knows which opponent this was.
 	if str(request.get("kind", "")) == "arena":
-		if outcome != Outcome.RESTART:
-			var who := str(request.get("opponent_name", "your rival"))
-			if won:
-				await _result_banner.show_victory(0, [], RESULT_DELAY, [],
-					"You stand over %s." % who)
-			else:
-				await _result_banner.show_defeat(0, RESULT_DELAY,
-					"%s proved the stronger cultivator." % who)
+		# A duel that was dropped rather than fought has no result to
+		# report. Saying nothing leaves the attempt unspent, which is
+		# the honest outcome; reporting `won` here meant every restart
+		# went up as a defeat.
+		if outcome == Outcome.RESTART:
+			_set_banner("STAGE %d" % GameState.current_stage)
+			GameState.stage_changed.emit()
+			dungeon_aborted.emit(request)
+			return
+		var who := str(request.get("opponent_name", "your rival"))
+		if won:
+			await _result_banner.show_victory(0, [], RESULT_DELAY, [],
+				"You stand over %s." % who)
+		else:
+			await _result_banner.show_defeat(0, RESULT_DELAY,
+				"%s proved the stronger cultivator." % who)
 		_set_banner("STAGE %d" % GameState.current_stage)
 		GameState.stage_changed.emit()
 		dungeon_finished.emit(request, won)

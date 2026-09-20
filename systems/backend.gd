@@ -109,9 +109,11 @@ func ensure_session() -> bool:
 		return true
 	_signing_in = true
 	var ok := false
+	var code := 0
 	if _refresh_token != "":
 		var r := await _auth("token?grant_type=refresh_token", {"refresh_token": _refresh_token})
 		ok = r["ok"]
+		code = int(r.get("code", 0))
 		if ok:
 			_set_session(r["data"])
 	if not ok and not is_guest:
@@ -120,14 +122,25 @@ func ensure_session() -> bool:
 		online = false
 		push_warning("Backend: your login expired, please log in again")
 		return false
-	if not ok:
-		# First launch (or the refresh token expired): new anonymous account
+
+	# A new anonymous account is ONLY ever for a device that has never
+	# had one. This used to run whenever a refresh failed, which forked
+	# the player in two: their real account kept its sect seat and Arena
+	# standing while the device started answering to a stranger, so they
+	# could meet themselves in the Arena. A dropped connection on
+	# returning to the app was enough to do it, since a network failure
+	# looks the same here as a rejected token.
+	if not ok and user_id == "" and _refresh_token == "":
 		var r2 := await _auth("signup", {"data": {}})
 		ok = r2["ok"]
 		if ok:
 			_set_session(r2["data"])
 		else:
 			push_warning("Backend: sign-in failed (%s)" % str(r2.get("error", "")))
+	elif not ok:
+		# Offline for now. The save is local anyway, and the next launch
+		# with a working connection picks the same account back up.
+		push_warning("Backend: couldn't reach sign-in (%d); staying offline rather than starting a second account" % code)
 	_signing_in = false
 	online = ok
 	return ok

@@ -70,6 +70,8 @@ func _connect_battle() -> void:
 	_battle = Dungeons.find_battle(self)
 	if _battle != null and _battle.has_signal("dungeon_finished"):
 		_battle.connect("dungeon_finished", _on_dungeon_finished)
+	if _battle != null and _battle.has_signal("dungeon_aborted"):
+		_battle.connect("dungeon_aborted", _on_dungeon_aborted)
 
 
 func _process(delta: float) -> void:
@@ -1530,6 +1532,17 @@ func _go_home() -> void:
 		router = router.get_parent()
 	if router != null:
 		router.call("open_tab", "Home")
+
+
+## A fight that was dropped before it finished. Nothing is reported,
+## so an Arena attempt is not spent and no defeat is recorded — the
+## duel simply never happened.
+func _on_dungeon_aborted(request: Dictionary) -> void:
+	_fighting = false
+	if str(request.get("kind", "")) == "arena":
+		_arena_opponent = {}
+		_toast("The duel was interrupted. Your attempt is untouched.", COL_SHORT)
+	_rebuild()
 
 
 func _on_dungeon_finished(request: Dictionary, won: bool) -> void:

@@ -68,8 +68,11 @@ const SELECT_SCROLLS := {
 	Enums.Rarity.PRISMATIC: "select_scroll_prismatic",
 }
 
-const COST_SINGLE := 100
-const COST_TEN := 900
+## Raised from 100/900 after alpha: achievements hand out far more
+## Jade than the old prices assumed, so a x10 was close to free.
+## The x10 keeps its discount, just a smaller one.
+const COST_SINGLE := 350
+const COST_TEN := 3000
 
 ## Normal rates, in % (adds up to 100).
 ## Gold and Prismatic can never be summoned.
