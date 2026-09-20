@@ -6,10 +6,11 @@ extends PanelContainer
 # Backend (Supabase).
 #
 # Not in a sect:  Browse (search, join / apply) and Create.
-# In a sect:      Hall, Members, Requests (leader & elders), Chat.
+# In a sect:      Hall, Members, Requests (leader & elders).
+#
+# Sect chat is NOT here any more: it is a channel in the floating
+# chat box on Home (ui/chat_box.gd), alongside World and Whispers.
 # =========================================================
-
-const CHAT_POLL := 4.0
 
 const COL_BG_TOP := Color("0d1a31")
 const COL_BG_BOTTOM := Color("060c1a")
@@ -24,8 +25,6 @@ var _title: Label
 var _status: Label
 var _tabs_row: HFlowContainer
 var _body: VBoxContainer
-var _chat_row: HBoxContainer
-var _chat_input: LineEdit
 
 var _tab := ""
 var _busy := false
@@ -33,9 +32,6 @@ var _membership: Variant = null
 var _sect := {}
 var _members: Array = []
 var _requests: Array = []
-var _messages: Array = []
-var _last_msg_id := 0
-var _poll := 0.0
 var _search := ""
 ## Loaded at least once: later refreshes happen quietly in the background
 var _loaded := false
@@ -83,21 +79,6 @@ func _ready() -> void:
 	_body.add_theme_constant_override("separation", 10)
 	pad.add_child(_body)
 
-	# Chat input (only shown on the Chat tab)
-	_chat_row = HBoxContainer.new()
-	_chat_row.add_theme_constant_override("separation", 8)
-	_chat_row.visible = false
-	root.add_child(_chat_row)
-	_chat_input = _line_edit("Say something to your sect...", 200)
-	_chat_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_chat_input.text_submitted.connect(func(_t: String): _send_chat())
-	_chat_row.add_child(_chat_input)
-	var send := OrnateButton.new()
-	send.text = "Send"
-	send.custom_minimum_size = Vector2(150, 56)
-	send.pressed.connect(_send_chat)
-	_chat_row.add_child(send)
-
 	refresh()
 
 
@@ -105,15 +86,6 @@ func _ready() -> void:
 ## there, then updates quietly.
 func on_opened() -> void:
 	refresh(_loaded)
-
-
-func _process(delta: float) -> void:
-	if _tab != "Chat" or not is_visible_in_tree() or _busy:
-		return
-	_poll += delta
-	if _poll >= CHAT_POLL:
-		_poll = 0.0
-		_poll_chat()
 
 
 # ---------------------------------------------------------
@@ -132,7 +104,6 @@ func refresh(silent := false) -> void:
 		return
 	_clear()
 	_set_tabs([])
-	_chat_row.visible = false
 	if not Sects.available():
 		_status.text = ""
 		_note("Sects need the online server. Set up the Backend (Supabase URL and key) to use them.")
@@ -251,7 +222,6 @@ func _in_sect_tabs() -> Array:
 	tabs.append("Trial")
 	tabs.append("Research")
 	tabs.append("Shop")
-	tabs.append("Chat")
 	return tabs
 
 
@@ -261,9 +231,8 @@ func _show_tab(tab: String) -> void:
 	_set_tabs(_in_sect_tabs() if in_sect else ["Browse", "Create"])
 	# Tabs that fetch their own data clear the screen once it arrives,
 	# so there's no blank flash in between
-	if _tab not in ["Trial", "Shop", "Chat"]:
+	if _tab not in ["Trial", "Shop"]:
 		_clear()
-	_chat_row.visible = _tab == "Chat"
 	match _tab:
 		"Browse":
 			_build_browse()
@@ -281,8 +250,6 @@ func _show_tab(tab: String) -> void:
 			_build_research()
 		"Shop":
 			_build_shop()
-		"Chat":
-			_build_chat()
 
 
 # ---------------------------------------------------------
@@ -767,56 +734,6 @@ func _build_shop() -> void:
 		b.disabled = bought >= limit or _my_balance() < cost
 		h.add_child(b)
 		_body.add_child(panel)
-
-
-# ---------------------------------------------------------
-# CHAT
-# ---------------------------------------------------------
-
-func _build_chat() -> void:
-	_messages = []
-	_last_msg_id = 0
-	_poll = 0.0
-	var rows: Array = await Sects.messages(str(_sect.get("id", "")))
-	if _tab != "Chat":
-		return
-	_clear()
-	if rows.is_empty():
-		_body.add_child(_label("No messages yet. Say hello!", 18, COL_DIM))
-	_add_messages(rows)
-
-
-func _poll_chat() -> void:
-	if _sect.is_empty():
-		return
-	var rows: Array = await Sects.messages(str(_sect.get("id", "")), _last_msg_id)
-	if _tab == "Chat" and not rows.is_empty():
-		if _messages.is_empty():
-			_clear()
-		_add_messages(rows)
-
-
-func _add_messages(rows: Array) -> void:
-	for m in rows:
-		_messages.append(m)
-		_last_msg_id = maxi(_last_msg_id, int(m["id"]))
-		var mine := str(m.get("user_id", "")) == Backend.user_id
-		var line := _label("%s:  %s" % [str(m["name"]), str(m["body"])], 18, COL_OK if mine else COL_TEXT,
-			HORIZONTAL_ALIGNMENT_LEFT)
-		line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		_body.add_child(line)
-
-
-func _send_chat() -> void:
-	var text_value := _chat_input.text.strip_edges()
-	if text_value == "" or _busy:
-		return
-	_chat_input.text = ""
-	var r: Dictionary = await Sects.send(text_value)
-	if not r["ok"]:
-		_toast(str(r["error"]), COL_BAD)
-		return
-	_poll_chat()
 
 
 # ---------------------------------------------------------

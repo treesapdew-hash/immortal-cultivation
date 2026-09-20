@@ -77,6 +77,10 @@ func _ready() -> void:
 	# Rewards from closed-door cultivation (time away)
 	OfflineRewardsPopup.open(self)
 
+	# Floating chat on Home (World / Sect / Whispers). Does nothing
+	# when the backend isn't configured, so offline play is unchanged.
+	ChatBox.attach(self)
+
 	# Yesterday's dungeon ranking rewards, delivered by mail
 	Ranking.check_daily()
 	_add_mail_button()

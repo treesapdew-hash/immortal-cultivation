@@ -34,6 +34,10 @@ class_name Missions
 ##   shop_buys     shop purchases
 ##   offline       closed-door rewards collected
 ##   daily_full    days the last daily chest was opened
+##   chat_sent     chat messages sent (any channel) — Chat
+##   friends_added friend requests accepted — Friends
+##   gifts_sent    friend gifts sent — Friends
+##   gifts_claimed friend gifts collected — Friends
 const DAILY := [
 	{"id": "login", "desc": "Log in today", "track": "login", "goal": 1, "points": 10},
 	{"id": "stages_10", "desc": "Clear 10 stages", "track": "stages", "goal": 10, "points": 15},
@@ -44,6 +48,9 @@ const DAILY := [
 	{"id": "craft", "desc": "Refine 5 pills", "track": "craft", "goal": 5, "points": 10},
 	{"id": "shop", "desc": "Buy something in the shop", "track": "shop_buys", "goal": 1, "points": 10},
 	{"id": "offline", "desc": "Collect closed-door cultivation", "track": "offline", "goal": 1, "points": 10},
+	{"id": "chat", "desc": "Speak in chat", "track": "chat_sent", "goal": 1, "points": 10},
+	{"id": "gift_send", "desc": "Send gifts to 3 fellow cultivators", "track": "gifts_sent", "goal": 3, "points": 10},
+	{"id": "gift_claim", "desc": "Collect gifts from friends", "track": "gifts_claimed", "goal": 1, "points": 10},
 ]
 
 const WEEKLY := [
@@ -56,10 +63,16 @@ const WEEKLY := [
 	{"id": "forge_3", "desc": "Forge 3 artifacts", "track": "forge", "goal": 3, "points": 10},
 	{"id": "daily_full_5", "desc": "Open the last daily chest on 5 days", "track": "daily_full",
 		"goal": 5, "points": 20},
+	{"id": "friends_3", "desc": "Befriend 3 cultivators", "track": "friends_added", "goal": 3, "points": 10},
+	{"id": "gifts_30", "desc": "Send 30 friend gifts", "track": "gifts_sent", "goal": 30, "points": 10},
+	{"id": "chat_10", "desc": "Speak in chat 10 times", "track": "chat_sent", "goal": 10, "points": 10},
 ]
 
-## Points needed to fill the bar.
-const MAX_POINTS := 100
+## Points needed to fill the bar. Both lists offer 140 points, so
+## filling it takes about 93% of them — the same slack as before the
+## social missions (110 offered, 100 needed). Raise this if you add
+## more missions, or the bar gets easier every time.
+const MAX_POINTS := 130
 
 ## Chest rewards. Besides "jade", "stones", "qi", items by id,
 ## "card" and "card_choice" (a rarity), chests can hold:
@@ -73,18 +86,20 @@ const MAX_POINTS := 100
 ## chest from skipping whole realms; later it doesn't bite at all.
 const QI_STEPS_PER_HOUR := 0.75
 
+## Thresholds stay at 25 / 50 / 75 / 100% of MAX_POINTS, so the
+## rewards pace exactly as they did before MAX_POINTS changed.
 const DAILY_CHESTS := [
-	{"points": 25, "rewards": {"stones_hours": 2, "qi_hours": 2}},
-	{"points": 50, "rewards": {"jade": 50, "loot_hours": 2, "array_flag": 5}},
-	{"points": 75, "rewards": {"starup_pill": 15, "artifact_core": 40}},
-	{"points": 100, "rewards": {"jade": 100, "pill_mats": 0.5, "treasure_dust": 40}},
+	{"points": 33, "rewards": {"stones_hours": 2, "qi_hours": 2}},
+	{"points": 65, "rewards": {"jade": 50, "loot_hours": 2, "array_flag": 5}},
+	{"points": 98, "rewards": {"starup_pill": 15, "artifact_core": 40}},
+	{"points": 130, "rewards": {"jade": 100, "pill_mats": 0.5, "treasure_dust": 40}},
 ]
 
 const WEEKLY_CHESTS := [
-	{"points": 25, "rewards": {"stones_hours": 8, "qi_hours": 8}},
-	{"points": 50, "rewards": {"jade": 200, "loot_hours": 8, "lifebound_essence": 200}},
-	{"points": 75, "rewards": {"starup_pill": 80, "artifact_core": 200, "treasure_dust": 200, "array_flag": 30}},
-	{"points": 100, "rewards": {"jade": 300, "pill_mats": 2.0, "card_choice": Enums.Rarity.PURPLE}},
+	{"points": 33, "rewards": {"stones_hours": 8, "qi_hours": 8}},
+	{"points": 65, "rewards": {"jade": 200, "loot_hours": 8, "lifebound_essence": 200}},
+	{"points": 98, "rewards": {"starup_pill": 80, "artifact_core": 200, "treasure_dust": 200, "array_flag": 30}},
+	{"points": 130, "rewards": {"jade": 300, "pill_mats": 2.0, "card_choice": Enums.Rarity.PURPLE}},
 ]
 
 
