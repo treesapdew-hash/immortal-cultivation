@@ -49,10 +49,6 @@ theme/custom_font="uid://cclqo2il368b"
 
 [rendering]
 
+rendering_device/d3d12/max_resource_descriptors=262144
 rendering_device/driver.windows="d3d12"
 textures/vram_compression/import_etc2_astc=true
-; Screens like Formation and Codex draw a lot of distinct partner
-; textures at once, which exhausted the D3D12 RESOURCES descriptor
-; heap and flooded the log with "Cannot create uniform set".
-; Four times the 65536 default; the setting allows up to 1,000,000.
-rendering_device/d3d12/max_resource_descriptors=262144
