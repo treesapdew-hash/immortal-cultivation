@@ -45,8 +45,16 @@ var _poll_left := 0.0
 var _send_cooldown := 0.0
 var _busy := false
 
+## The panel at rest. Shortened while the on-screen keyboard is up.
+const PANEL_SIZE := Vector2(940, 1180)
+## Breathing room between the panel and the keyboard.
+const KEYBOARD_GAP := 40.0
+
 var _root: Control
+var _center: CenterContainer
 var _panel: PanelContainer
+## Keyboard height last applied, in viewport pixels. -1 = not yet set.
+var _kb_shift := -1.0
 var _rows: VBoxContainer
 var _scroll: ScrollContainer
 var _input: LineEdit
@@ -209,14 +217,14 @@ func _build() -> void:
 	close_away.pressed.connect(_close)
 	_root.add_child(close_away)
 
-	var center := CenterContainer.new()
-	center.anchor_right = 1.0
-	center.anchor_bottom = 1.0
-	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_root.add_child(center)
+	_center = CenterContainer.new()
+	_center.anchor_right = 1.0
+	_center.anchor_bottom = 1.0
+	_center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_root.add_child(_center)
 
 	_panel = PanelContainer.new()
-	_panel.custom_minimum_size = Vector2(940, 1180)
+	_panel.custom_minimum_size = PANEL_SIZE
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = COL_PANEL
 	sb.border_color = COL_GOLD
@@ -227,7 +235,7 @@ func _build() -> void:
 	sb.shadow_size = 24
 	_panel.add_theme_stylebox_override("panel", sb)
 	_panel.resized.connect(func(): _panel.pivot_offset = _panel.size * 0.5)
-	center.add_child(_panel)
+	_center.add_child(_panel)
 
 	var v := VBoxContainer.new()
 	v.add_theme_constant_override("separation", 10)
@@ -474,6 +482,42 @@ func _add_message(channel: int, row: Dictionary) -> void:
 	line.add_child(text)
 
 
+# ---------------------------------------------------------
+# THE ON-SCREEN KEYBOARD
+# ---------------------------------------------------------
+
+## Android puts its keyboard over the bottom of the screen, which is
+## exactly where the box that is being typed into sits — testers were
+## typing blind. Shrinking the centring area lifts the panel, and
+## shortening it keeps the top on screen when the keyboard is tall.
+##
+## Costs nothing anywhere else: the height is 0 on desktop and
+## whenever the keyboard is down.
+func _follow_keyboard() -> void:
+	if _center == null or _panel == null:
+		return
+	var kb := _keyboard_height()
+	if is_equal_approx(kb, _kb_shift):
+		return
+	_kb_shift = kb
+	_center.offset_bottom = -kb
+	var room := get_viewport().get_visible_rect().size.y - kb - KEYBOARD_GAP
+	_panel.custom_minimum_size.y = minf(PANEL_SIZE.y, maxf(room, 400.0))
+
+
+## Keyboard height in viewport pixels, converted from the screen
+## pixels the OS reports — the game renders 1080x1920 into whatever
+## the device actually is, so the two do not match.
+func _keyboard_height() -> float:
+	var screen_px := float(DisplayServer.virtual_keyboard_get_height())
+	if screen_px <= 0.0:
+		return 0.0
+	var window_px := float(DisplayServer.window_get_size().y)
+	if window_px <= 0.0:
+		return 0.0
+	return screen_px * (get_viewport().get_visible_rect().size.y / window_px)
+
+
 ## A worn title beside a name: the tier's colour on a matching plate,
 ## so it reads at a glance without crowding the line.
 func _title_tag(id: String) -> Control:
@@ -602,6 +646,7 @@ func _do_action(id: int, user_id: String, who: String, body: String) -> void:
 # ---------------------------------------------------------
 
 func _process(delta: float) -> void:
+	_follow_keyboard()
 	if _send_cooldown > 0.0:
 		_send_cooldown = maxf(0.0, _send_cooldown - delta)
 	_poll_left -= delta
