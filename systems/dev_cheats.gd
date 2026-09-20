@@ -83,6 +83,7 @@ func _build() -> void:
 		["+1 of each Selection Scroll", _selection_scrolls],
 		["+300 Fate Points", _fate_points],
 		["+1 of each Premium Scroll", _premium_scrolls],
+		["+Essence & fragments (evolve)", _premium_mats],
 	])
 	_section(v, "Battle", [
 		["Team power x10", _power_10],
@@ -237,6 +238,22 @@ func _premium_scrolls() -> void:
 	GameState.save_game()
 	GameState.roster_changed.emit()
 	_say("+1 Premium Selection Scroll and +1 of each group scroll.")
+
+
+## Everything an evolution needs: Essence to forge with, and enough
+## Soul Fragments on every partner to reach their star cap.
+func _premium_mats() -> void:
+	GameState.add_items({GameState.PREMIUM_ESSENCE_ID: 1000})
+	var touched := 0
+	for p in GameState.roster:
+		if p.is_mc():
+			continue
+		GameState.partner_copies[p.partner_id] = GameState.get_copies(p.partner_id) + 40
+		touched += 1
+	GameState.starup_pills += 100000000
+	GameState.save_game()
+	GameState.roster_changed.emit()
+	_say("+1000 Premium Soul Essence, +40 Soul Fragments on %d partners, +100M Star-up Pills." % touched)
 
 
 func _fate_points() -> void:

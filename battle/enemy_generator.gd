@@ -36,6 +36,19 @@ const STRENGTH_BANDS := [
 ]
 const LATE_GROWTH_PER_500 := 1.4
 
+## Ceiling on enemy strength.
+##
+## Strength keeps compounding 1.4x per 500 stages forever, and enemy
+## HP is BASE_HP x strength x the boss multiplier. Past roughly stage
+## 46,000 that passes int64's limit (9.22e18): the HP wraps to
+## nonsense, enemies die instantly and the same stage "clears" over
+## and over. Only the dev stage cheats reach that far, but a wrapped
+## integer is a silly way to find out.
+##
+## 1e14 leaves BASE_HP x strength x BOSS_HP_MULT four orders of
+## magnitude clear of the limit.
+const MAX_STRENGTH := 1.0e14
+
 # HP scales a bit harder than ATK, so fights get longer
 # rather than suddenly lethal.
 const HP_EXPONENT := 1.0
@@ -95,7 +108,7 @@ static func strength(stage: int) -> float:
 
 	var last: Array = STRENGTH_BANDS.back()
 	var extra := float(stage - last[0]) / 500.0
-	return last[1] * pow(LATE_GROWTH_PER_500, extra)
+	return minf(last[1] * pow(LATE_GROWTH_PER_500, extra), MAX_STRENGTH)
 
 
 static func hp_multiplier(stage: int) -> float:

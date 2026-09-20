@@ -1174,18 +1174,15 @@ func _update_costs() -> void:
 	if p.stars >= p.get_star_cap():
 		_pill_bar.visible = false
 		_pips.visible = false
-		# At the star cap Awaken is dead, so the button becomes Evolve
-		# for anyone with a higher form. Keeps it off the scene file.
-		if not SummonSystem.next_forms(p.partner_id).is_empty():
-			var blocked := GameState.can_evolve(p)
+		# At the star cap Awaken is dead, so the button becomes Evolve —
+		# but only once it can actually be done. A button that is there
+		# and refuses reads as broken, so until then this stays "Max".
+		if GameState.can_evolve(p) == "":
 			awaken_button.text = "Evolve"
 			awaken_button.disabled = false
-			_set_ready(awaken_button, blocked == "")
-			if blocked == "":
-				_set_cost_label(awaken_cost_label,
-					"%d Essence" % GameState.evolve_cost(p), true)
-			else:
-				_set_cost_label(awaken_cost_label, blocked, false)
+			_set_ready(awaken_button, true)
+			_set_cost_label(awaken_cost_label,
+				"%d Essence" % GameState.evolve_cost(p), true)
 		else:
 			awaken_button.disabled = true
 			_set_ready(awaken_button, false)
