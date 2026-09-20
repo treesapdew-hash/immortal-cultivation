@@ -207,12 +207,14 @@ func _reload() -> void:
 	# Register first: without a snapshot there is nothing to fight.
 	await Arena.sync()
 	var s := await Arena.state()
-	var pending := await Arena.rewards_pending()
+	# Settles any period that closed while they were away and posts
+	# what they earned; returns how many letters were written.
+	var posted := await Arena.collect_rewards()
 	var opp := await Arena.opponents(int(s.get("points", 1000)))
 	_busy = false
 	if not is_instance_valid(self) or not is_inside_tree():
 		return
-	s["pending"] = pending
+	s["posted"] = posted
 	_state = s
 	_opponents = opp
 	_render()
@@ -241,28 +243,34 @@ func _render() -> void:
 		"Exchange":
 			_render_shop()
 		_:
+			_body.add_child(_my_showcase_button())
 			_render_rewards()
 			_render_duel(left, bought)
 
 
-## Yesterday's and last week's standing, if they haven't been taken.
+## Your own formation, read back the way rivals see it. Worth having
+## where you can act on it: this is the page others judge you by.
+func _my_showcase_button() -> Control:
+	var b := OrnateButton.new()
+	b.text = "View my formation"
+	b.variant = OrnateButton.Variant.DARK
+	b.custom_minimum_size = Vector2(400, 52)
+	b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var mine := func() -> void:
+		InspectPopup.open(self, Backend.user_id, str(GameState.mc_name))
+	b.pressed.connect(mine)
+	return b
+
+
+## Standing rewards are posted, not claimed: the server settles a
+## period once it closes and the letters are already in the mailbox
+## by the time this opens. All that is left is to say so.
 func _render_rewards() -> void:
-	var pending: Dictionary = _state.get("pending", {}) if _state.get("pending", null) is Dictionary else {}
-	if pending.is_empty():
+	var posted := int(_state.get("posted", 0))
+	if posted <= 0:
 		return
-	for weekly in [false, true]:
-		var key := "weekly" if weekly else "daily"
-		if not bool(pending.get(key, false)):
-			continue
-		var b := OrnateButton.new()
-		b.text = "Claim %s standing" % ("weekly" if weekly else "daily")
-		b.variant = OrnateButton.Variant.CRIMSON if weekly else OrnateButton.Variant.GOLD
-		b.custom_minimum_size = Vector2(400, 58)
-		b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		var on_claim := func() -> void:
-			_on_claim(weekly)
-		b.pressed.connect(on_claim)
-		_body.add_child(b)
+	_body.add_child(_label("%d standing reward%s sent to your mailbox."
+		% [posted, "" if posted == 1 else "s"], 19, COL_GOLD))
 	_body.add_child(_line())
 
 
@@ -463,22 +471,6 @@ func _on_buy(item_id: String, cost: int) -> void:
 	var item := ItemDB.get_item(str(r["item_id"]))
 	_toast("+%d %s" % [int(r["amount"]), str(item.get("name", r["item_id"]))], COL_OK)
 	_render()
-
-
-func _on_claim(weekly: bool) -> void:
-	if _busy:
-		return
-	_busy = true
-	var r := await Arena.claim_reward(weekly)
-	_busy = false
-	if not is_instance_valid(self) or not is_inside_tree():
-		return
-	if not r["ok"]:
-		_toast(str(r["error"]), COL_BAD)
-		return
-	_toast("Rank %d  ·  +%s Tokens, +%s Jade" % [int(r["rank"]),
-		NumberFormat.short(int(r["tokens"])), NumberFormat.short(int(r["jade"]))], COL_OK)
-	_reload()
 
 
 func _on_buy_duel() -> void:

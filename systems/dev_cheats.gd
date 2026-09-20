@@ -11,7 +11,7 @@ extends CanvasLayer
 # release builds.
 # =========================================================
 
-const ENABLED := false
+const ENABLED := true
 
 const COL_PANEL := Color(0.05, 0.07, 0.12, 0.96)
 const COL_GOLD := Color("e2c27a")

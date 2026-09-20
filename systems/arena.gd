@@ -29,6 +29,11 @@ const OPPONENT_COUNT := 5
 
 ## Arena currency.
 const TOKEN_ID := "arena_token"
+
+## Below this many cultivators duelling in a bracket, only the base
+## standing reward pays out. Must match arena_min_bracket() in
+## setup_12_arena_rewards.sql; the server is what enforces it.
+const MIN_BRACKET_FOR_RANK := 5
 ## Tokens for a win and a loss. Losing still pays a little, so a
 ## bad run is not a wasted session.
 const TOKENS_WIN := 12
@@ -256,31 +261,48 @@ static func buy(item_id: String, cost: int) -> Dictionary:
 # STANDING REWARDS
 # ---------------------------------------------------------
 
-## {daily: bool, weekly: bool} — what is waiting.
-static func rewards_pending() -> Dictionary:
-	var r: Dictionary = await Backend.call_fn("arena_rewards_pending", {})
-	return r["data"] if r["ok"] and r["data"] is Dictionary else {}
+## Collects any standing rewards the server has settled and posts
+## them to the mailbox. There is nothing to press: a period closes,
+## the server freezes the standings, and the letters are waiting the
+## next time the Arena is opened.
+##
+## The server marks each reward delivered as it hands it over, so a
+## letter is written once even if this is called twice. Returns how
+## many arrived.
+static func collect_rewards() -> int:
+	var r: Dictionary = await Backend.call_fn("arena_collect_rewards", {})
+	if not r["ok"] or not (r["data"] is Array):
+		return 0
+	var rows: Array = r["data"]
+	var posted := 0
+	for row in rows:
+		if row is Dictionary:
+			_post_reward(row)
+			posted += 1
+	if posted > 0:
+		GameState.save_game()
+	return posted
 
 
-## Claims yesterday's standing, or last week's. The rank comes from
-## the server's table, so only what it grants is added.
-static func claim_reward(weekly := false) -> Dictionary:
-	var r: Dictionary = await Backend.call_fn("arena_claim_reward", {"p_weekly": weekly})
-	if not r["ok"]:
-		return {"ok": false, "error": _error_text(r)}
-	var d: Dictionary = r["data"] if r["data"] is Dictionary else {}
-	if not bool(d.get("ok", false)):
-		return {"ok": false, "error": str(d.get("error", "Nothing to claim."))}
+static func _post_reward(row: Dictionary) -> void:
+	var weekly := str(row.get("kind", "daily")) == "weekly"
+	var rank := int(row.get("rank", 0))
+	var tokens := int(row.get("tokens", 0))
+	var jade := int(row.get("jade", 0))
+	var period := str(row.get("period", ""))
 
-	var tokens := int(d.get("tokens", 0))
-	var jade := int(d.get("jade", 0))
+	var title := "%s Arena Standing" % ("Weekly" if weekly else "Daily")
+	var body := "The %s closed on %s.\n\nYou finished rank %d of %s in the %s bracket." % [
+		"week" if weekly else "day", period, rank,
+		NumberFormat.short(int(row.get("bracket_size", 0))), bracket_name(bracket())]
+	# Say so plainly rather than letting it look like a bad roll.
+	if int(row.get("bracket_size", 0)) < MIN_BRACKET_FOR_RANK:
+		body += "\n\nToo few cultivators duelled in your bracket for the" \
+			+ " higher places to pay out, so this is the base reward."
+	var items := {}
 	if tokens > 0:
-		GameState.add_items({TOKEN_ID: tokens})
-	if jade > 0:
-		GameState.add_immortal_jade(jade)
-	GameState.save_game()
-	return {"ok": true, "error": "", "rank": int(d.get("rank", 0)),
-		"tokens": tokens, "jade": jade, "weekly": weekly}
+		items[TOKEN_ID] = tokens
+	Mail.send(title, body, jade, items)
 
 
 ## The bracket's top cultivators.
