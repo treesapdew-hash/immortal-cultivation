@@ -135,10 +135,14 @@ func _rebuild() -> void:
 	_action_row("Report a bug", "Copies your version, stage and recent log. Paste it in your message.",
 		"Copy Report", OrnateButton.Variant.GOLD, _on_report)
 	_action_row("Login & Cloud Save", _account_status(), "Manage", OrnateButton.Variant.GOLD, _on_account)
-	_soon_row("Redeem code")
+	_redeem_row()
 	_soon_row("Language")
 	_action_row("Reset account", "Deletes ALL progress and starts over. Cannot be undone.",
 		"Reset", OrnateButton.Variant.CRIMSON, _on_reset)
+
+	_section("Community")
+	_action_row("Discord", "News, codes and help from other cultivators.",
+		"Join", OrnateButton.Variant.GOLD, func(): OS.shell_open(Settings.DISCORD_URL))
 
 	_section("About")
 	var credits := _label("Immortal Cultivation\nFont: Trajan Pro\nMade with Godot Engine", 17, COL_DIM)
@@ -252,6 +256,46 @@ func _info_row(title: String, value: String) -> void:
 func _soon_row(title: String) -> void:
 	var h := _row(title, "")
 	h.add_child(_label("Coming soon", 18, COL_DIM, HORIZONTAL_ALIGNMENT_RIGHT))
+
+
+## Code entry, inline rather than its own popup: it is a single field.
+## The server decides what a code is worth and whether it was used.
+func _redeem_row() -> void:
+	var h := _row("Redeem code", "Codes from events and the Discord server.")
+
+	var field := LineEdit.new()
+	field.placeholder_text = "Enter code"
+	field.max_length = Redeem.MAX_LENGTH
+	field.custom_minimum_size = Vector2(230, 54)
+	field.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	field.add_theme_font_size_override("font_size", 20)
+	h.add_child(field)
+
+	var button := OrnateButton.new()
+	button.text = "Redeem"
+	button.variant = OrnateButton.Variant.GOLD
+	button.custom_minimum_size = Vector2(170, 54)
+	h.add_child(button)
+
+	var submit := func() -> void:
+		if button.disabled:
+			return
+		button.disabled = true
+		var r := await Redeem.claim(field.text)
+		# The panel rebuilds on some actions, which frees these.
+		if not is_instance_valid(button) or not is_instance_valid(field):
+			return
+		button.disabled = false
+		if bool(r["ok"]):
+			field.text = ""
+			_toast(str(r["text"]), COL_OK)
+		else:
+			_toast(str(r["error"]), COL_BAD)
+
+	button.pressed.connect(submit)
+	var on_enter := func(_t: String) -> void:
+		submit.call()
+	field.text_submitted.connect(on_enter)
 
 
 func _action_row(title: String, sub: String, button_text: String, variant: OrnateButton.Variant, action: Callable) -> void:

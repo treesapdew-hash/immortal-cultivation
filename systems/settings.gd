@@ -23,6 +23,9 @@ const VERSION := "Alpha 0.1.0"
 const PRIVACY_URL := "https://treesapdew-hash.github.io/immortal-cultivation/legal/privacy.html"
 const TERMS_URL := "https://treesapdew-hash.github.io/immortal-cultivation/legal/terms.html"
 const DELETE_ACCOUNT_URL := "https://treesapdew-hash.github.io/immortal-cultivation/legal/delete-account.html"
+## Community server. Invite links can be revoked, so if players report
+## a dead link this is the one to update.
+const DISCORD_URL := "https://discord.gg/3TaJPusQbs"
 
 ## Every setting and its default.
 const DEFAULTS := {
