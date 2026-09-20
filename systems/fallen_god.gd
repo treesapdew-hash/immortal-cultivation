@@ -88,7 +88,7 @@ static func _state() -> Dictionary:
 
 
 static func _now() -> Dictionary:
-	return Time.get_datetime_dict_from_system()
+	return GameState.now_dict()
 
 
 ## DEV: treat the first window as open whatever the time (dev_cheats.gd).

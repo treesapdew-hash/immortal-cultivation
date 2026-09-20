@@ -179,6 +179,6 @@ static func finish(damage: int) -> Dictionary:
 
 ## Monday of this week (UTC), as the server stores it: "2026-09-21".
 static func _week_start() -> String:
-	var days := floori(Time.get_unix_time_from_system() / 86400.0)
+	var days := floori(float(GameState.now_unix()) / 86400.0)
 	var monday := days - posmod(days + 3, 7)
 	return Time.get_date_string_from_unix_time(monday * 86400)

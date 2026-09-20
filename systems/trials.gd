@@ -106,7 +106,7 @@ static var debug_weekday := -1
 static func weekday() -> int:
 	if debug_weekday >= 0:
 		return debug_weekday
-	return int(Time.get_datetime_dict_from_system()["weekday"])
+	return int(GameState.now_dict()["weekday"])
 
 
 static func is_free_day() -> bool:

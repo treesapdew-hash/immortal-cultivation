@@ -138,28 +138,23 @@ static func _count_streak() -> void:
 	GameState.login_streak_day = today_n
 
 
+## Days since the epoch, in UTC, off the server's clock rather than
+## the device's — a wound-forward phone used to hand out a fresh set
+## of dailies and a longer login streak.
 static func _day_number() -> int:
-	var t := Time.get_datetime_dict_from_system()
-	var unix := Time.get_unix_time_from_datetime_dict({
-		"year": t["year"], "month": t["month"], "day": t["day"],
-		"hour": 0, "minute": 0, "second": 0})
-	return int(unix / 86400)
+	return floori(float(GameState.now_unix()) / 86400.0)
 
 
-## Monday of this week, as a day number (local time).
+## Monday of this week, as a day number.
 static func _week_id() -> int:
-	var t := Time.get_datetime_dict_from_system()
-	var unix := Time.get_unix_time_from_datetime_dict({
-		"year": t["year"], "month": t["month"], "day": t["day"],
-		"hour": 0, "minute": 0, "second": 0})
-	var day_num := floori(float(unix) / 86400.0)
+	var day_num := _day_number()
 	# 1 Jan 1970 was a Thursday
 	return day_num - posmod(day_num + 3, 7)
 
 
 ## Seconds until the list resets.
 static func seconds_to_reset(weekly: bool) -> int:
-	var t := Time.get_datetime_dict_from_system()
+	var t := GameState.now_dict()
 	var left := 86400 - (int(t["hour"]) * 3600 + int(t["minute"]) * 60 + int(t["second"]))
 	if weekly:
 		var to_monday := posmod(8 - int(t["weekday"]), 7)

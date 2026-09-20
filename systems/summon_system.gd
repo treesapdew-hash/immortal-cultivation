@@ -283,7 +283,7 @@ static func choose_from_scroll(item_id: String, partner_id: String) -> bool:
 
 ## Local day number (days since 1 Jan 1970, local date).
 static func _day_number() -> int:
-	var t := Time.get_datetime_dict_from_system()
+	var t := GameState.now_dict()
 	var unix := Time.get_unix_time_from_datetime_dict({
 		"year": t["year"], "month": t["month"], "day": t["day"], "hour": 0, "minute": 0, "second": 0})
 	return floori(float(unix) / 86400.0)

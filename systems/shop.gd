@@ -294,6 +294,6 @@ static func buy(offer: Dictionary) -> String:
 
 ## "Resets in 5h 12m"
 static func time_until_reset() -> String:
-	var now := Time.get_datetime_dict_from_system()
+	var now := GameState.now_dict()
 	var left := (23 - int(now["hour"])) * 3600 + (59 - int(now["minute"])) * 60 + (60 - int(now["second"]))
 	return Loot.format_duration(left)

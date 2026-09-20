@@ -1235,7 +1235,7 @@ func to_dict() -> Dictionary:
 	return {
 		"version": SAVE_VERSION,
 		"realm_count": Realms.count(),
-		"last_seen": int(Time.get_unix_time_from_system()),
+		"last_seen": now_unix(),
 		"mc": {
 			"name": mc_name,
 			"gender": mc_gender,
@@ -1609,10 +1609,28 @@ func learn_recipe(target: int) -> void:
 		known_recipes.sort()
 
 
-## Today's number (local time), for the daily shop reset.
+## The clock everything dated runs on. The server's when we have it,
+## so winding the device forward no longer buys a new day of resets,
+## a login streak or a night of offline rewards. Falls back to the
+## device only until the first response arrives.
+func now_unix() -> int:
+	if Backend.has_server_time:
+		return Backend.server_unix()
+	return int(Time.get_unix_time_from_system())
+
+
+## Now, broken out, in UTC. Every daily and weekly boundary in the
+## game reads this rather than the device's own calendar.
+func now_dict() -> Dictionary:
+	return Time.get_datetime_dict_from_unix_time(now_unix())
+
+
+## Today's number, for the daily shop reset and every other daily.
+## UTC, not local: it has to agree with the server, and the Arena and
+## its settlement were already reckoning in UTC.
 func today() -> int:
-	var t := Time.get_datetime_dict_from_system()
-	return t["year"] * 10000 + t["month"] * 100 + t["day"]
+	var t := Time.get_datetime_dict_from_unix_time(now_unix())
+	return int(t["year"]) * 10000 + int(t["month"]) * 100 + int(t["day"])
 
 
 ## Clears the daily purchase counts when a new day starts.
@@ -1671,7 +1689,11 @@ func _compute_offline(last_seen: int) -> void:
 	pending_offline = {}
 	if last_seen <= 0 or not mc_created:
 		return
-	var away := int(Time.get_unix_time_from_system()) - last_seen
+	# Server time, so winding the clock forward buys nothing. A clock
+	# wound backwards gives a negative figure, which falls below the
+	# minimum and pays nothing; roll_offline() caps the top end at
+	# OFFLINE_MAX_HOURS by itself.
+	var away := now_unix() - last_seen
 	if away < Loot.OFFLINE_MIN_SECONDS:
 		return
 	var rewards := Loot.roll_offline(current_stage, away)

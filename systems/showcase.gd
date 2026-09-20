@@ -40,7 +40,7 @@ static func build() -> Dictionary:
 	return {
 		"team": team,
 		"array": _battle_array_names(),
-		"built": Time.get_unix_time_from_system(),
+		"built": GameState.now_unix(),
 	}
 
 

@@ -209,6 +209,63 @@ func call_fn(fn: String, args: Dictionary = {}) -> Dictionary:
 	return await rest(HTTPClient.METHOD_POST, "rpc/" + fn, args)
 
 
+# ---------------------------------------------------------
+# THE SERVER'S CLOCK
+# ---------------------------------------------------------
+# Daily resets, login streaks and offline rewards all used to be
+# measured against the device clock, which a player can simply wind
+# forward. Every HTTP response carries a Date header, so the real
+# time arrives free with traffic the game already makes — no extra
+# request, and it keeps working on responses that failed.
+#
+# Only the offset is kept, so it stays right as time passes.
+
+const _MONTHS := ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+	"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+## Server time minus device time, in seconds.
+var _clock_offset := 0
+## False until a response has been seen; callers fall back to the
+## device clock, because refusing to tell a brand-new offline player
+## what day it is would be worse than trusting them.
+var has_server_time := false
+
+
+## Now, by the server's reckoning.
+func server_unix() -> int:
+	return int(Time.get_unix_time_from_system()) + _clock_offset
+
+
+func _note_server_date(headers: PackedStringArray) -> void:
+	for entry in headers:
+		var line := str(entry)
+		if not line.to_lower().begins_with("date:"):
+			continue
+		var when := _parse_http_date(line.substr(5).strip_edges())
+		if when > 0:
+			_clock_offset = when - int(Time.get_unix_time_from_system())
+			has_server_time = true
+		return
+
+
+## "Sun, 21 Sep 2026 01:23:45 GMT" -> unix seconds, or 0 if it isn't
+## a date. Always GMT by the HTTP spec, which is what the dict wants.
+func _parse_http_date(value: String) -> int:
+	var parts := value.split(" ", false)
+	if parts.size() < 5:
+		return 0
+	var month := _MONTHS.find(str(parts[2]))
+	if month < 0:
+		return 0
+	var clock := str(parts[4]).split(":")
+	if clock.size() < 3:
+		return 0
+	return int(Time.get_unix_time_from_datetime_dict({
+		"year": int(parts[3]), "month": month + 1, "day": int(parts[1]),
+		"hour": int(clock[0]), "minute": int(clock[1]), "second": int(clock[2]),
+	}))
+
+
 func _rest_headers(extra: Array) -> PackedStringArray:
 	var h := PackedStringArray([
 		"apikey: " + SUPABASE_KEY,
@@ -231,6 +288,7 @@ func _http(method: int, url: String, headers: PackedStringArray, body: Variant) 
 		return {"ok": false, "code": 0, "data": null, "error": "request failed (%d)" % err}
 	var res: Array = await req.request_completed
 	req.queue_free()
+	_note_server_date(res[2])
 	var code := int(res[1])
 	var text := (res[3] as PackedByteArray).get_string_from_utf8()
 	var data = JSON.parse_string(text) if text != "" else null

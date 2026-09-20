@@ -160,7 +160,8 @@ static func send(offer: Dictionary, partner_ids: Array) -> String:
 	var trip := offer.duplicate(true)
 	trip["partners"] = partner_ids.duplicate()
 	trip["rewards"] = rewards_for(offer, partner_ids)
-	trip["ends_at"] = int(Time.get_unix_time_from_system()) + int(offer["hours"]) * 3600
+	# Server time, or a wound-forward clock finishes every trip at once.
+	trip["ends_at"] = GameState.now_unix() + int(offer["hours"]) * 3600
 
 	GameState.expeditions.append(trip)
 	GameState.expedition_offers = GameState.expedition_offers.filter(
@@ -170,7 +171,7 @@ static func send(offer: Dictionary, partner_ids: Array) -> String:
 
 
 static func seconds_left(trip: Dictionary) -> int:
-	return maxi(0, int(trip["ends_at"]) - int(Time.get_unix_time_from_system()))
+	return maxi(0, int(trip["ends_at"]) - GameState.now_unix())
 
 
 static func is_done(trip: Dictionary) -> bool:
@@ -188,7 +189,7 @@ static func rush(trip: Dictionary) -> String:
 	var cost := rush_cost(trip)
 	if not GameState.spend_immortal_jade(cost):
 		return "Needs %s Jade." % NumberFormat.short(cost)
-	trip["ends_at"] = int(Time.get_unix_time_from_system())
+	trip["ends_at"] = GameState.now_unix()
 	GameState.expeditions_changed()
 	return ""
 

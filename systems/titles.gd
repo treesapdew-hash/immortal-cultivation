@@ -228,7 +228,7 @@ static func owns(id: String) -> bool:
 	if not GameState.titles_owned.has(id):
 		return false
 	var until := expires_at(id)
-	return until <= 0 or until > int(Time.get_unix_time_from_system())
+	return until <= 0 or until > GameState.now_unix()
 
 
 ## How long a title has left, for the Codex ("6 days left"). "" when
@@ -237,7 +237,7 @@ static func remaining_text(id: String) -> String:
 	var until := expires_at(id)
 	if until <= 0 or not owns(id):
 		return ""
-	var left := until - int(Time.get_unix_time_from_system())
+	var left := until - GameState.now_unix()
 	if left >= 172800:
 		return "%d days left" % int(left / 86400.0)
 	if left >= 7200:
@@ -334,7 +334,7 @@ static func _until(id: String) -> int:
 	var t: Dictionary = LIST.get(id, {})
 	if not t.has("days"):
 		return 0
-	return int(Time.get_unix_time_from_system()) + int(t["days"]) * 86400
+	return GameState.now_unix() + int(t["days"]) * 86400
 
 
 ## Grants any local title whose condition is met, and pushes the clock

@@ -363,7 +363,7 @@ func _star() -> void:
 
 ## Pretends the game was closed for 8 hours, then shows the popup.
 func _offline_8h() -> void:
-	GameState._compute_offline(int(Time.get_unix_time_from_system()) - 8 * 3600)
+	GameState._compute_offline(GameState.now_unix() - 8 * 3600)
 	if not GameState.has_offline_rewards():
 		_say("No offline rewards (is the MC created?).")
 		return
