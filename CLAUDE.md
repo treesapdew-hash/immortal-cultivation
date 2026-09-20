@@ -105,9 +105,6 @@ Day boundaries are therefore **UTC**, and `FallenGod.WINDOWS` (12/18/21)
 are UTC hours, not local.
 
 ## Open / next
-- **Formation swap** reported as only changing one side. Not reproduced:
-  the `_slot_drop` / `set_formation_slot` path reads correctly and a
-  headless save with one partner cannot exercise it. Needs a repro.
 - **Fallen God windows are UTC** since the clock move — 12/18/21 UTC is
   20:00/02:00/05:00 in Singapore. Probably wants shifting.
 - 46 title banners are all in and correctly imported (0.90MB for the set).
