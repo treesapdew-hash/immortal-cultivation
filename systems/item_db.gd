@@ -129,6 +129,12 @@ const ITEMS := {
 		"desc": "A full ×10 summon at the Summoning Altar, with its guaranteed Purple. Used before Jade.",
 		"source": "Events, mission chests and the Treasure Pavilion.",
 	},
+	"arena_token": {
+		"name": "Arena Token", "category": Category.MATERIAL, "grade": 4, "icon": "core",
+		"tint": Color("ff9a5a"),
+		"desc": "Won in the Arena, whether you triumph or fall. Spent at the Arena Exchange.",
+		"source": "Arena duels, and daily and weekly standings.",
+	},
 	"premium_essence": {
 		"name": "Premium Soul Essence", "category": Category.MATERIAL, "grade": 5, "icon": "core",
 		"tint": Color("ff7ad0"),
